@@ -1,0 +1,25 @@
+{
+  "name": "bithomeio",
+  "description": "BitHome.io",
+  "version": "0.0.0",
+  "homepage": "https://github.com/bithomeio/bithome-hub",
+  "author": {
+    "name": "Mike Kurdziel",
+    "email": "michael.kurdziel@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BitHomeIO/bithome-hub.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BitHomeIO/bithome-hub/issues"
+  },
+  "licenses": [
+    {
+      "type": "Apache",
+      "url": "https://github.com/BitHomeIO/bithome-hub/blob/master/LICENSE"
+    }
+  ],
+    "dependencies": {
+  }
+}
