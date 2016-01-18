@@ -20,6 +20,7 @@
       "url": "https://github.com/BitHomeIO/bithome-hub/blob/master/LICENSE"
     }
   ],
-    "dependencies": {
+  "dependencies": {
+    "mosca": "^0.32.1"
   }
 }
