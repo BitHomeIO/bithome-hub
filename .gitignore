@@ -41,3 +41,5 @@ hub.iml
 .idea/vcs.xml
 .idea/copyright/profiles_settings.xml
 .idea
+.tmp
+build
