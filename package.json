@@ -34,7 +34,8 @@
     "mosca": "^1.0.2",
     "rc": "^1.1.6",
     "sails": "~0.11.4",
-    "sails-disk": "~0.10.0"
+    "sails-disk": "~0.10.0",
+    "sails-mongo": "^0.11.6"
   },
   "scripts": {
     "debug": "node debug app.js",
