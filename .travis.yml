@@ -1,0 +1,24 @@
+sudo: false
+language: node_js
+node_js:
+- '5.4.1'
+cache:
+- apt: true
+- directories:
+  - $TRAVIS_BUILD_DIR/node_modules
+  - $HOME/.rvm/gems
+  - $(npm config get prefix)/bin/bower
+  - $(npm config get prefix)/bin/grunt-cli
+before_install:
+#- npm list -g bower --depth=0 || npm install -g bower
+- npm list -g grunt-cli --depth=0 || npm install -g grunt-cli
+install:
+- npm install
+- grunt buildProd
+after_success:
+#- cd dist/ && tar -zcf $HOME/-web-dist-$TRAVIS_BRANCH.tar.gz . && cd ..
+#- pushd $HOME && sha256sum web-dist-$TRAVIS_BRANCH.tar.gz > web-dist-$TRAVIS_BRANCH.tar.gz.sha256 && popd
+before_cache:
+- rvm install 2.1
+- ruby --version
+- gem install berkshelf
