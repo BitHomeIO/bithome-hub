@@ -16,7 +16,9 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
+    "angular2": "^2.0.0-beta.2",
     "ejs": "^2.4.1",
+    "es6-shim": "^0.33.13",
     "grunt": "^0.4.5",
     "grunt-contrib-clean": "~0.7.0",
     "grunt-contrib-coffee": "~0.13.0",
@@ -33,12 +35,19 @@
     "lodash": "^4.0.0",
     "mosca": "^1.0.2",
     "rc": "^1.1.6",
+    "reflect-metadata": "^0.1.2",
+    "rxjs": "^5.0.0-beta.0",
     "sails": "~0.11.4",
     "sails-disk": "~0.10.0",
-    "sails-mongo": "^0.11.6"
+    "sails-mongo": "^0.11.6",
+    "zone.js": "^0.5.10"
   },
   "scripts": {
     "debug": "node debug app.js",
     "start": "node app.js"
+  },
+  "devDependencies": {
+    "bootstrap": "^3.3.6",
+    "moment": "^2.11.1"
   }
 }
