@@ -7,18 +7,6 @@
 
 module.exports = {
 	
-
-
-  /**
-   * `MessageController.create()`
-   */
-  create: function (req, res) {
-    return res.json({
-      todo: 'create() is not implemented yet!'
-    });
-  },
-
-
   /**
    * `MessageController.get()`
    */
@@ -28,14 +16,12 @@ module.exports = {
     );
   },
 
-
   /**
    * `MessageController.clear()`
    */
   clear: function (req, res) {
-    return res.json({
-      todo: 'clear() is not implemented yet!'
-    });
+    MessageService.clear();
+    return res.ok();
   }
 };
 

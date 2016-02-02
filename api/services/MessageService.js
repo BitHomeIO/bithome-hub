@@ -1,5 +1,12 @@
 module.exports = {
 
+  /**
+   * Incoming message handler
+   *
+   * @param timestamp
+   * @param client
+   * @param packet
+   */
   handleMessage: function (timestamp, client, packet) {
 
     if (!packet.topic.startsWith("$SYS/")) {
@@ -9,6 +16,14 @@ module.exports = {
     }
   },
 
+  /**
+   * Save a message to the log
+   *
+   * @param timestamp
+   * @param clientId
+   * @param topic
+   * @param payload
+   */
   saveMessage: function (timestamp, clientId, topic, payload) {
     Message.create(
       {
@@ -28,7 +43,21 @@ module.exports = {
     );
   },
 
+  /**
+   * Query the message log
+   *
+   * @param limit
+   * @param offset
+   * @returns {*}
+   */
   query: function (limit, offset) {
     return Message.find({skip: offset, limit: limit});
+  },
+
+  /**
+   * Clear out the message log
+   */
+  clear: function() {
+    Message.drop();
   }
 };
