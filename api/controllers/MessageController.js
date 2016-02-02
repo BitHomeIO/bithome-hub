@@ -1,5 +1,5 @@
 /**
- * MessagesController
+ * MessageController
  *
  * @description :: Server-side logic for managing messages
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
@@ -10,7 +10,7 @@ module.exports = {
 
 
   /**
-   * `MessagesController.create()`
+   * `MessageController.create()`
    */
   create: function (req, res) {
     return res.json({
@@ -20,17 +20,17 @@ module.exports = {
 
 
   /**
-   * `MessagesController.get()`
+   * `MessageController.get()`
    */
   get: function (req, res) {
-    return res.json({
-      todo: 'get() is not implemented yet!'
-    });
+    return res.json(
+      MessageService.query(0, 20)
+    );
   },
 
 
   /**
-   * `MessagesController.clear()`
+   * `MessageController.clear()`
    */
   clear: function (req, res) {
     return res.json({
