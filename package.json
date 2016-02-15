@@ -51,5 +51,8 @@
     "tslint": "^3.3.0",
     "typescript": "^1.7.5",
     "zone.js": "^0.5.10"
+  },
+  "devDependencies": {
+    "grunt-tslint": "^3.0.2"
   }
 }
