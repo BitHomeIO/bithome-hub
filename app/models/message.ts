@@ -1,10 +1,10 @@
-class Message {
-    private timestamp: string;
+export class Message {
+    private timestamp: Date;
     private node: string;
     private channel: string;
     private message: string;
 
-    constructor(timestamp: string, node: string, channel: string, message: string) {
+    constructor(timestamp: Date, node: string, channel: string, message: string) {
         this.timestamp = timestamp;
         this.node = node;
         this.channel = channel;

@@ -1,0 +1,5 @@
+{
+  "ambientDependencies": {
+    "moment": "github:DefinitelyTyped/DefinitelyTyped/moment/moment.d.ts#b090bcf9ba9f756ec8ff53e7707269729172a325"
+  }
+}

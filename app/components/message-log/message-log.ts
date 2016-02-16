@@ -1,4 +1,5 @@
 import {Component} from 'angular2/core';
+import {Message} from '../../models/message';
 
 @Component({
     selector: 'message-log',

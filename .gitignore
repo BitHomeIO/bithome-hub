@@ -45,3 +45,5 @@ hub.iml
 build
 .tscache
 .baseDir.ts
+www
+typings
