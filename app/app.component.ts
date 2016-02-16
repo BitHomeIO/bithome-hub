@@ -1,7 +1,9 @@
 import {Component} from 'angular2/core';
+import {MessageLog} from './components/message-log/message-log';
 @Component({
+    directives: [MessageLog],
     selector: 'my-app',
-    template: '<h1>My First Angular 2 App</h1>',
+    template: '<message-log></message-log>',
 })
 export class AppComponent {
 
