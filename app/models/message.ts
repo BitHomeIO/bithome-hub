@@ -14,5 +14,14 @@ export class Message {
     public getMessage(): string {
         return this.message;
     }
+    public getNode(): string {
+        return this.node;
+    }
+    public getChannel(): string {
+        return this.channel;
+    }
+    public getTimestamp(): Date {
+        return this.timestamp;
+    }
 }
 

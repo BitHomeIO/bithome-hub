@@ -22,6 +22,14 @@ module.exports = function(grunt) {
 
 			// When assets are changed:
 			tasks: ['syncAssets' , 'linkAssets']
+		},
+		typescript: {
+
+			// Assets to watch:
+			files: ['app/**/*.ts'],
+
+			// When assets are changed:
+			tasks: ['compileTs']
 		}
 	});
 

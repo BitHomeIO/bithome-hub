@@ -2,6 +2,8 @@ import {Injectable, bind} from 'angular2/core';
 import {Message} from '../models/message';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
+import {Operator} from 'rxjs/Operator';
+import 'rxjs/rx';
 
 let initialMessages: Message[] = [];
 
@@ -26,7 +28,6 @@ export class MessageService {
     public create: Subject<Message> = new Subject<Message>();
 
     constructor() {
-        debugger;
         this.messages = this.updates
             // watch the updates and accumulate operations on the messages
             .scan((messages: Message[],
@@ -57,6 +58,7 @@ export class MessageService {
         this.create
             .map( function(message: Message): IMessagesOperation {
                 return (messages: Message[]) => {
+                    console.log(`Adding message: ${message.getMessage()}`);
                     return messages.concat(message);
                 };
             })
