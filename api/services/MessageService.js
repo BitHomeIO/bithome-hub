@@ -50,8 +50,14 @@ module.exports = {
    * @param offset
    * @returns {*}
    */
-  query: function (limit, offset) {
-    return Message.find({skip: offset, limit: limit});
+  query: function (limit, offset, cb) {
+    Message.find({skip: offset, limit: limit}).exec(
+      function(err, results) {
+        if (!err) {
+          return cb(results);
+        }
+      }
+    );
   },
 
   /**

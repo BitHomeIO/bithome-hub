@@ -47,3 +47,4 @@ build
 .baseDir.ts
 www
 typings
+*.tmp.txt
