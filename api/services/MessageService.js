@@ -28,15 +28,16 @@ module.exports = {
     Message.create(
       {
         topic: topic,
-        clientId: clientId,
+        nodeId: clientId,
         message: payload,
-        createdAt: timestamp.toDate(),
-        updatedAt: timestamp.toDate()
+        createdAt: timestamp.toDate()
       }).exec(
       function callback(error, created) {
         if (error) {
           sails.log.error(error);
         } else {
+          sails.sockets.broadcast('message', 'message_created', created);
+
           sails.log.debug("[" + timestamp.format() + "] message saved");
         }
       }

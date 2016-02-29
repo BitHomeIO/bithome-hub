@@ -6,7 +6,7 @@ import {Message} from '../../models/message';
     selector: 'message-log-entry',
     template: `
         <div>
-            [{{message.getTimestamp()}}] {{message.getNode()}} - {{message.getMessage()}}
+            [{{message.createdAt}}] {{message.topic}}: {{message.nodeId}} - {{message.message}}
         </div>
 
     `,

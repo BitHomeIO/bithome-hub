@@ -6,13 +6,11 @@
 */
 
 module.exports = {
-
   attributes: {
-    clientId : { type: 'text' },
+    nodeId : { type: 'text' },
     topic : { type: 'text' },
     message : { type: 'text' },
-    createdAt : { type: 'datetime' },
-    updatedAt : { type: 'datetime' },
+    createdAt : { type: 'datetime' }
   }
 };
 

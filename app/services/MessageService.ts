@@ -34,12 +34,7 @@ export class MessageService {
                    operation: IMessagesOperation) => {
                     return operation(messages);
                 },
-                initialMessages)
-            // make sure we can share the most recent list of messages across anyone
-            // who's interested in subscribing and cache the last known list of
-            // messages
-            .publishReplay(1)
-            .refCount();
+                initialMessages).publishReplay(10).refCount();
 
         // `create` takes a Message and then puts an operation (the inner function)
         // on the `updates` stream to add the Message to the list of messages.
@@ -58,7 +53,6 @@ export class MessageService {
         this.create
             .map( function(message: Message): IMessagesOperation {
                 return (messages: Message[]) => {
-                    console.log(`Adding message: ${message.getMessage()}`);
                     return messages.concat(message);
                 };
             })
@@ -66,6 +60,30 @@ export class MessageService {
 
         this.newMessages
             .subscribe(this.create);
+
+        var thisMessageService: MessageService = this;
+
+        io.socket.on('message_created', function gotHelloMessage(messageJson) {
+            thisMessageService.addJsonMessage(messageJson);
+        });
+
+        io.socket.get('/api/messages', function gotHelloMessage(data) {
+            if (data) {
+                _.each(data, function (messageJson: Message) {
+                    thisMessageService.addJsonMessage(messageJson);
+                });
+            }
+        });
+    }
+
+    public addJsonMessage(messageJson: Message): void {
+        var message: Message = new Message(
+            messageJson.createdAt,
+            messageJson.nodeId,
+            messageJson.topic,
+            messageJson.message);
+
+        this.newMessages.next(message);
     }
 
     // an imperative function call to this action stream

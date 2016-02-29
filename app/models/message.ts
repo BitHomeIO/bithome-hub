@@ -1,27 +1,27 @@
 export class Message {
-    private timestamp: Date;
-    private node: string;
-    private channel: string;
-    private message: string;
+    public createdAt: Date;
+    public nodeId: string;
+    public topic: string;
+    public message: string;
 
-    constructor(timestamp: Date, node: string, channel: string, message: string) {
-        this.timestamp = timestamp;
-        this.node = node;
-        this.channel = channel;
+    constructor(createdAt: Date, nodeId: string, topic: string, message: string) {
+        this.createdAt = createdAt;
+        this.nodeId = nodeId;
+        this.topic = topic;
         this.message = message;
     }
 
     public getMessage(): string {
         return this.message;
     }
-    public getNode(): string {
-        return this.node;
+    public getNodeId(): string {
+        return this.nodeId;
     }
-    public getChannel(): string {
-        return this.channel;
+    public getTopic(): string {
+        return this.topic;
     }
-    public getTimestamp(): Date {
-        return this.timestamp;
+    public getCreatedAt(): Date {
+        return this.createdAt;
     }
 }
 

@@ -44,12 +44,10 @@ module.exports.sockets = {
   // -OR-
   //
 
-  // adapter: 'socket.io-redis',
-  // host: '127.0.0.1',
-  // port: 6379,
-  // db: 'sails',
-  // pass: '<redis auth password>',
-
+   //adapter: 'socket.io-redis',
+   //host: '127.0.0.1',
+   //port: 6379,
+   //db: 'sails',
 
 
  /***************************************************************************

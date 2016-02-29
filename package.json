@@ -20,7 +20,7 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "angular2": "2.0.0-beta.3",
+    "angular2": "^2.0.0-beta.7",
     "bootstrap": "^3.3.6",
     "es6-promise": "^3.1.2",
     "es6-shim": "^0.33.13",
@@ -42,14 +42,16 @@
     "moment": "^2.11.2",
     "mosca": "^1.0.2",
     "reflect-metadata": "0.1.2",
-    "rxjs": "5.0.0-beta.0",
-    "sails": "~0.11.4",
-    "sails-disk": "~0.10.0",
-    "sails-mongo": "^0.11.6",
+    "rxjs": "^5.0.0-beta.2",
+    "sails": "^0.12.1",
+    "sails-disk": "~0.10.8",
+    "sails-mongo": "^0.12.0",
+    "socket.io-client": "^1.4.5",
     "systemjs": "^0.19.20",
     "tslint": "^3.3.0",
     "typescript": "^1.7.5",
-    "zone.js": "0.5.14"
+    "underscore": "^1.8.3",
+    "zone.js": "^0.5.15"
   },
   "devDependencies": {
     "grunt-tslint": "^3.0.2"
