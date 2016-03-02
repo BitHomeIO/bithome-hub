@@ -5,8 +5,6 @@ import {Observable} from 'rxjs/Observable';
 import {Operator} from 'rxjs/Operator';
 import 'rxjs/rx';
 
-let initialMessages: Message[] = [];
-
 interface IMessagesOperation extends Function {
     (messages: Message[]): Message[];
 }
@@ -14,83 +12,57 @@ interface IMessagesOperation extends Function {
 @Injectable()
 export class MessageService {
 
-
-    // a stream that publishes new messages only once
-    public newMessages: Subject<Message> = new Subject<Message>();
-
-    // `messages` is a stream that emits an array of the most up to date messages
-    public messages: Observable<Message[]>;
-
-    // `updates` receives _operations_ to be applied to our `messages`
-    // it's a way we can perform changes on *all* messages (that are currently
-    // stored in `messages`)
-    public updates: Subject<any> = new Subject<any>();
-
-    // action streams
-    public create: Subject<Message> = new Subject<Message>();
+    public messages$: Observable<Array<Message>>;
+    private messageObserver: any;
+    private dataStore: {
+        messages: Array<Message>
+    };
 
     constructor() {
-        this.messages = this.updates
-            // watch the updates and accumulate operations on the messages
-            .scan((messages: Message[],
-                   operation: IMessagesOperation) => {
-                    return operation(messages);
-                },
-                initialMessages).publishReplay(10).refCount();
 
-        // `create` takes a Message and then puts an operation (the inner function)
-        // on the `updates` stream to add the Message to the list of messages.
-        //
-        // That is, for each item that gets added to `create` (by using `next`)
-        // this stream emits a concat operation function.
-        //
-        // Next we subscribe `this.updates` to listen to this stream, which means
-        // that it will receive each operation that is created
-        //
-        // Note that it would be perfectly acceptable to simply modify the
-        // "addMessage" function below to simply add the inner operation function to
-        // the update stream directly and get rid of this extra action stream
-        // entirely. The pros are that it is potentially clearer. The cons are that
-        // the stream is no longer composable.
-        this.create
-            .map( function(message: Message): IMessagesOperation {
-                return (messages: Message[]) => {
-                    return messages.concat(message);
-                };
-            })
-            .subscribe(this.updates);
+        // Create Observable Stream to output our data
+        this.messages$ = new Observable(observer =>
+            this.messageObserver = observer).share().publishReplay(1000).refCount();
 
-        this.newMessages
-            .subscribe(this.create);
+        this.dataStore = { messages: [] };
 
         var thisMessageService: MessageService = this;
 
         io.socket.on('message_created', function gotHelloMessage(messageJson) {
-            thisMessageService.addJsonMessage(messageJson);
+            thisMessageService.addMessage(
+                thisMessageService.messageFromJson(messageJson),
+                true);
         });
 
         io.socket.get('/api/messages', function gotHelloMessage(data) {
             if (data) {
                 _.each(data, function (messageJson: Message) {
-                    thisMessageService.addJsonMessage(messageJson);
+                    thisMessageService.addMessage(
+                        thisMessageService.messageFromJson(messageJson),
+                        false);
                 });
             }
         });
     }
 
-    public addJsonMessage(messageJson: Message): void {
+    public messageFromJson(messageJson: Message): Message {
         var message: Message = new Message(
             messageJson.createdAt,
             messageJson.nodeId,
             messageJson.topic,
             messageJson.message);
 
-        this.newMessages.next(message);
+        return message;
     }
 
     // an imperative function call to this action stream
-    public addMessage(message: Message): void {
-        this.newMessages.next(message);
+    public addMessage(message: Message, isFirst: boolean): void {
+        if (isFirst) {
+            this.dataStore.messages.unshift(message);
+        } else {
+            this.dataStore.messages.push(message);
+        }
+        this.messageObserver.next(this.dataStore.messages);
     }
 }
 

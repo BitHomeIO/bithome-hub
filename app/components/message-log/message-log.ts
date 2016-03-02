@@ -22,40 +22,25 @@ import {Subscriber} from 'rxjs/Subscriber';
 export class MessageLog implements OnInit, OnDestroy {
     private messagesSubscription: Subscription;
     private messages: Observable<Array<Message>>;
-    private messagesObserver: Subscriber<Array<Message>>;
-    private messagesStore: {
-        messages: Array<Message>
-    };
 
     constructor(public messageService: MessageService, private ref: ChangeDetectorRef) {
 
     }
 
     public ngOnInit(): void {
-        console.log('onInit');
 
-        this.messages = new Observable(observer =>
-            this.messagesObserver = observer);
+        this.messages = this.messageService.messages$;
 
-        this.messagesStore = { messages: [] };
-
-        this.messagesSubscription = this.messageService.messages.subscribe(
+        this.messagesSubscription = this.messageService.messages$.subscribe(
             (messages) => {
-                this.messagesStore.messages = messages;
-                this.messagesObserver.next(this.messagesStore.messages);
                 this.ref.detectChanges();
             }
         );
     }
 
     public ngOnDestroy(): void {
-        console.log('onDestroy');
         if (this.messagesSubscription) {
             this.messagesSubscription.unsubscribe();
-            console.log('unsubscribe: ' + this.messagesSubscription.isUnsubscribed);
-        }
-        if (this.messagesObserver) {
-            this.messagesObserver.unsubscribe();
         }
     }
 }

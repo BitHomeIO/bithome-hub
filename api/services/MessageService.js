@@ -52,7 +52,7 @@ module.exports = {
    * @returns {*}
    */
   query: function (limit, offset, cb) {
-    Message.find({skip: offset, limit: limit}).exec(
+    Message.find({skip: offset, limit: limit}).sort({createdAt:-1}).exec(
       function(err, results) {
         if (!err) {
           return cb(results);
