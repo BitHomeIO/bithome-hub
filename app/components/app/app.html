@@ -1,0 +1,22 @@
+<div class="bh-app">
+    <div class="page-header">
+        <div class="container">
+            <h1>BitHome Hub</h1>
+            <div class="navLinks">
+                <a [routerLink]="['/Messages']">Messages</a>
+                <a [routerLink]="['/Nodes']">Nodes</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="content">
+        <div class="container">
+
+            <login></login>
+
+            <hr>
+
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

@@ -24,6 +24,12 @@ module.exports = function (grunt) {
         src: ['**/*.ts'],
         dest: '.tmp/public/app'
       }, {
+        // Copy over the view files
+        expand: true,
+        cwd: './app',
+        src: ['**/*.html'],
+        dest: '.tmp/public/app'
+      }, {
         // Copy over the asset files
         expand: true,
         cwd: './assets',
