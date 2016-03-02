@@ -46,6 +46,6 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
   'get /api/messages': 'MessageController.get',
-  'get /api/messages/stream': 'MessageController.stream'
+  'get /api/nodes': 'NodeController.get',
 
 };

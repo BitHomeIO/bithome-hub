@@ -13,6 +13,17 @@ module.exports = {
       sails.log.debug("[" + timestamp.format() + "] " + client.id + " Topic:" + packet.topic + " Packet:" + packet.payload);
 
       MessageService.saveMessage(timestamp, client.id, packet.topic, packet.payload);
+
+      // Check for the existance of this node
+      NodeService.getNode(client.id,
+        function (node) {
+          if (!node) {
+            // New node so save it
+            NodeService.saveNode(client.id);
+          } else {
+            sails.log('Found node with nodeId: ' + client.id);
+          }
+       });
     }
   },
 

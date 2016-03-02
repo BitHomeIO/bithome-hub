@@ -8,7 +8,8 @@
 module.exports = {
 
   attributes: {
-
+    nodeId : { type: 'text' },
+    createdAt : { type: 'datetime' }
   }
 };
 

@@ -1,13 +1,12 @@
-import {Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef} from 'angular2/core';
-import {Observable} from 'rxjs/Observable';
+import {Component} from 'angular2/core';
+import {NodeList} from '../node-list/node-list';
 
 @Component({
     selector: 'nodes',
+    directives: [NodeList],
     template: `
         <h1>Nodes:</h1>
-        <div>
-            TODO: this
-        </div>
+        <node-list></node-list>
 
     `,
 })
