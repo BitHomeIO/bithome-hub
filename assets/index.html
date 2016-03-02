@@ -14,17 +14,19 @@
     <script>
         System.config({
             map: {
-                rxjs: 'node_modules/rxjs'
+                rxjs: 'node_modules/rxjs',
+                angular2: 'node_modules/angular2'
             },
             packages: {
                 app: {
                     format: 'register',
                     defaultExtension: 'js'
                 },
-                'rxjs': {defaultExtension: 'js'} // and added this to packages
+                'rxjs': {defaultExtension: 'js'},
+                'angular2': {defaultExtension: 'js'}
             }
         });
-        System.import('/app/main').then(null, console.error.bind(console));
+        System.import('/app/app').then(null, console.error.bind(console));
     </script>
     <title>New Sails App</title>
 
@@ -59,7 +61,7 @@
 </head>
 
 <body>
-    <my-app></my-app>
+    <bithome-app></bithome-app>
 <!--<%- body %>-->
 
 

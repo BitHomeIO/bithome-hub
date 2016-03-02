@@ -13,6 +13,8 @@ interface IMessagesOperation extends Function {
 
 @Injectable()
 export class MessageService {
+
+
     // a stream that publishes new messages only once
     public newMessages: Subject<Message> = new Subject<Message>();
 
