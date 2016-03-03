@@ -1,9 +1,11 @@
+///<reference path="../typings/sails.io.d.ts" />
+
 import {Injectable, bind} from 'angular2/core';
 import {Message} from '../models/message';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
 import {Operator} from 'rxjs/Operator';
-import io = require('sails.io');
+declare var io: any;
 import 'rxjs/rx';
 
 interface IMessagesOperation extends Function {
