@@ -42,13 +42,15 @@
         System.config({
             map: {
                 rxjs: 'node_modules/rxjs',
-                angular2: 'node_modules/angular2'
+                angular2: 'node_modules/angular2',
+                moment: 'node_modules/moment'
             },
             packages: {
                 app: {
                     format: 'register',
                     defaultExtension: 'js'
                 },
+                'moment': {defaultExtension: 'js'},
                 'rxjs': {defaultExtension: 'js'},
                 'angular2': {defaultExtension: 'js'}
             }
