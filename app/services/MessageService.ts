@@ -3,7 +3,7 @@ import {Message} from '../models/message';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
 import {Operator} from 'rxjs/Operator';
-import {io} from '../typings/sails.io';
+import io = require('sails.io');
 import 'rxjs/rx';
 
 interface IMessagesOperation extends Function {
