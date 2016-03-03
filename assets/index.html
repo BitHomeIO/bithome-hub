@@ -1,6 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>BitHome Hub</title>
+
+    <!-- App Includes -->
     <script src="node_modules/es6-shim/es6-shim.min.js"></script>
     <script src="node_modules/es6-promise/dist/es6-promise.min.js"></script>
     <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
@@ -10,6 +21,22 @@
     <script src="node_modules/moment/moment.js"></script>
     <script src="node_modules/underscore/underscore-min.js"></script>
     <script src="js/dependencies/sails.io.js"></script>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/styles/importer.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
     <script>
         System.config({
@@ -28,94 +55,22 @@
         });
         System.import('/app/components/app/app').then(null, console.error.bind(console));
     </script>
-    <title>New Sails App</title>
 
-    <!-- Viewport mobile tag for sensible mobile support -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-
-    <!--
-        Stylesheets and Preprocessors
-        ==============================
-
-        You can always bring in CSS files manually with `<link>` tags, or asynchronously
-        using a solution like AMD (RequireJS).  Or, if you like, you can take advantage
-        of Sails' conventional asset pipeline (boilerplate Gruntfile).
-
-        By default, stylesheets from your `assets/styles` folder are included
-        here automatically (between STYLES and STYLES END). Both CSS (.css) and LESS (.less)
-        are supported. In production, your styles will be minified and concatenated into
-        a single file.
-
-        To customize any part of the built-in behavior, just edit `tasks/pipeline.js`.
-        For example, here are a few things you could do:
-
-            + Change the order of your CSS files
-            + Import stylesheets from other directories
-            + Use a different or additional preprocessor, like SASS, SCSS or Stylus
-    -->
-
-    <!--STYLES-->
-    <link rel="stylesheet" href="/styles/importer.css">
-    <!--STYLES END-->
 </head>
 
 <body>
-    <bithome-app></bithome-app>
-<!--<%- body %>-->
 
+<bithome-app></bithome-app>
 
-<!--
-    Client-side Templates
-    ========================
+<!-- jQuery -->
+<script src="/node_modules/jquery/dist/jquery.min.js"></script>
 
-    HTML templates are important prerequisites of modern, rich client applications.
-    To work their magic, frameworks like Backbone, Angular, Ember, and Knockout require
-    that you load these templates client-side.
+<!-- Bootstrap Core JavaScript -->
+<script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 
-    By default, your Gruntfile is configured to automatically load and precompile
-    client-side JST templates in your `assets/templates` folder, then
-    include them here automatically (between TEMPLATES and TEMPLATES END).
+<!-- Custom Theme JavaScript -->
+<script src="/js/theme/sb-admin-2.js"></script>
 
-    To customize this behavior to fit your needs, just edit `tasks/pipeline.js`.
-    For example, here are a few things you could do:
-
-        + Import templates from other directories
-        + Use a different template engine (handlebars, jade, dust, etc.)
-        + Internationalize your client-side templates using a server-side
-          stringfile before they're served.
--->
-
-<!--TEMPLATES-->
-
-<!--TEMPLATES END-->
-
-
-<!--
-
-  Client-side Javascript
-  ========================
-
-  You can always bring in JS files manually with `script` tags, or asynchronously
-  on the client using a solution like AMD (RequireJS).  Or, if you like, you can
-  take advantage of Sails' conventional asset pipeline (boilerplate Gruntfile).
-
-  By default, files in your `assets/js` folder are included here
-  automatically (between SCRIPTS and SCRIPTS END).  Both JavaScript (.js) and
-  CoffeeScript (.coffee) are supported. In production, your scripts will be minified
-  and concatenated into a single file.
-
-  To customize any part of the built-in behavior, just edit `tasks/pipeline.js`.
-  For example, here are a few things you could do:
-
-      + Change the order of your scripts
-      + Import scripts from other directories
-      + Use a different preprocessor, like TypeScript
-
--->
-
-<!--SCRIPTS-->
-<!--<script src="/js/dependencies/sails.io.js"></script>-->
-<!--SCRIPTS END-->
 </body>
+
 </html>

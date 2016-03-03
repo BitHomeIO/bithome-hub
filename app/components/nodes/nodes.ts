@@ -4,11 +4,8 @@ import {NodeList} from '../node-list/node-list';
 @Component({
     selector: 'nodes',
     directives: [NodeList],
-    template: `
-        <h1>Nodes:</h1>
-        <node-list></node-list>
-
-    `,
+    templateUrl: 'app/components/nodes/nodes.html',
+    styleUrls: ['app/components/nodes/nodes.css']
 })
 export class Nodes {
 

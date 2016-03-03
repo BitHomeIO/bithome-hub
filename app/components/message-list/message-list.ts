@@ -1,25 +1,19 @@
 import {Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef} from 'angular2/core';
 import {Message} from '../../models/message';
 import {MessageService} from '../../services/MessageService';
-import {MessageLogEntry} from '../message-log-entry/message-log-entry';
+import {MessageListItem} from '../message-list-item/message-list-item';
 import {Observable} from 'rxjs/Observable';
 import {OnDestroy} from 'angular2/core';
 import {Subscription} from 'rxjs/Subscription';
-import {Subscriber} from 'rxjs/Subscriber';
 
 @Component({
-    selector: 'message-log',
-    directives: [MessageLogEntry],
+    selector: 'message-list',
+    directives: [MessageListItem],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
-        <h1>Message Log: {{ test }}</h1>
-        <div>
-            <message-log-entry *ngFor="#message of messages | async" [message]="message"></message-log-entry>
-        </div>
-
-    `,
+    templateUrl: 'app/components/message-list/message-list.html',
+    styleUrls: ['app/components/message-list/message-list.css']
 })
-export class MessageLog implements OnInit, OnDestroy {
+export class MessageList implements OnInit, OnDestroy {
     private messagesSubscription: Subscription;
     private messages: Observable<Array<Message>>;
 

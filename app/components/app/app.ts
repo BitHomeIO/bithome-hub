@@ -1,5 +1,5 @@
 import {Component} from 'angular2/core';
-import {MessageLog} from '../message-log/message-log';
+import {Messages} from '../messages/messages';
 import {Observable} from 'rxjs/Observable';
 import {utilInjectables} from '../../util/util';
 import {serviceInjectables} from '../../services/service';
@@ -14,7 +14,7 @@ import {ROUTER_DIRECTIVES} from 'angular2/router';
 import {Nodes} from '../nodes/nodes';
 
 @Component({
-    directives: [ROUTER_DIRECTIVES, MessageLog],
+    directives: [ROUTER_DIRECTIVES],
     selector: 'bithome-app',
     templateUrl: 'app/components/app/app.html',
     styleUrls: ['app/components/app/app.css']
@@ -22,7 +22,7 @@ import {Nodes} from '../nodes/nodes';
 })
 @RouteConfig([
     { path: '/',          name: 'root',      redirectTo: ['Messages'] },
-    { path: '/messages',  name: 'Messages',  component: MessageLog  },
+    { path: '/messages',  name: 'Messages',  component: Messages  },
     { path: '/nodes',  name: 'Nodes',        component: Nodes  }
 ])
 export class App {

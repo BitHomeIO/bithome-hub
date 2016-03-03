@@ -10,13 +10,8 @@ import {Node} from '../../models/Node';
     selector: 'node-list',
     directives: [NodeListItem],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
-        <h1>Node List:</h1>
-        <div>
-            <node-list-item *ngFor="#node of nodes | async" [node]="node"></node-list-item>
-        </div>
-
-    `,
+    templateUrl: 'app/components/node-list/node-list.html',
+    styleUrls: ['app/components/node-list/node-list.css']
 })
 export class NodeList implements OnInit, OnDestroy {
     private nodeListSubscription: Subscription;
@@ -33,7 +28,6 @@ export class NodeList implements OnInit, OnDestroy {
         this.nodeListSubscription = this.nodeService.nodes$.subscribe(
             (nodes) => {
                 this.ref.detectChanges();
-                console.log(nodes.length);
             }
         );
     }
