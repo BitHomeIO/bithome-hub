@@ -3,7 +3,7 @@ import {Observable} from 'rxjs/Observable';
 import {OnDestroy} from 'angular2/core';
 import {Subscription} from 'rxjs/Subscription';
 import {NodeListItem} from '../node-list-item/node-list-item';
-import {NodeService} from '../../services/nodeService';
+import {NodeService} from '../../services/NodeService';
 import {Node} from '../../models/node';
 
 @Component({
