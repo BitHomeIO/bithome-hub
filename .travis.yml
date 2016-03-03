@@ -11,9 +11,11 @@ cache:
 before_install:
 #- npm list -g bower --depth=0 || npm install -g bower
 - npm list -g grunt-cli --depth=0 || npm install -g grunt-cli
+- npm list -g typings --depth=0 || npm install -g typings
 - npm update npm
 install:
 - npm install
+- typings install
 - grunt buildProd
 after_success:
 #- cd dist/ && tar -zcf $HOME/-web-dist-$TRAVIS_BRANCH.tar.gz . && cd ..
