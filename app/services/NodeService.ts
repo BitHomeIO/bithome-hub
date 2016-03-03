@@ -4,6 +4,7 @@ import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
 import {Operator} from 'rxjs/Operator';
 import 'rxjs/rx';
+declare var io: any;
 
 @Injectable()
 export class NodeService {
