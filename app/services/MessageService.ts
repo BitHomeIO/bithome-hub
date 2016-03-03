@@ -1,5 +1,3 @@
-///<reference path="../typings/sails.io.d.ts" />
-
 import {Injectable, bind} from 'angular2/core';
 import {Message} from '../models/message';
 import {Subject} from 'rxjs/Subject';
