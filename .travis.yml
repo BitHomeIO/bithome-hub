@@ -7,11 +7,11 @@ cache:
 - directories:
   - $TRAVIS_BUILD_DIR/node_modules
   - $HOME/.rvm/gems
-  - $(npm config get prefix)/bin/bower
   - $(npm config get prefix)/bin/grunt-cli
 before_install:
 #- npm list -g bower --depth=0 || npm install -g bower
 - npm list -g grunt-cli --depth=0 || npm install -g grunt-cli
+- npm update npm
 install:
 - npm install
 - grunt buildProd
