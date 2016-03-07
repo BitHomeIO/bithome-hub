@@ -2,13 +2,12 @@ module.exports = {
 
   bridges: {},
 
-  initBridge: function (bridge) {
+  initBridge: function (key, bridge) {
     bridge.init();
 
-    var keyName = bridge.name.replace(' ', '');
+    var keyName = key.replace(' ', '');
 
     this.bridges[keyName] = bridge;
-
   },
 
   init: function () {
@@ -16,10 +15,15 @@ module.exports = {
     sails.log.info("BridgeService initialization. Starting " + available.length + " bridges;");
 
     async.each(available,
-      function (bridge, callback) {
+      function (bridgeEntry, callback) {
+
+
+        var bridgeKey = Object.keys(bridgeEntry)[0];
+        var bridge = bridgeEntry[bridgeKey];
 
         if (!bridge.name) {
           callback('Bridge: has no name field');
+          return;
         }
 
         var name = bridge.name;
@@ -27,9 +31,10 @@ module.exports = {
         sails.log.info('Initializing bridge: ' + name);
 
         if (bridge.init) {
-          BridgeService.initBridge(bridge);
+          BridgeService.initBridge(bridgeKey, bridge);
         } else {
           callback('Bridge: ' + name + ' has no init method');
+          return;
         }
       }, function (err) {
         sails.log.error("Error loading bridge: " + err);
