@@ -43,6 +43,7 @@
     "lodash": "^4.0.0",
     "moment": "^2.11.2",
     "mosca": "^1.0.2",
+    "node-hue-api": "^2.2.0",
     "reflect-metadata": "0.1.2",
     "rxjs": "^5.0.0-beta.2",
     "sails": "^0.12.1",

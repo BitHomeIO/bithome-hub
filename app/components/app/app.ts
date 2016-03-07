@@ -12,6 +12,7 @@ import {RouteConfig} from 'angular2/router';
 import {provide} from 'angular2/core';
 import {ROUTER_DIRECTIVES} from 'angular2/router';
 import {Nodes} from '../nodes/nodes';
+import {Bridges} from '../bridges/bridges';
 
 @Component({
     directives: [ROUTER_DIRECTIVES],
@@ -23,6 +24,7 @@ import {Nodes} from '../nodes/nodes';
 @RouteConfig([
     { path: '/',          name: 'root',      redirectTo: ['Messages'] },
     { path: '/messages',  name: 'Messages',  component: Messages  },
+    { path: '/bridges',  name: 'Bridges',  component: Bridges  },
     { path: '/nodes',  name: 'Nodes',        component: Nodes  }
 ])
 export class App {
