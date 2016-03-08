@@ -1,8 +1,17 @@
 module.exports = {
 	
   get: function (req, res) {
-    return res.json(BridgeService.bridges);
-  }
+    var bridges = [];
+      _.each(
+      BridgeService.bridges,
+      function(bridge) {
+        bridges.push({ name: bridge.name,
+                       id: bridge.logName,
+                       status: bridge.getStatus()});
+      }
+    );
 
+    return res.json(bridges);
+  }
 };
 

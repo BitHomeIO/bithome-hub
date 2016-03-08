@@ -37,7 +37,9 @@ export class BridgeService {
     public bridgeFromJson(bridgeJson: Bridge): Bridge {
         var bridge: Bridge = new Bridge(
             bridgeJson.createdAt,
-            bridgeJson.name);
+            bridgeJson.name,
+            bridgeJson.id,
+            bridgeJson.status);
 
         return bridge;
     }

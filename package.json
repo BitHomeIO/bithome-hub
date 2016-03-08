@@ -43,6 +43,7 @@
     "jquery": "^2.2.1",
     "jquery-ui": "^1.10.5",
     "lodash": "^4.0.0",
+    "machina": "^1.1.2",
     "moment": "^2.11.2",
     "mosca": "^1.0.2",
     "node-hue-api": "^2.2.0",
