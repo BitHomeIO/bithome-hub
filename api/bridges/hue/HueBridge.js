@@ -9,6 +9,7 @@ module.exports = {
   linkButtonIntervalMs: 5000,
   searchNewNodesIntervalMs: 60000,
   hueBridge: null,
+  hueApi: null,
 
   signals: new machina.Fsm({
     namespace: 'hue-signal',
@@ -37,6 +38,9 @@ module.exports = {
         },
         'waitingForLinkButton': function () {
           this.transition('waitingForLinkButton');
+        },
+        'fetchingLights': function () {
+          this.transition('fetchingLights');
         }
       },
       waitingForLinkButton: {
@@ -50,6 +54,22 @@ module.exports = {
           clearTimeout( this.timer );
         }
       },
+      fetchingLights: {
+        _onEnter: function() {
+          this.emit("fetchingLights");
+        }
+      },
+      initialized: {
+        _onEnter: function() {
+          this.timer = setTimeout( function() {
+            this.handle( 'timeout' );
+          }.bind( this ), 60000 );
+        },
+        timeout: 'fetchingLights',
+        _onExit: function() {
+          clearTimeout( this.timer );
+        }
+      },
       bridgeNotFound: {
         _onEnter: function () {
         }
@@ -57,33 +77,65 @@ module.exports = {
     }
   }),
 
-  initializeBridge: function initializeBridge() {
-    sails.log.debug(this.logName + "Registering with hue bridge");
+  connectWithKey: function connectWithKey(key) {
+    sails.log.debug(this.logName + "Connecting with credentials");
+
+    this.hueApi = new HueApi(this.hueBridge.ipaddress, key);
+
     var that = this;
 
-    BridgeSetting.findOne({bridgeId: that.logName, key: 'userId'}).exec(
-      function (err, record) {
-        if (record) {
-          console.log('key:' + record.value);
-        }
+    that.hueApi.description(function(err, result) {
+      if (err) {
+        sails.log.error(that.logName + "Error getting bridge description: " + err);
+      } else {
+        sails.log.debug(that.logName + "Connected to " + result.model.name);
+        that.signals.handle('fetchingLights');
+      }
     });
+  },
 
+  registerWithBridge: function registerWithBridge() {
+    sails.log.debug(this.logName + "Registering with hue bridge");
 
     var hueApi = new HueApi();
+    var that = this;
 
-    hueApi.createUser(that.hueBridge.ipaddress, function(err, user) {
+    hueApi.createUser(that.hueBridge.ipaddress, function(err, key) {
       if (err) {
         sails.log.error(that.logName + "Error registering with bridge:" + err);
         that.signals.handle('waitingForLinkButton');
       } else {
+        console.log(that.logName + "Key received from bridge");
+
         BridgeSetting.create ({
           bridgeId: that.logName,
           key: 'userId',
-          value: user
+          value: key
         }).exec(function (error, created) {
-          sails.log.info(that.logName + "Saved key")
+          if (!error) {
+            sails.log.info(that.logName + "Saved key")
+            that.connectWithKey(key);
+          } else {
+            sails.log.error(that.logName + error);
+          }
         });
       }
+    });
+  },
+
+  initializeBridge: function initializeBridge() {
+    var that = this;
+    sails.log.debug(that.logName + "Initializing bridge");
+
+    var that = this;
+    BridgeSetting.findOne({bridgeId: that.logName, key: 'userId'}).exec(
+      function (err, record) {
+        if (record) {
+          that.connectWithKey(record.value);
+
+        } else {
+          that.registerWithBridge();
+        }
     });
   },
 
@@ -109,11 +161,32 @@ module.exports = {
     });
   },
 
+  fetchingLights: function fetchingLights() {
+    sails.log.debug(this.logName + "Fetching lights");
+    var that = this;
+    that.hueApi.lights(function (err, result) {
+      if (err) {
+        sails.log.error(that.logName + "Error fetching lights from bridge:" + err);
+        that.signals.handle('bridgeNotFound');
+      } else {
+        if (result.lights.length === 0) {
+          sails.log.debug(that.logName + "No Hue lights Found.");
+          that.signals.handle('bridgeNotFound');
+        } else {
+          _.each(result.lights, function(light) {
+            sails.log.debug(that.logName + "Found light " + light.name + " (" + light.uniqueid + ")");
+          });
+        }
+      }
+    });
+  },
+
   init: function () {
     sails.log.info(this.logName + ": Starting");
     var that = this;
     this.signals.on('searchBridges', function() { that.searchBridges(); });
     this.signals.on('initializeBridge', function() { that.initializeBridge(); });
+    this.signals.on('fetchingLights', function() { that.fetchingLights(); });
     this.signals.handle('init');
   },
 
