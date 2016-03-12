@@ -1,3 +1,4 @@
+
 /**
  * Connections
  * (sails.config.connections)
@@ -18,9 +19,9 @@
  * For more information on configuration, check out:
  * http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.connections.html
  */
+var mosca = require('mosca');
 
 module.exports.connections = {
-
   /***************************************************************************
   *                                                                          *
   * Local disk storage for DEVELOPMENT ONLY                                  *
@@ -54,7 +55,7 @@ module.exports.connections = {
    * Settings for the Mosca MQTT broker                                       *
    *                                                                          *
    ***************************************************************************/
-  moscaSettings: {
+  moscaSettingsMongoDB: {
     port: 1883,
     backend: {
       type: 'mongo',
@@ -62,5 +63,10 @@ module.exports.connections = {
       pubsubCollection: 'ascoltatori',
       mongo: {}
     }
+  },
+
+  moscaSettingsMemory: {
+    port: 1883
   }
+
 };

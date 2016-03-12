@@ -1,9 +1,11 @@
 module.exports.mqtt = {
+  connection: 'moscaSettingsMongoDB',
+
   start: function (cb) {
 
     sails.mosca = require('mosca');
 
-    var server = new sails.mosca.Server(sails.config.connections.moscaSettings);
+    var server = new sails.mosca.Server(sails.config.connections[this.connection]);
 
     server.on('clientConnected', function (client) {
       sails.log.debug(client.id + " connected");
