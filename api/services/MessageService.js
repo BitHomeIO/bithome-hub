@@ -1,29 +1,81 @@
 module.exports = {
 
+  hubTopic: 'hub',
+  sourceMap: {},
+
+  /**
+   * Initialize the Message Service
+   */
+  init: function() {
+
+  },
+
+  /**
+   * Register a node source with its handler method
+   */
+  registerSource: function (key, handler) {
+    this.sourceMap[key] = handler;
+  },
+
   /**
    * Incoming message handler
-   *
-   * @param timestamp
-   * @param client
-   * @param packet
    */
   handleMessage: function (timestamp, client, packet) {
 
     if (!packet.topic.startsWith("$SYS/")) {
       sails.log.debug("[" + timestamp.format() + "] " + client.id + " Topic:" + packet.topic + " Packet:" + packet.payload);
 
-      MessageService.saveMessage(timestamp, client.id, packet.topic, packet.payload);
+      // Check to see if this message has come across the hub topic
+      if (packet.topic === this.hubTopic) {
+        MessageService.handleMessageForHub(timestamp, client, packet);
 
-      // Check for the existance of this node
-      NodeService.getNode(client.id,
-        function (node) {
-          if (!node) {
-            // New node so save it
-            NodeService.saveNode(client.id);
-          } else {
-            sails.log('Found node with nodeId: ' + client.id);
-          }
-       });
+      } else if(NodeService.nodeSourceMap[packet.topic]) {
+        // Otherwise assume this message is for a device
+        MessageService.handleMessageForNode(packet.topic, timestamp, client, packet);
+      }
+    }
+  },
+
+  /**
+   * Handle messages directed at the hub
+   */
+  handleMessageForHub: function (timestamp, client, packet) {
+
+    MessageService.saveMessage(timestamp, client.id, packet.topic, packet.payload);
+
+    // Check for the existence of this node
+    NodeService.getNode(client.id,
+      function (node) {
+        if (!node) {
+          // New node so save it
+          NodeService.addNode(client.id, null, 'mqtt');
+        } else {
+          sails.log('Message from nodeId: ' + client.id + ' ' + packet.payload);
+        }
+      }
+    );
+  },
+
+  /**
+   * Handle messages directed at a device on a bridged source
+   */
+  handleMessageForNode: function (nodeId, timestamp, client, packet) {
+
+    sails.log.debug('Device message for nodeId: ' + nodeId + ' from ' + client.id + ' ' + packet.payload);
+
+    // Lookup the bridge for this source and pass it along
+    var source = NodeService.nodeSourceMap[nodeId];
+
+    if (source) {
+      var callbackBridge = MessageService.sourceMap[source];
+
+      if (callbackBridge && callbackBridge.handleMessage) {
+        callbackBridge.handleMessage(nodeId, packet.payload);
+      } else {
+        sails.log.error('No callback for source:' + source);
+      }
+    } else {
+      sails.log.error('No source for nodeId:' + nodeId);
     }
   },
 

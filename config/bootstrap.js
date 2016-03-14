@@ -21,6 +21,7 @@ module.exports.bootstrap = function(cb) {
 
   sails.config.mqtt.start(function () {
 
+    NodeService.init();
     BridgeService.init();
 
   });

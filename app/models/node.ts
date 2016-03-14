@@ -1,18 +1,17 @@
 export class Node {
     public createdAt: Date;
     public nodeId: string;
+    public name: string;
+    public source: string;
 
-    constructor(createdAt: Date, nodeId: string) {
+    constructor(createdAt: Date,
+                nodeId: string,
+                name: string,
+                source: string) {
         this.createdAt = createdAt;
         this.nodeId = nodeId;
-    }
-
-    public getNodeId(): string {
-        return this.nodeId;
-    }
-
-    public getCreatedAt(): Date {
-        return this.createdAt;
+        this.name = name;
+        this.source = source;
     }
 }
 

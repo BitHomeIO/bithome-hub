@@ -9,6 +9,8 @@ module.exports = {
 
   attributes: {
     nodeId : { type: 'text' },
+    name : { type: 'text' },
+    source : { type: 'text' },
     createdAt : { type: 'datetime' }
   }
 };

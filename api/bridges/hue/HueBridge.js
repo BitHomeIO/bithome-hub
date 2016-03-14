@@ -1,15 +1,21 @@
 var hue = require("node-hue-api");
-var HueApi = require("node-hue-api").HueApi;
+var HueApi = hue.HueApi;
+var LightState = hue.lightState;
+
 var machina = require('machina');
+var logName = 'HueAdapter: ';
 
 module.exports = {
 
   name: 'Hue Adapter',
   logName: 'HueAdapter: ',
+  source: 'hue',
   linkButtonIntervalMs: 5000,
   searchNewNodesIntervalMs: 60000,
   hueBridge: null,
   hueApi: null,
+
+  nodeIdHueIdMap: {},
 
   signals: new machina.Fsm({
     namespace: 'hue-signal',
@@ -44,30 +50,30 @@ module.exports = {
         }
       },
       waitingForLinkButton: {
-        _onEnter: function() {
-          this.timer = setTimeout( function() {
-            this.handle( 'timeout' );
-          }.bind( this ), 5000 );
+        _onEnter: function () {
+          this.timer = setTimeout(function () {
+            this.handle('timeout');
+          }.bind(this), 5000);
         },
         timeout: 'initializeBridge',
-        _onExit: function() {
-          clearTimeout( this.timer );
+        _onExit: function () {
+          clearTimeout(this.timer);
         }
       },
       fetchingLights: {
-        _onEnter: function() {
+        _onEnter: function () {
           this.emit("fetchingLights");
         }
       },
       initialized: {
-        _onEnter: function() {
-          this.timer = setTimeout( function() {
-            this.handle( 'timeout' );
-          }.bind( this ), 60000 );
+        _onEnter: function () {
+          this.timer = setTimeout(function () {
+            this.handle('timeout');
+          }.bind(this), 60000);
         },
         timeout: 'fetchingLights',
-        _onExit: function() {
-          clearTimeout( this.timer );
+        _onExit: function () {
+          clearTimeout(this.timer);
         }
       },
       bridgeNotFound: {
@@ -84,7 +90,7 @@ module.exports = {
 
     var that = this;
 
-    that.hueApi.description(function(err, result) {
+    that.hueApi.description(function (err, result) {
       if (err) {
         sails.log.error(that.logName + "Error getting bridge description: " + err);
       } else {
@@ -100,14 +106,14 @@ module.exports = {
     var hueApi = new HueApi();
     var that = this;
 
-    hueApi.createUser(that.hueBridge.ipaddress, function(err, key) {
+    hueApi.createUser(that.hueBridge.ipaddress, function (err, key) {
       if (err) {
         sails.log.error(that.logName + "Error registering with bridge:" + err);
         that.signals.handle('waitingForLinkButton');
       } else {
         console.log(that.logName + "Key received from bridge");
 
-        BridgeSetting.create ({
+        BridgeSetting.create({
           bridgeId: that.logName,
           key: 'userId',
           value: key
@@ -136,7 +142,7 @@ module.exports = {
         } else {
           that.registerWithBridge();
         }
-    });
+      });
   },
 
 
@@ -173,21 +179,57 @@ module.exports = {
           sails.log.debug(that.logName + "No Hue lights Found.");
           that.signals.handle('bridgeNotFound');
         } else {
-          _.each(result.lights, function(light) {
+          _.each(result.lights, function (light) {
             sails.log.debug(that.logName + "Found light " + light.name + " (" + light.uniqueid + ")");
+            that.nodeIdHueIdMap[light.uniqueid] = light.id;
+            NodeService.addNode(light.uniqueid, light.name, that.source);
           });
         }
       }
     });
   },
 
+  handleMessage: function handleMessage(nodeId, message) {
+    sails.log.debug(this.logName + 'handling message for ' + nodeId);
+
+    var hueId = this.nodeIdHueIdMap[nodeId];
+
+    if (hueId) {
+      var state;
+      if (message == 'on') {
+        state = LightState.create().on();
+      } else if (message == 'off') {
+        state = LightState.create().off();
+      } else if (message == 'alert') {
+        state = LightState.create().shortAlert();
+      } else if (message == 'color') {
+        state = LightState.create().colorLoop();
+      } else {
+        sails.log.error(this.logName + 'unknown state: ' + message);
+      }
+
+      this.hueApi.setLightState(hueId, state).done();
+
+    } else {
+      sails.log.error(this.logName + 'no Hue ID for nodeId: ' + nodeId);
+    }
+  },
+
   init: function () {
     sails.log.info(this.logName + ": Starting");
     var that = this;
-    this.signals.on('searchBridges', function() { that.searchBridges(); });
-    this.signals.on('initializeBridge', function() { that.initializeBridge(); });
-    this.signals.on('fetchingLights', function() { that.fetchingLights(); });
+    this.signals.on('searchBridges', function () {
+      that.searchBridges();
+    });
+    this.signals.on('initializeBridge', function () {
+      that.initializeBridge();
+    });
+    this.signals.on('fetchingLights', function () {
+      that.fetchingLights();
+    });
     this.signals.handle('init');
+
+    MessageService.registerSource(that.source, that);
   },
 
   getStatus: function getStatus() {
