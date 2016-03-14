@@ -14,6 +14,14 @@ module.exports = {
   searchNewNodesIntervalMs: 60000,
   hueBridge: null,
   hueApi: null,
+  capabilities: [
+    'alarm',
+    'colorControlHsb',
+    'colorControlRgb',
+    'colorTemperature',
+    'switch',
+    'switchLevel'
+  ],
 
   nodeIdHueIdMap: {},
 
@@ -183,6 +191,7 @@ module.exports = {
             sails.log.debug(that.logName + "Found light " + light.name + " (" + light.uniqueid + ")");
             that.nodeIdHueIdMap[light.uniqueid] = light.id;
             NodeService.addNode(light.uniqueid, light.name, that.source);
+            NodeService.addNodeCapabilities(light.uniqueid, that.capabilities);
           });
         }
       }
@@ -190,32 +199,146 @@ module.exports = {
   },
 
   handleMessage: function handleMessage(nodeId, message) {
-    sails.log.debug(this.logName + 'handling message for ' + nodeId);
+    if (!message || message.length == 0) {
+      sails.log.warn(this.logName + 'null message');
+    }
+
+    sails.log.debug(this.logName + 'handling message nodeId:' + nodeId + ' message:' + message);
 
     var hueId = this.nodeIdHueIdMap[nodeId];
 
     if (hueId) {
-      var state;
-      if (message == 'on') {
-        state = LightState.create().on();
-      } else if (message == 'off') {
-        state = LightState.create().off();
-      } else if (message == 'alert') {
-        state = LightState.create().shortAlert();
-      } else if (message == 'color') {
-        state = LightState.create().colorLoop();
-      } else {
-        sails.log.error(this.logName + 'unknown state: ' + message);
-      }
 
-      this.hueApi.setLightState(hueId, state).done();
+      var args = message.toString().split(' ');
+
+      switch (args[0]) {
+        case 'capability.switch.on':
+          this.switchLight(hueId, true);
+          break;
+        case 'capability.switch.off':
+          this.switchLight(hueId, false);
+          break;
+        case 'capability.switch.alert.off':
+          this.switchLight(hueId, false);
+          break;
+        case 'capability.switchLevel':
+        case 'capability.switchLevel.setLevel':
+          if (this.requireArgs(args, 2)) {
+            this.setBrightness(hueId, args[1]);
+          }
+          break;
+        case 'capability.alarm.strobe':
+        case 'capability.alarm.both':
+          this.alertLight(hueId);
+          break;
+
+        case 'capability.colorControlHsb':
+          if (this.requireArgs(args, 4)) {
+            this.hueApi.setLightState(hueId, LightState.create().on().hsb(args[1], args[2], args[3])).done();
+          }
+          break;
+
+        case 'capability.colorControlHsb.setHue':
+          if (this.requireArgs(args, 2)) {
+            this.hueApi.setLightState(hueId, LightState.create().on().hue(args[1])).done();
+          }
+          break;
+
+        case 'capability.colorControlHsb.setSaturation':
+          if (this.requireArgs(args, 2)) {
+            this.hueApi.setLightState(hueId, LightState.create().on().sat(args[1])).done();
+          }
+          break;
+
+        case 'capability.colorControlHsb.setBrightness':
+          if (this.requireArgs(args, 2)) {
+            this.setBrightness(hueId, args[1]);
+          }
+          break;
+
+        case 'capability.colorControlRgb':
+          if (this.requireArgs(args, 4)) {
+            this.setRgb(hueId, args[1], args[2], args[3]);
+          }
+          break;
+
+        case 'capability.colorTemperature':
+          if (this.requireArgs(args, 2)) {
+            this.hueApi.setLightState(hueId, LightState.create().on().colorTemp(args[1])).done();
+          }
+          break;
+
+        default:
+          sails.log.info(this.logName + 'capability ' + args[0] + ' not implemented');
+          break;
+      }
+      //if (message == 'on') {
+      //  state = LightState.create().on();
+      //} else if (message == 'off') {
+      //  state = LightState.create().off();
+      //} else if (message == 'alert') {
+      //  state = LightState.create().longAlert();
+      //} else if (message == 'color') {
+      //  state = LightState.create().colorLoop();
+      //} else {
+      //  sails.log.error(this.logName + 'unknown state: ' + message);
+      //}
+      //
+      //this.hueApi.setLightState(hueId, state).done();
 
     } else {
       sails.log.error(this.logName + 'no Hue ID for nodeId: ' + nodeId);
     }
   },
 
-  init: function () {
+  requireArgs: function(args, minLength) {
+    if (args.length < minLength) {
+      sails.log.error(this.logName + 'invalid arguments');
+      return false;
+    }
+    return true;
+  },
+
+  setRgb: function(hueId, red, green, blue) {
+    var state = LightState.create().on().rgb(red, green, blue);
+
+    this.hueApi.setLightState(hueId, state).done();
+  },
+
+  setBrightness: function(hueId, brightness) {
+    var state = LightState.create().on().bri(brightness);
+
+    this.hueApi.setLightState(hueId, state).done();
+  },
+
+  /**
+   * Strobe the light
+   */
+  alertLight: function(hueId) {
+
+    var state = LightState.create().longAlert();
+
+    this.hueApi.setLightState(hueId, state).done();
+  },
+
+  /**
+   * Switch the light on or off
+   */
+  switchLight: function(hueId, isOn) {
+
+    var state;
+    if (isOn == true) {
+      state = LightState.create().on();
+    }
+    if (isOn == false) {
+      state = LightState.create().off();
+    }
+    if (state) {
+      this.hueApi.setLightState(hueId, state).done();
+    }
+  },
+
+  init: function init() {
     sails.log.info(this.logName + ": Starting");
     var that = this;
     this.signals.on('searchBridges', function () {

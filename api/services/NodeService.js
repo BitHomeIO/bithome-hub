@@ -19,9 +19,7 @@ module.exports = {
     var that = this;
     // First check to see if we have a node for this node ID
     this.getNode(nodeId, function(results) {
-      if (results) {
-        sails.log.debug('Already have node for nodeId: ' + nodeId);
-      } else {
+      if (!results) {
         that._saveNode(nodeId, name, source);
       }
     });
@@ -76,11 +74,43 @@ module.exports = {
   },
 
   /**
+   * Add a node capabilities
+   */
+  addNodeCapabilities: function (nodeId, capabilities) {
+    var that = this;
+
+    _.each(capabilities, function(capability) {
+      that.addNodeCapability(nodeId, capability);
+    });
+  },
+
+  /**
+   * Add a node capability
+   */
+  addNodeCapability: function (nodeId, capability) {
+    var that = this;
+
+    Capability.count(
+      {
+        nodeId: nodeId,
+        capability: capability
+      }).exec(
+      function callback(error, numFound) {
+        if (error) {
+          sails.log.error(error);
+        } else if (numFound == 0) {
+          that._saveNodeCapability(nodeId, capability);
+        }
+      }
+    );
+  },
+
+  /**
    * Save the node to storage
    */
   _saveNode: function (nodeId, name, source) {
 
-    NodeService.sourceMap[nodeId] = source;
+    NodeService.nodeSourceMap[nodeId] = source;
 
     var timestamp = sails.moment();
 
@@ -98,6 +128,25 @@ module.exports = {
           sails.sockets.broadcast('node', 'node_created', created);
 
           sails.log.debug("[" + timestamp.format() + "] node " + nodeId + " saved");
+        }
+      }
+    );
+  },
+
+  /**
+   * Save the node capability to storage
+   */
+  _saveNodeCapability: function (nodeId, capability) {
+    Capability.create(
+      {
+        nodeId: nodeId,
+        capability: capability
+      }).exec(
+      function callback(error, created) {
+        if (error) {
+          sails.log.error(error);
+        } else {
+          sails.log.debug("node " + nodeId + " capability " + capability + " saved");
         }
       }
     );
