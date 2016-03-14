@@ -8,9 +8,16 @@
 module.exports = {
 
   attributes: {
-    nodeId : { type: 'text' },
+    id : {
+      type: 'text',
+      primaryKey: true
+    },
     name : { type: 'text' },
     source : { type: 'text' },
+    capabilities : {
+      collection: 'capability',
+      via: 'node',
+    },
     createdAt : { type: 'datetime' }
   }
 };

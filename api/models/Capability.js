@@ -4,8 +4,10 @@
 module.exports = {
 
   attributes: {
-    nodeId : { type: 'text' },
-    capability : { type: 'text' }
+    capability : { type: 'text' },
+    node: {
+      model: 'node'
+    }
   }
 };
 

@@ -5,7 +5,7 @@ module.exports = {
   /**
    * Initialize the node service
    */
-  init: function() {
+  init: function () {
     this._loadSourceMap();
   },
 
@@ -18,7 +18,7 @@ module.exports = {
   addNode: function (nodeId, name, source) {
     var that = this;
     // First check to see if we have a node for this node ID
-    this.getNode(nodeId, function(results) {
+    this.getNode(nodeId, function (results) {
       if (!results) {
         that._saveNode(nodeId, name, source);
       }
@@ -26,8 +26,8 @@ module.exports = {
   },
 
   getNode: function (nodeId, cb) {
-    Node.findOne({nodeId: nodeId}).exec(
-      function(err, results) {
+    Node.findOne({id: nodeId}).exec(
+      function (err, results) {
         if (!err) {
           return cb(results);
         }
@@ -36,16 +36,32 @@ module.exports = {
   },
 
   query: function (limit, offset, cb) {
-    Node.find({skip: offset, limit: limit}).sort({createdAt:-1}).exec(
-      function(err, results) {
+    Node.find({skip: offset, limit: limit}).sort({createdAt: -1}).populate('capabilities').exec(
+      function (err, results) {
         if (!err) {
-          return cb(results);
+
+          // Flatten the capability objects
+          var nodes = [];
+          _.each(results, function (node) {
+            var capabilities = _.pluck(node.capabilities, 'capability');
+            var newNode = {
+              id: node.id,
+              name: node.name,
+              source: node.source,
+              createdAt: node.createdAt,
+              capabilities: capabilities
+            };
+
+            nodes.push(newNode);
+          });
+
+          return cb(nodes);
         }
       }
     );
   },
 
-  clear: function() {
+  clear: function () {
     Node.drop();
   },
 
@@ -60,8 +76,8 @@ module.exports = {
         if (error) {
           sails.log.error(error);
         } else {
-          _.each(nodes, function(node) {
-            sails.log.debug('Loading nodeId:' + node.nodeId + ' to source ' + node.source);
+          _.each(nodes, function (node) {
+            sails.log.debug('Loading nodeId:' + node.id + ' to source ' + node.source);
 
             // Only map external sources
             if (node.source != 'mqtt') {
@@ -79,7 +95,7 @@ module.exports = {
   addNodeCapabilities: function (nodeId, capabilities) {
     var that = this;
 
-    _.each(capabilities, function(capability) {
+    _.each(capabilities, function (capability) {
       that.addNodeCapability(nodeId, capability);
     });
   },
@@ -92,7 +108,7 @@ module.exports = {
 
     Capability.count(
       {
-        nodeId: nodeId,
+        node: nodeId,
         capability: capability
       }).exec(
       function callback(error, numFound) {
@@ -116,7 +132,7 @@ module.exports = {
 
     Node.create(
       {
-        nodeId: nodeId,
+        id: nodeId,
         name: name,
         source: source,
         createdAt: timestamp.toDate()
@@ -139,7 +155,7 @@ module.exports = {
   _saveNodeCapability: function (nodeId, capability) {
     Capability.create(
       {
-        nodeId: nodeId,
+        node: nodeId,
         capability: capability
       }).exec(
       function callback(error, created) {
