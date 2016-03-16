@@ -21,11 +21,11 @@
     "test": "NODE_ENV=test node ./node_modules/mocha/bin/mocha test/bootstrap.test.js test/service/**/*.test.js"
   },
   "dependencies": {
-    "angular2": "^2.0.0-beta.7",
+    "angular2": "^2.0.0-beta.9",
     "angular2-moment": "^0.4.2",
     "bootstrap": "^3.3.6",
     "es6-promise": "^3.1.2",
-    "es6-shim": "^0.33.13",
+    "es6-shim": "^0.35.0",
     "font-awesome": "^4.5.0",
     "gridstack": "^0.2.5",
     "grunt": "^0.4.5",
@@ -43,7 +43,7 @@
     "include-all": "~0.1.3",
     "jquery": "^2.2.1",
     "jquery-ui": "^1.10.5",
-    "lodash": "^4.0.0",
+    "lodash": "^4.6.1",
     "machina": "^1.1.2",
     "moment": "^2.11.2",
     "mosca": "^1.0.2",

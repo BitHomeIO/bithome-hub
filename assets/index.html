@@ -14,22 +14,25 @@
     <!-- App Includes -->
     <script src="node_modules/es6-shim/es6-shim.min.js"></script>
     <script src="node_modules/es6-promise/dist/es6-promise.min.js"></script>
-    <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
     <script src="node_modules/systemjs/dist/system.src.js"></script>
     <script src="node_modules/rxjs/bundles/Rx.js"></script>
+    <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
     <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
     <script src="node_modules/moment/moment.js"></script>
     <script src="node_modules/underscore/underscore-min.js"></script>
+
     <script src="js/dependencies/sails.io.js"></script>
 
     <!-- Bootstrap Core CSS -->
     <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/node_modules/jquery-ui/themes/base/jquery-ui.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="/styles/importer.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/node_modules/gridstack/dist/gridstack.min.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -43,7 +46,11 @@
             map: {
                 rxjs: 'node_modules/rxjs',
                 angular2: 'node_modules/angular2',
-                moment: 'node_modules/moment'
+                moment: 'node_modules/moment',
+                gridstack: 'node_modules/gridstack/dist/gridstack.min.js',
+                jquery: 'node_modules/jquery/dist/jquery.min.js',
+                'jquery-ui': 'node_modules/jquery-ui',
+                'lodash': 'node_modules/lodash/lodash.js',
             },
             packages: {
                 app: {
@@ -52,7 +59,11 @@
                 },
                 'moment': {defaultExtension: 'js'},
                 'rxjs': {defaultExtension: 'js'},
-                'angular2': {defaultExtension: 'js'}
+                'angular2': {defaultExtension: 'js'},
+                'gridstack': {defaultExtension: 'js'},
+                'jquery': {defaultExtension: 'js'},
+                'jquery-ui': {defaultExtension: 'js'},
+                'lodash': {defaultExtension: 'js'}
             }
         });
         System.import('/app/components/app/app').then(null, console.error.bind(console));
@@ -69,6 +80,7 @@
 
 <!-- Bootstrap Core JavaScript -->
 <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/node_modules/gridstack/dist/gridstack.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
 <script src="/js/theme/sb-admin-2.js"></script>
