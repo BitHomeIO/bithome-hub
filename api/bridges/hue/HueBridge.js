@@ -212,6 +212,15 @@ module.exports = {
       var args = message.toString().split(' ');
 
       switch (args[0]) {
+        case 'capability.switch':
+          if (this.requireArgs(args, 2)) {
+            if (args[1] == 'on') {
+              this.switchLight(hueId, true);
+            } if (args[1] == 'off') {
+              this.switchLight(hueId, false);
+            }
+          }
+          break;
         case 'capability.switch.on':
           this.switchLight(hueId, true);
           break;

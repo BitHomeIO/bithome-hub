@@ -1,5 +1,6 @@
 {
   "ambientDependencies": {
+    "camelcase": "github:DefinitelyTyped/DefinitelyTyped/camelcase/camelcase.d.ts#56295f5058cac7ae458540423c50ac2dcf9fc711",
     "es6-shim": "github:DefinitelyTyped/DefinitelyTyped/es6-shim/es6-shim.d.ts#4de74cb527395c13ba20b438c3a7a419ad931f1c",
     "underscore": "github:DefinitelyTyped/DefinitelyTyped/underscore/underscore.d.ts#ae40eedc5648e91f21a52e0f596479ed87a12af4"
   },

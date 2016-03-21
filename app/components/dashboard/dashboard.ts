@@ -1,5 +1,5 @@
 import {Component} from 'angular2/core';
-import {OnInit} from 'angular2/core';
+import {AfterViewInit} from 'angular2/core';
 import {ElementRef} from 'angular2/core';
 import {DashboardItem} from '../dashboard-item/dashboard-item';
 declare var jQuery: any;
@@ -13,13 +13,13 @@ import 'gridstack';
     templateUrl: 'app/components/dashboard/dashboard.html',
     styleUrls: ['app/components/dashboard/dashboard.css'],
 })
-export class Dashboard implements OnInit {
+export class Dashboard implements AfterViewInit {
 
     constructor(private elementRef: ElementRef) {
 
     }
 
-    public ngOnInit(): void {
+    public ngAfterViewInit(): void {
         var options: any = {
             cellHeight: 80,
             verticalMargin: 10

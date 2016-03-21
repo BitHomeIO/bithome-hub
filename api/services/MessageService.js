@@ -23,15 +23,16 @@ module.exports = {
   handleMessage: function (timestamp, client, packet) {
 
     if (!packet.topic.startsWith("$SYS/")) {
-      sails.log.debug("[" + timestamp.format() + "] " + client.id + " Topic:" + packet.topic + " Packet:" + packet.payload);
 
+      sails.log.debug(JSON.stringify(NodeService.nodeSourceMap));
       // Check to see if this message has come across the hub topic
       if (packet.topic === this.hubTopic) {
         MessageService.handleMessageForHub(timestamp, client, packet);
-
       } else if(NodeService.nodeSourceMap[packet.topic]) {
         // Otherwise assume this message is for a device
         MessageService.handleMessageForNode(packet.topic, timestamp, client, packet);
+      } else {
+        sails.log.debug("[" + timestamp.format() + "]  Packet:" + JSON.stringify(packet));
       }
     }
   },
@@ -61,7 +62,7 @@ module.exports = {
    */
   handleMessageForNode: function (nodeId, timestamp, client, packet) {
 
-    sails.log.debug('Device message for nodeId: ' + nodeId + ' from ' + client.id + ' ' + packet.payload);
+    sails.log.debug('Device message for nodeId: ' + nodeId + ' ' + packet.payload);
 
     // Lookup the bridge for this source and pass it along
     var source = NodeService.nodeSourceMap[nodeId];

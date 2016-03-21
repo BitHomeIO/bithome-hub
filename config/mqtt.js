@@ -5,23 +5,23 @@ module.exports.mqtt = {
 
     sails.mosca = require('mosca');
 
-    var server = new sails.mosca.Server(sails.config.connections[this.connection]);
+    sails.mqtt = new sails.mosca.Server(sails.config.connections[this.connection]);
 
-    server.on('clientConnected', function (client) {
+    sails.mqtt.on('clientConnected', function (client) {
       sails.log.debug(client.id + " connected");
     });
 
-    server.on('clientDisconnected', function (client) {
+    sails.mqtt.on('clientDisconnected', function (client) {
       sails.log.debug(client.id + " disconnected");
     });
 
     // fired when a message is received
-    server.on('published', function (packet, client) {
+    sails.mqtt.on('published', function (packet, client) {
       //console.log('Published', packet.payload);
       MessageService.handleMessage(sails.moment(), client, packet)
     });
 
-    server.on('ready',
+    sails.mqtt.on('ready',
       function setup() {
         sails.log.info('Mosca server is up and running');
 

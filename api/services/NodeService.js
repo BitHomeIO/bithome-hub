@@ -81,7 +81,7 @@ module.exports = {
 
             // Only map external sources
             if (node.source != 'mqtt') {
-              that.nodeSourceMap[node.nodeId] = node.source;
+              that.nodeSourceMap[node.id] = node.source;
             }
           });
         }
