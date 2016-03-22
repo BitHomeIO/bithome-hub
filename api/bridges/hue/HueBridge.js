@@ -244,7 +244,7 @@ module.exports = {
 
         case 'capability.colorControlHsb':
           if (this.requireArgs(args, 4)) {
-            this.hueApi.setLightState(hueId, LightState.create().on().hsb(args[1], args[2], args[3])).done();
+            this.hueApi.setLightState(hueId, LightState.create().on().hsb(3.59*args[1], args[2], args[3])).done();
           }
           break;
 

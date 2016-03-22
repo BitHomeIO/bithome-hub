@@ -19,6 +19,7 @@ export class UiSlider implements AfterViewInit {
 
     @Input('slider-min') minValue: number;
     @Input('slider-max') maxValue: number;
+    @Input('slider-value') value: number;
     @Output() changed: EventEmitter<any> = new EventEmitter();
 
     constructor(private actionService: ActionService,
@@ -28,7 +29,7 @@ export class UiSlider implements AfterViewInit {
     public ngAfterViewInit(): void {
         var inputRef: any  = jQuery(this.elementRef.nativeElement).find('.bh-ui-slider input');
         var comp = this;
-        inputRef.slider({min: this.minValue, max: this.maxValue});
+        inputRef.slider({min: this.minValue, max: this.maxValue, value: this.value});
         inputRef.on('change',
             (event: any) => {
                 this.changed.emit(event.value.newValue);
