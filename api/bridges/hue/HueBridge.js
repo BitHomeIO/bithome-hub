@@ -233,7 +233,8 @@ module.exports = {
         case 'capability.switchLevel':
         case 'capability.switchLevel.setLevel':
           if (this.requireArgs(args, 2)) {
-            this.setBrightness(hueId, args[1]);
+            // Scale this up to 0-255
+            this.setBrightness(hueId, 2.55 * args[1]);
           }
           break;
         case 'capability.alarm.strobe':

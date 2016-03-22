@@ -37,10 +37,5 @@ export class UiSwitch implements AfterViewInit {
             }
         );
     }
-
-    public onChange(state: boolean): void {
-        var onOff: string = state ? 'on' : 'off';
-        this.actionService.executeCapability('00:17:88:01:00:e6:46:68-0b', 'switch', [onOff]);
-    }
 }
 

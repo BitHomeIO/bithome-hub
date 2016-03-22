@@ -6,6 +6,9 @@ import 'slider';
 import {ElementRef} from 'angular2/core';
 import {AfterViewInit} from 'angular2/core';
 import {ActionService} from '../../services/ActionService';
+import {EventEmitter} from 'angular2/core';
+import {Output} from 'angular2/core';
+import {Input} from 'angular2/core';
 
 @Component({
     selector: 'ui-slider',
@@ -14,6 +17,10 @@ import {ActionService} from '../../services/ActionService';
 })
 export class UiSlider implements AfterViewInit {
 
+    @Input('slider-min') minValue: number;
+    @Input('slider-max') maxValue: number;
+    @Output() changed: EventEmitter<any> = new EventEmitter();
+
     constructor(private actionService: ActionService,
                 private elementRef: ElementRef) {
     }
@@ -21,17 +28,12 @@ export class UiSlider implements AfterViewInit {
     public ngAfterViewInit(): void {
         var inputRef: any  = jQuery(this.elementRef.nativeElement).find('.bh-ui-slider input');
         var comp = this;
-        inputRef.slider();
-        inputRef.on('sliderChange.bootstrapSlider',
-            (event: any, state: boolean) => {
-               comp.onChange(state);
+        inputRef.slider({min: this.minValue, max: this.maxValue});
+        inputRef.on('change',
+            (event: any) => {
+                this.changed.emit(event.value.newValue);
             }
         );
-    }
-
-    public onChange(state: boolean): void {
-        var onOff: string = state ? 'on' : 'off';
-        this.actionService.executeCapability('00:17:88:01:00:e6:46:68-0b', 'slider', [onOff]);
     }
 }
 

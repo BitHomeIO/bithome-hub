@@ -13,6 +13,7 @@ import {ComponentRef} from 'angular2/core';
 import {AfterViewInit} from 'angular2/core';
 import {Capability} from '../capability/capability';
 import {ActionService} from '../../services/ActionService';
+import * as _ from 'lodash';
 declare var System: any;
 
 export class CapabilityModalData {
@@ -58,7 +59,7 @@ export class CapabilityModal implements ICustomModalComponent, OnInit {
 
     public ngOnInit(): void {
         //
-        var componentPathPart = 'capability-' + this.capability;
+        var componentPathPart = 'capability-' + _.kebabCase(this.capability);
         var componentModuleCc = camelCase(componentPathPart);
         var componentModuleName = componentModuleCc.charAt(0).toUpperCase() + componentModuleCc.slice(1);
         var componentPath = '/app/components/'  + componentPathPart + '/' + componentPathPart;
