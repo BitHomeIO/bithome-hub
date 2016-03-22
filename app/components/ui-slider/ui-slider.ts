@@ -8,18 +8,18 @@ import {AfterViewInit} from 'angular2/core';
 import {ActionService} from '../../services/ActionService';
 
 @Component({
-    selector: 'capability-slider',
-    templateUrl: 'app/components/capability-slider/capability-slider.html',
-    styleUrls: ['app/components/capability-slider/capability-slider.css']
+    selector: 'ui-slider',
+    templateUrl: 'app/components/ui-slider/ui-slider.html',
+    styleUrls: ['app/components/ui-slider/ui-slider.css']
 })
-export class CapabilitySlider implements AfterViewInit {
+export class UiSlider implements AfterViewInit {
 
     constructor(private actionService: ActionService,
                 private elementRef: ElementRef) {
     }
 
     public ngAfterViewInit(): void {
-        var inputRef: any  = jQuery(this.elementRef.nativeElement).find('.bh-capability-slider input');
+        var inputRef: any  = jQuery(this.elementRef.nativeElement).find('.bh-ui-slider input');
         var comp = this;
         inputRef.slider();
         inputRef.on('sliderChange.bootstrapSlider',

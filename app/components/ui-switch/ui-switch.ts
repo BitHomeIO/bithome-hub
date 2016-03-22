@@ -7,6 +7,8 @@ import {ElementRef} from 'angular2/core';
 import {AfterViewInit} from 'angular2/core';
 import {ActionService} from '../../services/ActionService';
 import {Input} from 'angular2/core';
+import {Output} from 'angular2/core';
+import {EventEmitter} from 'angular2/core';
 
 @Component({
     selector: 'ui-switch',
@@ -17,6 +19,7 @@ export class UiSwitch implements AfterViewInit {
 
     @Input('switch-off-text') offText: string;
     @Input('switch-on-text') onText: string;
+    @Output() changed: EventEmitter<any> = new EventEmitter();
 
     constructor(private actionService: ActionService,
                 private elementRef: ElementRef) {
@@ -24,13 +27,13 @@ export class UiSwitch implements AfterViewInit {
 
     public ngAfterViewInit(): void {
         var inputRef: any  = jQuery(this.elementRef.nativeElement).find('.bh-ui-switch input');
-        var comp = this;
+
         inputRef.bootstrapSwitch('size', 'small');
         inputRef.bootstrapSwitch('onText', this.onText ? this.onText : 'On');
         inputRef.bootstrapSwitch('offText', this.offText ? this.offText : 'Off');
         inputRef.on('switchChange.bootstrapSwitch',
             (event: any, state: boolean) => {
-               comp.onChange(state);
+                this.changed.emit(state);
             }
         );
     }

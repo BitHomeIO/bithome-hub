@@ -1,6 +1,5 @@
 import {Component} from 'angular2/core';
 import {CapabilitySwitch} from '../capability-switch/capability-switch';
-import {CapabilitySlider} from '../capability-slider/capability-slider';
 import {HostBinding} from 'angular2/core';
 import {Input} from 'angular2/core';
 import {ElementRef} from 'angular2/core';
@@ -11,7 +10,7 @@ declare var System: any;
 
 @Component({
     selector: 'dashboard-item',
-    directives: [CapabilitySwitch, CapabilitySlider],
+    directives: [CapabilitySwitch],
     templateUrl: 'app/components/dashboard-item/dashboard-item.html',
     styleUrls: ['app/components/dashboard-item/dashboard-item.css'],
     host: {

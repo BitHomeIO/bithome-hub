@@ -40,7 +40,7 @@ export class NodeService {
     }
 
     public nodeFromJson(nodeJson: Node): Node {
-        var node: Node = new Node(nodeJson.createdAt, nodeJson.nodeId, nodeJson.name, nodeJson.source, nodeJson.capabilities);
+        var node: Node = new Node(nodeJson.createdAt, nodeJson.id, nodeJson.name, nodeJson.source, nodeJson.capabilities);
 
         return node;
     }

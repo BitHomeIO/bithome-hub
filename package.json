@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "angular2": "^2.0.0-beta.9",
+    "angular2-modal": "0.0.4",
     "angular2-moment": "^0.4.2",
     "bootstrap": "^3.3.6",
     "bootstrap-slider": "^6.1.5",
