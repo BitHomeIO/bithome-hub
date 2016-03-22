@@ -9,6 +9,7 @@ import {ActionService} from '../../services/ActionService';
 import {EventEmitter} from 'angular2/core';
 import {Output} from 'angular2/core';
 import {Input} from 'angular2/core';
+import * as _ from 'lodash';
 
 @Component({
     selector: 'ui-slider',
@@ -30,11 +31,17 @@ export class UiSlider implements AfterViewInit {
         var inputRef: any  = jQuery(this.elementRef.nativeElement).find('.bh-ui-slider input');
         var comp = this;
         inputRef.slider({min: this.minValue, max: this.maxValue, value: this.value});
+        var throttled =  _.throttle(this.emitChange, 250, { 'trailing': true });
+
         inputRef.on('change',
             (event: any) => {
-                this.changed.emit(event.value.newValue);
+                throttled(comp, event.value.newValue);
             }
         );
+    }
+
+    public emitChange(comp, value): void {
+        comp.changed.emit(value);
     }
 }
 

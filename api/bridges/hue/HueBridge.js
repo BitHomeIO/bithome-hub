@@ -237,11 +237,17 @@ module.exports = {
             this.setBrightness(hueId, 2.55 * args[1]);
           }
           break;
+        case 'capability.alarm':
+          if (this.requireArgs(args, 2)) {
+            if (args[1] == 'strobe' || args[1] == 'both') {
+              this.alertLight(hueId);
+            }
+          }
+          break;
         case 'capability.alarm.strobe':
         case 'capability.alarm.both':
           this.alertLight(hueId);
           break;
-
         case 'capability.colorControlHsb':
           if (this.requireArgs(args, 4)) {
             this.hueApi.setLightState(hueId, LightState.create().on().hsb(3.59*args[1], args[2], args[3])).done();
@@ -274,7 +280,8 @@ module.exports = {
 
         case 'capability.colorTemperature':
           if (this.requireArgs(args, 2)) {
-            this.hueApi.setLightState(hueId, LightState.create().on().colorTemp(args[1])).done();
+            var temperature = args[1]*(500.0-153.0)/100.0 + 153.0 ;
+            this.hueApi.setLightState(hueId, LightState.create().on().colorTemp(temperature)).done();
           }
           break;
 

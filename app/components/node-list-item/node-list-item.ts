@@ -32,17 +32,10 @@ export class NodeListItem {
 
         let bindings = Injector.resolve([provide(ICustomModal, {useValue: bindingData})]);
 
-        dialog = this.modal.open(
+        this.modal.open(
             <any>component,
             bindings,
             new ModalConfig('sm', true, 27));
-
-
-        dialog.then((resultPromise) => {
-            return resultPromise.result.then((result) => {
-                console.log(result);
-            });
-        });
     }
 }
 
