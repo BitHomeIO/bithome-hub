@@ -26,11 +26,13 @@ module.exports = {
   },
 
   getNode: function (nodeId, cb) {
+    var ns = this;
+
     Node.findOne({id: nodeId}).populate('capabilities').exec(
       function (err, results) {
         if (!err) {
           return cb(
-            NodeService.flattenCapabilities(results)
+            ns.flattenCapabilities(results)
           );
         }
       }
@@ -38,6 +40,8 @@ module.exports = {
   },
 
   query: function (limit, offset, cb) {
+    var ns = this;
+
     Node.find({skip: offset, limit: limit}).sort({createdAt: -1}).populate('capabilities').exec(
       function (err, results) {
         if (!err) {
@@ -45,7 +49,7 @@ module.exports = {
           // Flatten the capability objects
           var nodes = [];
           _.each(results, function (node) {
-            nodes.push(NodeService.flattenCapabilities(node));
+            nodes.push(ns.flattenCapabilities(node));
           });
 
           return cb(nodes);
