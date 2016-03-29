@@ -59,14 +59,18 @@ module.exports = {
   },
 
   flattenCapabilities: function(node) {
-    var capabilities = _.pluck(node.capabilities, 'capability');
-    return {
-      id: node.id,
-      name: node.name,
-      source: node.source,
-      createdAt: node.createdAt,
-      capabilities: capabilities
-    };
+    if (node) {
+      var capabilities = _.pluck(node.capabilities, 'capability');
+      return {
+        id: node.id,
+        name: node.name,
+        source: node.source,
+        createdAt: node.createdAt,
+        capabilities: capabilities
+      };
+    } else {
+      return {};
+    }
   },
 
   clear: function () {
