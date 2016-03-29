@@ -18,7 +18,7 @@ module.exports = function(grunt) {
 		assets: {
 
 			// Assets to watch:
-			files: ['assets/**/*', 'tasks/pipeline.js', '!**/node_modules/**'],
+			files: ['assets/**/*', 'tasks/pipeline.js', '!**/node_modules/**', 'app/**/*.scss'],
 
 			// When assets are changed:
 			tasks: ['syncAssets' , 'linkAssets']
@@ -30,6 +30,14 @@ module.exports = function(grunt) {
 
 			// When assets are changed:
 			tasks: ['compileTs']
+		},
+		copy: {
+
+      // Assets to watch:
+      files: ['app/**/*.ts', 'app/**/*.html'],
+
+      // When assets are changed:
+      tasks: ['copy:dev']
 		}
 	});
 

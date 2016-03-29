@@ -17,7 +17,7 @@ export class NodeList implements OnInit, OnDestroy {
     private nodeListSubscription: Subscription;
     private nodes: Observable<Array<Node>>;
 
-    constructor(public nodeService: NodeService, private ref: ChangeDetectorRef) {
+    constructor(public nodeService: NodeService, private changeDetector: ChangeDetectorRef) {
 
     }
 
@@ -26,8 +26,8 @@ export class NodeList implements OnInit, OnDestroy {
         this.nodes = this.nodeService.nodes$;
 
         this.nodeListSubscription = this.nodeService.nodes$.subscribe(
-            (nodes) => {
-                this.ref.detectChanges();
+            () => {
+                this.changeDetector.detectChanges();
             }
         );
     }

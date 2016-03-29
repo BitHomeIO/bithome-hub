@@ -57,6 +57,7 @@
                 lodash: 'node_modules/lodash/lodash.js',
                 camelcase: 'node_modules/camelcase/index.js',
                 'angular2-modal': 'node_modules/angular2-modal',
+                async: 'node_modules/async/dist/async.min.js',
 
             },
             packages: {
@@ -74,7 +75,8 @@
                 'jquery-ui': {defaultExtension: 'js'},
                 'lodash': {defaultExtension: 'js'},
                 'camelcase': {defaultExtension: 'js'},
-                'angular2-modal': {defaultExtension: 'js'}
+                'angular2-modal': {defaultExtension: 'js'},
+                'async': {defaultExtension: 'js'}
             }
         });
         System.import('/app/components/app/app').then(null, console.error.bind(console));

@@ -1,28 +1,36 @@
 import {Injectable, bind} from 'angular2/core';
 import {Node} from '../models/node';
-import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
-import {Operator} from 'rxjs/Operator';
 import 'rxjs/rx';
-declare var io: any;
+declare var io:any;
 
 @Injectable()
 export class NodeService {
 
-    public nodes$: Observable<Array<Node>>;
-    private nodeObserver: any;
-    private dataStore: {
-        nodes: Array<Node>
+    public nodes$:Observable<Array<Node>>;
+    private nodeObserver:any;
+    private dataStore:{
+        nodes:Array<Node>,
+        nodeMap:{ [key:string]:Node }
     };
 
     constructor() {
 
-        this.nodes$ = new Observable(observer =>
-            this.nodeObserver = observer).share().publishReplay(1000).refCount();
+        var thisNs:NodeService = this;
 
-        this.dataStore = { nodes: [] };
+        this.dataStore = {nodes: [], nodeMap: {}};
 
-        var thisNs: NodeService = this;
+        this.nodes$ = new Observable(
+            function (observer) {
+                thisNs.nodeObserver = observer;
+
+                thisNs.initialize();
+            }
+        ).share().publishReplay(1000).refCount();
+    }
+
+   public initialize(): void {
+        var thisNs:NodeService = this;
 
         io.socket.on('node_created', function gotHelloMessage(nodeJson) {
             thisNs.addNode(
@@ -31,7 +39,7 @@ export class NodeService {
 
         io.socket.get('/api/nodes', function gotHelloMessage(data) {
             if (data) {
-                _.each(data, function (nodeJson: Node) {
+                _.each(data, function (nodeJson:Node) {
                     thisNs.addNode(
                         thisNs.nodeFromJson(nodeJson));
                 });
@@ -39,19 +47,33 @@ export class NodeService {
         });
     }
 
-    public nodeFromJson(nodeJson: Node): Node {
-        var node: Node = new Node(nodeJson.createdAt, nodeJson.id, nodeJson.name, nodeJson.source, nodeJson.capabilities);
+    public nodeFromJson(nodeJson:Node):Node {
+        var node:Node = new Node(nodeJson.createdAt, nodeJson.id, nodeJson.name, nodeJson.source, nodeJson.capabilities);
 
         return node;
     }
 
     // an imperative function call to this action stream
-    public addNode(node: Node): void {
+    public addNode(node:Node):void {
         this.dataStore.nodes.unshift(node);
+        this.dataStore.nodeMap[node.id] = node;
         this.nodeObserver.next(this.dataStore.nodes);
+    }
+
+    public getNode(nodeId:string):Promise<Node> {
+        var thisNs = this;
+        return new Promise(function (resolve, reject) {
+            io.socket.get('/api/nodes/' + nodeId, function gotNode(data) {
+                if (data) {
+                    resolve(thisNs.nodeFromJson(data));
+                } else {
+                    reject();
+                }
+            });
+        });
     }
 }
 
-export var nodeServiceInjectables: Array<any> = [
+export var nodeServiceInjectables:Array<any> = [
     bind(NodeService).toClass(NodeService)
 ];

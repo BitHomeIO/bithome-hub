@@ -42,4 +42,12 @@ export class CapabilityColorControlRgb implements Capability {
     public getExecutedEvent(): EventEmitter<String[]> {
         return this.executed;
     }
+
+    getHeight():number {
+        return 2;
+    }
+
+    getWidth():number {
+        return 2;
+    }
 }

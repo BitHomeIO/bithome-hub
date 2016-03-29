@@ -46,8 +46,21 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
   'get /api/messages': 'MessageController.get',
+
+  //
+  // Nodes
+  //
   'get /api/nodes': 'NodeController.get',
+  'get /api/nodes/:nodeId': 'NodeController.getNode',
+
+  //
+  // Bridges
+  //
   'get /api/bridges': 'BridgeController.get',
+
+  //
+  // Capabilities
+  //
   'post /api/nodes/:nodeId/capabilities/:capability': 'ActionController.postCapability',
 
 };

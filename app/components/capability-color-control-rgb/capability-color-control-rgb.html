@@ -1,4 +1,5 @@
-<div class="bh-capability-color-control-rgb">
+<label>RGB Color Control</label>
+<div class="controls">
     <label><ui-slider (changed)="onRedChanged($event)" slider-min="0" slider-max="255" [slider-value]="red"></ui-slider>Red</label>
     <label><ui-slider (changed)="onGreenChanged($event)" slider-min="0" slider-max="255" [slider-value]="green"></ui-slider>Green</label>
     <label><ui-slider (changed)="onBlueChanged($event)" slider-min="0" slider-max="255" [slider-value]="blue"></ui-slider>Blue</label>

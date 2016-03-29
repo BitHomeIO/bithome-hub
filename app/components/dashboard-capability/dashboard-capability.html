@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">{{node?.name}} Dashboard</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+    <div>
+        <div class="grid-stack">
+            <dashboard-item *ngFor="#capability of capabilities" [capability]="capability" nodeId="{{node?.id}}" (itemInitialized)="onItemInitialized($event)"></dashboard-item>
+        </div>
+    </div>
+</div>

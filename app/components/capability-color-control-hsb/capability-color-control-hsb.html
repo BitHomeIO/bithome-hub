@@ -1,5 +1,4 @@
-<div class="bh-capability-color-control-hsb">
-    <label><ui-slider (changed)="onHueChanged($event)" slider-min="0" slider-max="100" [slider-value]="red"></ui-slider>Hue</label>
-    <label><ui-slider (changed)="onSatChanged($event)" slider-min="0" slider-max="100" [slider-value]="green"></ui-slider>Saturation</label>
-    <label><ui-slider (changed)="onBrightChanged($event)" slider-min="0" slider-max="100" [slider-value]="blue"></ui-slider>Brightness</label>
-</div>
+<label>HSB Color Control</label>
+<label><ui-slider (changed)="onHueChanged($event)" slider-min="0" slider-max="100" [slider-value]="red"></ui-slider>Hue</label>
+<label><ui-slider (changed)="onSatChanged($event)" slider-min="0" slider-max="100" [slider-value]="green"></ui-slider>Saturation</label>
+<label><ui-slider (changed)="onBrightChanged($event)" slider-min="0" slider-max="100" [slider-value]="blue"></ui-slider>Brightness</label>

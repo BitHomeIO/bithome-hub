@@ -17,7 +17,7 @@ export class MessageList implements OnInit, OnDestroy {
     private messagesSubscription: Subscription;
     private messages: Observable<Array<Message>>;
 
-    constructor(public messageService: MessageService, private ref: ChangeDetectorRef) {
+    constructor(public messageService: MessageService, private changeDetector: ChangeDetectorRef) {
 
     }
 
@@ -26,8 +26,8 @@ export class MessageList implements OnInit, OnDestroy {
         this.messages = this.messageService.messages$;
 
         this.messagesSubscription = this.messageService.messages$.subscribe(
-            (messages) => {
-                this.ref.detectChanges();
+            () => {
+                this.changeDetector.detectChanges();
             }
         );
     }

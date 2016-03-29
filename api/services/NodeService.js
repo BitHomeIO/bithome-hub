@@ -26,10 +26,12 @@ module.exports = {
   },
 
   getNode: function (nodeId, cb) {
-    Node.findOne({id: nodeId}).exec(
+    Node.findOne({id: nodeId}).populate('capabilities').exec(
       function (err, results) {
         if (!err) {
-          return cb(results);
+          return cb(
+            NodeService.flattenCapabilities(results)
+          );
         }
       }
     );
@@ -43,22 +45,24 @@ module.exports = {
           // Flatten the capability objects
           var nodes = [];
           _.each(results, function (node) {
-            var capabilities = _.pluck(node.capabilities, 'capability');
-            var newNode = {
-              id: node.id,
-              name: node.name,
-              source: node.source,
-              createdAt: node.createdAt,
-              capabilities: capabilities
-            };
-
-            nodes.push(newNode);
+            nodes.push(NodeService.flattenCapabilities(node));
           });
 
           return cb(nodes);
         }
       }
     );
+  },
+
+  flattenCapabilities: function(node) {
+    var capabilities = _.pluck(node.capabilities, 'capability');
+    return {
+      id: node.id,
+      name: node.name,
+      source: node.source,
+      createdAt: node.createdAt,
+      capabilities: capabilities
+    };
   },
 
   clear: function () {

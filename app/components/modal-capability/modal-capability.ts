@@ -1,6 +1,4 @@
 import {Component} from 'angular2/core';
-import {HostBinding} from 'angular2/core';
-import {Input} from 'angular2/core';
 import {ElementRef} from 'angular2/core';
 import {DynamicComponentLoader} from 'angular2/core';
 import camelCase from 'camelcase';
@@ -10,13 +8,12 @@ import {ICustomModal} from 'angular2-modal/dist/angular2-modal';
 import {ModalDialogInstance} from 'angular2-modal/dist/angular2-modal';
 import {Node} from '../../models/node';
 import {ComponentRef} from 'angular2/core';
-import {AfterViewInit} from 'angular2/core';
 import {Capability} from '../capability/capability';
 import {ActionService} from '../../services/ActionService';
 import * as _ from 'lodash';
 declare var System: any;
 
-export class CapabilityModalData {
+export class ModalCapabilityData {
     constructor(
         public node: Node,
         public capability: string
@@ -25,11 +22,11 @@ export class CapabilityModalData {
 
 
 @Component({
-    selector: 'capability-modal',
-    templateUrl: 'app/components/capability-modal/capability-modal.html',
-    styleUrls: ['app/components/capability-modal/capability-modal.css']
+    selector: 'modal-capability',
+    templateUrl: 'app/components/modal-capability/modal-capability.html',
+    styleUrls: ['app/components/modal-capability/modal-capability.css']
 })
-export class CapabilityModal implements ICustomModalComponent, OnInit {
+export class ModalCapability implements ICustomModalComponent, OnInit {
 
     public dialog: ModalDialogInstance;
 
@@ -38,7 +35,7 @@ export class CapabilityModal implements ICustomModalComponent, OnInit {
 
     private dynamicComponentLoader: DynamicComponentLoader;
     private elementRef: ElementRef;
-    private context: CapabilityModalData;
+    private context: ModalCapabilityData;
     private actionService: ActionService;
 
     constructor(actionService: ActionService,
@@ -51,7 +48,7 @@ export class CapabilityModal implements ICustomModalComponent, OnInit {
         this.dynamicComponentLoader = dynamicComponentLoader;
         this.elementRef = elementRef;
         this.dialog = dialog;
-        this.context = <CapabilityModalData>modelContentData;
+        this.context = <ModalCapabilityData>modelContentData;
 
         this.capability = this.context.capability;
         this.node = this.context.node;

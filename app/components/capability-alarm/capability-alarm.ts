@@ -12,7 +12,6 @@ import {Capability} from '../capability/capability';
     styleUrls: ['app/components/capability-alarm/capability-alarm.css']
 })
 export class CapabilityAlarm implements Capability {
-
     @Output() executed: EventEmitter<String[]> = new EventEmitter();
 
     public onClicked(event: boolean) {
@@ -21,6 +20,14 @@ export class CapabilityAlarm implements Capability {
 
     public getExecutedEvent(): EventEmitter<String[]> {
         return this.executed;
+    }
+
+    getHeight():number {
+        return 2;
+    }
+
+    getWidth():number {
+        return 2;
     }
 }
 

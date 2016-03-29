@@ -1,4 +1,13 @@
 .bh-dashboard-item {
   border: 1px solid #D3D5D4;
   padding: 0.5em;
+
+  h3 {
+    font-size: 1.5em;
+    color: red;
+  }
+
+  .controls {
+    padding: 0.5em;
+  }
 }
