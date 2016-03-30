@@ -1,7 +1,6 @@
 import {Component} from 'angular2/core';
 import {UiButton} from '../ui-button/ui-button';
 import {Output} from 'angular2/core';
-import {ActionExecuteEvent} from '../../models/action-execute-event';
 import {EventEmitter} from 'angular2/core';
 import {Capability} from '../capability/capability';
 
@@ -20,6 +19,10 @@ export class CapabilityAlarm implements Capability {
 
     public getExecutedEvent(): EventEmitter<String[]> {
         return this.executed;
+    }
+
+    getName():string {
+        return 'Alarm';
     }
 
     getHeight():number {

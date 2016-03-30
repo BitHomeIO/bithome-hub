@@ -22,6 +22,7 @@ import * as _ from 'lodash';
         '[attr.data-gs-min-width]': 'width',
         '[attr.data-gs-height]': 'height',
         '[attr.data-gs-min-height]': 'height',
+        '[attr.data-gs-auto-position]': 'autoPosition',
         '[attr.data-gs-x]': 'x',
         '[attr.data-gs-y]': 'y',
     }
@@ -34,8 +35,10 @@ export class DashboardItem implements OnInit {
     @Input() private y: number;
     @Input() private height: number;
     @Input() private width: number;
+    @Input() private autoPosition: boolean;
 
 
+    private header: string;
     private dynamicComponentLoader: DynamicComponentLoader;
     private elementRef: ElementRef;
 
@@ -43,6 +46,10 @@ export class DashboardItem implements OnInit {
                 private changeDetector: ChangeDetectorRef,
                 dynamicComponentLoader: DynamicComponentLoader,
                 elementRef: ElementRef) {
+        this.header = 'Control';
+        this.x = null;
+        this.y = null;
+        this.autoPosition = true;
         this.dynamicComponentLoader = dynamicComponentLoader;
         this.elementRef = elementRef;
     }
@@ -79,6 +86,7 @@ export class DashboardItem implements OnInit {
 
         this.height = capability.getHeight();
         this.width = capability.getWidth();
+        this.header = capability.getName();
 
         var that = this;
         capability.getExecutedEvent().subscribe(

@@ -64,7 +64,8 @@ export class DashboardCapability implements DashboardInterface, AfterViewInit {
 
     private initGrid(): void {
         var options:any = {
-            cellHeight: 80,
+            cellHeight: 40,
+            cellWidth: 40,
             verticalMargin: 10
         };
 

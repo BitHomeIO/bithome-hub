@@ -1,7 +1,6 @@
 import {Component} from 'angular2/core';
 import {UiSlider} from '../ui-slider/ui-slider';
 import {Output} from 'angular2/core';
-import {ActionExecuteEvent} from '../../models/action-execute-event';
 import {EventEmitter} from 'angular2/core';
 import {Capability} from '../capability/capability';
 
@@ -44,12 +43,17 @@ export class CapabilityColorControlHsb implements Capability {
         return this.executed;
     }
 
+
+    getName():string {
+        return 'HSB Color Control';
+    }
+
     getHeight():number {
-        return 2;
+        return 4;
     }
 
     getWidth():number {
-        return 2;
+        return 3;
     }
 }
 

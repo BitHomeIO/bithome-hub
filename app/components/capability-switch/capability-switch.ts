@@ -1,7 +1,6 @@
 import {Component} from 'angular2/core';
 import {UiSwitch} from '../ui-switch/ui-switch';
 import {Output} from 'angular2/core';
-import {ActionExecuteEvent} from '../../models/action-execute-event';
 import {EventEmitter} from 'angular2/core';
 import {Capability} from '../capability/capability';
 
@@ -21,6 +20,10 @@ export class CapabilitySwitch implements Capability {
 
     public getExecutedEvent(): EventEmitter<String[]> {
         return this.executed;
+    }
+
+    getName():string {
+        return 'Switch';
     }
 
     getHeight():number {
