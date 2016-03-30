@@ -12,7 +12,7 @@ import {Capability} from '../capability/capability';
 })
 export class CapabilitySwitchLevel implements Capability {
 
-    @Output() executed: EventEmitter<String[]> = new EventEmitter();
+    @Output() executed: EventEmitter<String[]> = new EventEmitter<String[]>();
 
     public onSliderChanged(event: number) {
        this.executed.emit([event.toString()]);

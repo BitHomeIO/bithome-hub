@@ -8,7 +8,10 @@ module.exports = function(grunt) {
 
 	grunt.config.set('ts', {
 		default: {
-      src: ['app/**/*.ts', 'typings/browser.d.ts'],
+      src: [
+        'app/**/*.ts',
+        'typings/browser.d.ts'
+      ],
       outDir: '.tmp/public/app',
       options: {
         target: 'es5',

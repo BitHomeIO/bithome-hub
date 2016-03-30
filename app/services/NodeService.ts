@@ -7,7 +7,7 @@ declare var io:any;
 @Injectable()
 export class NodeService {
 
-    public nodes$:Observable<Array<Node>>;
+    public nodes$:Observable<Node[]>;
     private nodeObserver:any;
     private dataStore:{
         nodes:Array<Node>,
@@ -20,7 +20,7 @@ export class NodeService {
 
         this.dataStore = {nodes: [], nodeMap: {}};
 
-        this.nodes$ = new Observable(
+        this.nodes$ = new Observable<Node[]>(
             function (observer) {
                 thisNs.nodeObserver = observer;
 

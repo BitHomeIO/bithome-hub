@@ -12,7 +12,7 @@ import {Capability} from '../capability/capability';
 })
 export class CapabilityColorControlHsb implements Capability {
 
-    @Output() executed: EventEmitter<String[]> = new EventEmitter();
+    @Output() executed: EventEmitter<String[]> = new EventEmitter<String[]>();
 
     private hue: number;
     private sat: number;

@@ -1,16 +1,13 @@
 import {Component} from 'angular2/core';
 import {ElementRef} from 'angular2/core';
 import {DynamicComponentLoader} from 'angular2/core';
-import camelCase from 'camelcase';
 import {OnInit} from 'angular2/core';
-import {ICustomModalComponent} from 'angular2-modal/dist/angular2-modal';
-import {ICustomModal} from 'angular2-modal/dist/angular2-modal';
-import {ModalDialogInstance} from 'angular2-modal/dist/angular2-modal';
 import {Node} from '../../models/node';
 import {ComponentRef} from 'angular2/core';
 import {Capability} from '../capability/capability';
 import {ActionService} from '../../services/ActionService';
 import * as _ from 'lodash';
+import {ICustomModalComponent, ModalDialogInstance, ICustomModal} from 'angular2-modal/dist/angular2-modal';
 declare var System: any;
 
 export class ModalCapabilityData {
@@ -57,7 +54,7 @@ export class ModalCapability implements ICustomModalComponent, OnInit {
     public ngOnInit(): void {
         //
         var componentPathPart = 'capability-' + _.kebabCase(this.capability);
-        var componentModuleCc = camelCase(componentPathPart);
+        var componentModuleCc = _.camelCase(componentPathPart);
         var componentModuleName = componentModuleCc.charAt(0).toUpperCase() + componentModuleCc.slice(1);
         var componentPath = '/app/components/'  + componentPathPart + '/' + componentPathPart;
 

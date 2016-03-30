@@ -12,7 +12,7 @@ import {Capability} from '../capability/capability';
 })
 export class CapabilitySwitch implements Capability {
 
-    @Output() executed: EventEmitter<String[]> = new EventEmitter();
+    @Output() executed: EventEmitter<String[]> = new EventEmitter<String[]>();
 
     public onSwitchChanged(event: boolean) {
        this.executed.emit([event ? 'on' : 'off']);

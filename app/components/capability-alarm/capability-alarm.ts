@@ -11,7 +11,7 @@ import {Capability} from '../capability/capability';
     styleUrls: ['app/components/capability-alarm/capability-alarm.css']
 })
 export class CapabilityAlarm implements Capability {
-    @Output() executed: EventEmitter<String[]> = new EventEmitter();
+    @Output() executed: EventEmitter<String[]> = new EventEmitter<String[]>();
 
     public onClicked(event: boolean) {
        this.executed.emit(['both']);

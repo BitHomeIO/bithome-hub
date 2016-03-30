@@ -1,15 +1,13 @@
 import {Injectable, bind} from 'angular2/core';
 import {Bridge} from '../models/bridge';
-import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
-import {Operator} from 'rxjs/Operator';
 declare var io: any;
 import 'rxjs/rx';
 
 @Injectable()
 export class BridgeService {
 
-    public bridges$: Observable<Array<Bridge>>;
+    public bridges$: Observable<Bridge[]>;
     private bridgeObserver: any;
     private dataStore: {
         bridges: Array<Bridge>
@@ -18,7 +16,7 @@ export class BridgeService {
     constructor() {
 
         // Create Observable Stream to output our data
-        this.bridges$ = new Observable(observer =>
+        this.bridges$ = new Observable<Bridge[]>(observer =>
             this.bridgeObserver = observer).share().publishReplay(1000).refCount();
 
         this.dataStore = { bridges: [] };

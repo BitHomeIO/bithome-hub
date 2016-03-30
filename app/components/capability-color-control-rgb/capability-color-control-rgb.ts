@@ -11,7 +11,7 @@ import {Capability} from '../capability/capability';
     styleUrls: ['app/components/capability-color-control-rgb/capability-color-control-rgb.css']
 })
 export class CapabilityColorControlRgb implements Capability {
-    @Output() executed: EventEmitter<String[]> = new EventEmitter();
+    @Output() executed: EventEmitter<String[]> = new EventEmitter<String[]>();
 
     private red: number;
     private green: number;

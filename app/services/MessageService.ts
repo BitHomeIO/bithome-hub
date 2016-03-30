@@ -1,19 +1,13 @@
 import {Injectable, bind} from 'angular2/core';
 import {Message} from '../models/message';
-import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
-import {Operator} from 'rxjs/Operator';
 declare var io: any;
 import 'rxjs/rx';
-
-interface IMessagesOperation extends Function {
-    (messages: Message[]): Message[];
-}
 
 @Injectable()
 export class MessageService {
 
-    public messages$: Observable<Array<Message>>;
+    public messages$: Observable<Message[]>;
     private messageObserver: any;
     private dataStore: {
         messages: Array<Message>
@@ -22,7 +16,7 @@ export class MessageService {
     constructor() {
 
         // Create Observable Stream to output our data
-        this.messages$ = new Observable(observer =>
+        this.messages$ = new Observable<Message[]>(observer =>
             this.messageObserver = observer).share().publishReplay(1000).refCount();
 
         this.dataStore = { messages: [] };

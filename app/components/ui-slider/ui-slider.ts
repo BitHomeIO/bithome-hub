@@ -28,7 +28,7 @@ export class UiSlider implements AfterViewInit {
     }
 
     public ngAfterViewInit(): void {
-        var inputRef: any  = jQuery(this.elementRef.nativeElement).find('.bh-ui-slider input');
+        var inputRef: any  = jQuery(this.elementRef.nativeElement).find('input');
         var comp = this;
         inputRef.slider({min: this.minValue, max: this.maxValue, value: this.value});
         var throttled =  _.throttle(this.emitChange, 250, { 'trailing': true });
