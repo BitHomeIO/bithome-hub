@@ -17,7 +17,7 @@ import * as _ from 'lodash';
     styleUrls: ['app/components/dashboard-item/dashboard-item.css'],
     encapsulation: ViewEncapsulation.None,
     host: {
-        'class': 'grid-stack-item',
+        'class': 'grid-stack-item bh-dashboard-item',
         '[attr.data-gs-width]': 'width',
         '[attr.data-gs-min-width]': 'width',
         '[attr.data-gs-height]': 'height',

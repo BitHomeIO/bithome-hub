@@ -1,4 +1,4 @@
-import {Component, ElementRef, ChangeDetectorRef, QueryList, Query, AfterViewInit} from 'angular2/core';
+import {Component, ElementRef, ChangeDetectorRef, QueryList, Query, AfterViewInit, NgZone} from 'angular2/core';
 import {DashboardItem} from '../dashboard-item/dashboard-item';
 import {RouteParams} from 'angular2/router';
 import {NodeService} from '../../services/NodeService';
@@ -22,18 +22,21 @@ export class DashboardCapability implements DashboardInterface, AfterViewInit {
     private nodeId:string;
     private node:Node;
     private grid:any;
-    private items: QueryList<DashboardItem>;
     private itemsInitialized:number;
+    private size:string;
 
     constructor(private elementRef:ElementRef,
                 private nodeService:NodeService,
                 private changeDetector: ChangeDetectorRef,
                 private params:RouteParams,
-                @Query(DashboardItem) items:QueryList<DashboardItem>) {
+                private window: Window) {
         this.nodeId = params.get('nodeId');
-        this.items = items;
         this.capabilities = new Array<string>();
         this.itemsInitialized = 0;
+
+        // window.onresize = () => {
+        //     this.onResize();
+        // };
     }
 
     public ngAfterViewInit():any {
@@ -60,6 +63,38 @@ export class DashboardCapability implements DashboardInterface, AfterViewInit {
                 that.changeDetector.detectChanges();
             }
         );
+    }
+
+    private isBreakpoint(size: string): boolean {
+        return jQuery('.device-' + size).is(':visible');
+    }
+
+    private onResize(): void {
+        if (this.isBreakpoint('xs')) {
+            if (this.size !== 'xs') {
+                this.size = 'xs';
+                this.grid.destroy();
+                console.log('Setting grid width to xs');
+                this.initGrid();
+            }
+            // this.grid.setGridWidth(1);
+            // } else if (this.isBreakpoint('sm')) {
+            //     // this.grid.setGridWidth(1);
+            //     console.log('Setting grid width to sm');
+            // } else if (this.isBreakpoint('md')) {
+            //     // this.grid.setGridWidth(12);
+            //     console.log('Setting grid width to md');
+            // } else if (this.isBreakpoint('lg')) {
+            //     // this.grid.setGridWidth(12);
+            //     console.log('Setting grid width to lg');
+        } else {
+            if (this.size !== 'lg') {
+                this.size = 'lg';
+                console.log('Setting grid width to lg');
+                this.grid.destroy();
+                this.initGrid();
+            }
+        }
     }
 
     private initGrid(): void {

@@ -36,4 +36,5 @@ export class App {
 }
 
 bootstrap(App, [ROUTER_PROVIDERS, serviceInjectables, utilInjectables,
-    provide(LocationStrategy, {useClass: HashLocationStrategy})]);
+    provide(LocationStrategy, {useClass: HashLocationStrategy}),
+    provide(Window, {useValue: window})]);
