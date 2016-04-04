@@ -1,6 +1,4 @@
 import {Component} from 'angular2/core';
-import {Observable} from 'rxjs/Observable';
-import {OnDestroy} from 'angular2/core';
 declare var jQuery: any;
 import 'slider';
 import {ElementRef} from 'angular2/core';
