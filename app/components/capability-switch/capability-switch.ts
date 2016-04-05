@@ -14,12 +14,20 @@ export class CapabilitySwitch implements Capability {
 
     @Output() executed: EventEmitter<String[]> = new EventEmitter<String[]>();
 
+    private value: boolean = true;
+
     public onSwitchChanged(event: boolean) {
        this.executed.emit([event ? 'on' : 'off']);
     }
 
     public getExecutedEvent(): EventEmitter<String[]> {
         return this.executed;
+    }
+
+    public updateValues(values:string[]):void {
+        if (values.length === 1) {
+           this.value = (values[0] === 'on');
+        }
     }
 
     getName():string {

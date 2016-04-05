@@ -71,18 +71,29 @@ module.exports = {
       fetchingLights: {
         _onEnter: function () {
           this.emit("fetchingLights");
-        }
+        },
+        'initialized': function () {
+          this.transition('initialized');
+        },
       },
       initialized: {
         _onEnter: function () {
           this.timer = setTimeout(function () {
             this.handle('timeout');
-          }.bind(this), 60000);
+          }.bind(this), 1000);
         },
-        timeout: 'fetchingLights',
+        timeout: 'readValues',
         _onExit: function () {
           clearTimeout(this.timer);
         }
+      },
+      readValues: {
+        _onEnter: function () {
+          this.emit("readValues");
+        },
+        'initialized': function () {
+          this.transition('initialized');
+        },
       },
       bridgeNotFound: {
         _onEnter: function () {
@@ -153,7 +164,6 @@ module.exports = {
       });
   },
 
-
   searchBridges: function searchBridges() {
     sails.log.debug(this.logName + "Searching for hue bridges");
     var that = this;
@@ -193,9 +203,28 @@ module.exports = {
             NodeService.addNode(light.uniqueid, light.name, that.source);
             NodeService.addNodeCapabilities(light.uniqueid, that.capabilities);
           });
+          that.signals.handle('initialized');
         }
       }
     });
+  },
+
+  readValues: function readValues() {
+    var that = this;
+
+    _.forEach(that.nodeIdHueIdMap, function(value, key) {
+      that.hueApi.lightStatus(value)
+        .then(function(status) {
+          that.broadcastValues(key, status);
+        }).done();
+    });
+
+    that.signals.handle('initialized');
+  },
+
+  broadcastValues: function broadcastValues(nodeId, status) {
+    // sails.log.debug(nodeId + ": " + status.state.bri);
+    ActionService.updateValues(nodeId, 'switch', [status.state.on ? 'on' : 'off']);
   },
 
   handleMessage: function handleMessage(nodeId, message) {
@@ -366,6 +395,9 @@ module.exports = {
     });
     this.signals.on('fetchingLights', function () {
       that.fetchingLights();
+    });
+    this.signals.on('readValues', function () {
+      that.readValues();
     });
     this.signals.handle('init');
 

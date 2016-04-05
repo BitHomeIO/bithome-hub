@@ -1,4 +1,7 @@
-import {Component, ComponentRef, ViewEncapsulation, EventEmitter, Output, ChangeDetectorRef} from 'angular2/core';
+import {
+    Component, ComponentRef, ViewEncapsulation, EventEmitter, Output, ChangeDetectorRef,
+    OnDestroy
+} from 'angular2/core';
 import {CapabilitySwitch} from '../capability-switch/capability-switch';
 import {Input} from 'angular2/core';
 import {ElementRef} from 'angular2/core';
@@ -9,6 +12,8 @@ import {Capability} from '../capability/capability';
 import {ActionService} from '../../services/ActionService';
 declare var System: any;
 import * as _ from 'lodash';
+import {Observable} from 'rxjs/Observable';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
     selector: 'dashboard-item',
@@ -27,7 +32,7 @@ import * as _ from 'lodash';
         '[attr.data-gs-y]': 'y',
     }
 })
-export class DashboardItem implements OnInit {
+export class DashboardItem implements OnInit, OnDestroy {
     @Output() public itemInitialized = new EventEmitter();
     @Input() private nodeId: string;
     @Input() private capability: string;
@@ -41,6 +46,8 @@ export class DashboardItem implements OnInit {
     private header: string;
     private dynamicComponentLoader: DynamicComponentLoader;
     private elementRef: ElementRef;
+    private values: Observable<Array<string>>;
+    private valuesSubscription: Subscription;
 
     constructor(private actionService: ActionService,
                 private changeDetector: ChangeDetectorRef,
@@ -80,6 +87,11 @@ export class DashboardItem implements OnInit {
         return this.height;
     }
 
+    public ngOnDestroy(): void {
+        if (this.valuesSubscription) {
+            this.valuesSubscription.unsubscribe();
+        }
+    }
 
     private attachListener(componentRef: ComponentRef): void {
         var capability: Capability = componentRef.instance;
@@ -92,6 +104,17 @@ export class DashboardItem implements OnInit {
         capability.getExecutedEvent().subscribe(
             function(params: string[]) {
                 that.onCapabilityExecuted(params);
+            }
+        );
+
+        // Listen for new values
+        this.values = this.actionService.getValueUpdatesForCapability(this.nodeId, this.capability);
+
+
+        this.valuesSubscription = this.values.subscribe(
+            (values) => {
+                capability.updateValues(values);
+                that.changeDetector.detectChanges();
             }
         );
 

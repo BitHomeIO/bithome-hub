@@ -63,4 +63,10 @@ module.exports.routes = {
   //
   'post /api/nodes/:nodeId/capabilities/:capability': 'ActionController.postCapability',
 
+  //
+  // Values
+  //
+  'get /api/nodes/:nodeId/values': 'ActionController.getValueUpdates',
+  'delete /api/nodes/:nodeId/values': 'ActionController.stopValueUpdates',
+
 };

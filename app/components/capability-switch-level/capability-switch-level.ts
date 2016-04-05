@@ -22,6 +22,10 @@ export class CapabilitySwitchLevel implements Capability {
         return this.executed;
     }
 
+    public updateValues(values:string[]):void {
+        // noop
+    }
+
     getName():string {
         return 'Switch Level';
     }

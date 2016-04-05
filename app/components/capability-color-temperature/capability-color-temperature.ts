@@ -22,6 +22,10 @@ export class CapabilityColorTemperature implements Capability {
         return this.executed;
     }
 
+    public updateValues(values:string[]):void {
+        // noop
+    }
+
     getName():string {
         return 'Color Temperature';
     }

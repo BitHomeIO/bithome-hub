@@ -1,4 +1,7 @@
-import {Component, ElementRef, ChangeDetectorRef, QueryList, Query, AfterViewInit, NgZone} from 'angular2/core';
+import {
+    Component, ElementRef, ChangeDetectorRef, QueryList, Query, AfterViewInit, NgZone,
+    OnDestroy
+} from 'angular2/core';
 import {DashboardItem} from '../dashboard-item/dashboard-item';
 import {RouteParams} from 'angular2/router';
 import {NodeService} from '../../services/NodeService';
@@ -6,6 +9,7 @@ import {Node} from '../../models/node';
 import * as async from 'async';
 import 'gridstack';
 import {DashboardInterface} from '../../dashboard-interface/dashboard-interface';
+import {ActionService} from '../../services/ActionService';
 
 declare var jQuery:any;
 
@@ -16,7 +20,8 @@ declare var jQuery:any;
     templateUrl: 'app/components/dashboard-capability/dashboard-capability.html',
     styleUrls: ['app/components/dashboard-capability/dashboard-capability.css'],
 })
-export class DashboardCapability implements DashboardInterface, AfterViewInit {
+export class DashboardCapability implements DashboardInterface, AfterViewInit, OnDestroy {
+
 
     private capabilities:string[];
     private nodeId:string;
@@ -29,6 +34,7 @@ export class DashboardCapability implements DashboardInterface, AfterViewInit {
                 private nodeService:NodeService,
                 private changeDetector: ChangeDetectorRef,
                 private params:RouteParams,
+                private actionService:ActionService,
                 private window: Window) {
         this.nodeId = params.get('nodeId');
         this.capabilities = new Array<string>();
@@ -44,6 +50,10 @@ export class DashboardCapability implements DashboardInterface, AfterViewInit {
             this.node = node;
             this.setupCapabilities();
         });
+    }
+
+    public ngOnDestroy():any {
+        this.actionService.stopValueUpdates(this.nodeId);
     }
 
     public onItemInitialized(dashboardItem: DashboardItem) {
