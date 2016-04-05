@@ -14,6 +14,8 @@ export class CapabilitySwitchLevel implements Capability {
 
     @Output() executed: EventEmitter<String[]> = new EventEmitter<String[]>();
 
+    private value: number = 0;
+
     public onSliderChanged(event: number) {
        this.executed.emit([event.toString()]);
     }
@@ -23,7 +25,9 @@ export class CapabilitySwitchLevel implements Capability {
     }
 
     public updateValues(values:string[]):void {
-        // noop
+        if (values.length === 1) {
+            this.value = parseFloat(values[0]);
+        }
     }
 
     getName():string {

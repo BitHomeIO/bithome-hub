@@ -213,7 +213,7 @@ module.exports = {
     var that = this;
 
     _.forEach(that.nodeIdHueIdMap, function(value, key) {
-      that.hueApi.lightStatus(value)
+      that.hueApi.lightStatusWithRGB(value)
         .then(function(status) {
           that.broadcastValues(key, status);
         }).done();
@@ -225,6 +225,10 @@ module.exports = {
   broadcastValues: function broadcastValues(nodeId, status) {
     // sails.log.debug(nodeId + ": " + status.state.bri);
     ActionService.updateValues(nodeId, 'switch', [status.state.on ? 'on' : 'off']);
+    ActionService.updateValues(nodeId, 'switchLevel', [status.state.bri / 2.55]);
+    ActionService.updateValues(nodeId, 'colorTemperature', [status.state.ct /(500.0-153.0)*100.0 - 153.0]);
+    // ActionService.updateValues(nodeId, 'colorControlRgb', [status.state.rgb[0], status.state.rgb[1], status.state.rgb[2]]);
+    // ActionService.updateValues(nodeId, 'colorControlHsb', [status.state.hue, status.state.sat, status.state.bri]);
   },
 
   handleMessage: function handleMessage(nodeId, message) {
@@ -232,7 +236,7 @@ module.exports = {
       sails.log.warn(this.logName + 'null message');
     }
 
-    sails.log.debug(this.logName + 'handling message nodeId:' + nodeId + ' message:' + message);
+    // sails.log.debug(this.logName + 'handling message nodeId:' + nodeId + ' message:' + message);
 
     var hueId = this.nodeIdHueIdMap[nodeId];
 

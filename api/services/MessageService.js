@@ -24,7 +24,7 @@ module.exports = {
 
     if (!packet.topic.startsWith("$SYS/")) {
 
-      sails.log.debug(JSON.stringify(NodeService.nodeSourceMap));
+      // sails.log.debug(JSON.stringify(NodeService.nodeSourceMap));
       // Check to see if this message has come across the hub topic
       if (packet.topic === this.hubTopic) {
         MessageService.handleMessageForHub(timestamp, client, packet);
@@ -62,7 +62,7 @@ module.exports = {
    */
   handleMessageForNode: function (nodeId, timestamp, client, packet) {
 
-    sails.log.debug('Device message for nodeId: ' + nodeId + ' ' + packet.payload);
+    // sails.log.debug('Device message for nodeId: ' + nodeId + ' ' + packet.payload);
 
     // Lookup the bridge for this source and pass it along
     var source = NodeService.nodeSourceMap[nodeId];

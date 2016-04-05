@@ -43,7 +43,11 @@ export class CapabilityColorControlRgb implements Capability {
     }
 
     public updateValues(values:string[]):void {
-        // noop
+        if (values.length === 3) {
+            this.red = parseInt(values[0], 10);
+            this.green = parseInt(values[1], 10);
+            this.blue = parseInt(values[2], 10);
+        }
     }
 
     getName():string {

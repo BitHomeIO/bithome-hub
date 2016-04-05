@@ -44,7 +44,11 @@ export class CapabilityColorControlHsb implements Capability {
     }
 
     public updateValues(values:string[]):void {
-        // noop
+        if (values.length === 3) {
+            this.hue = parseFloat(values[0]);
+            this.sat = parseFloat(values[1]);
+            this.bright = parseFloat(values[2]);
+        }
     }
 
     getName():string {
