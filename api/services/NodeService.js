@@ -69,7 +69,7 @@ module.exports = {
         capabilities: capabilities
       };
     } else {
-      return {};
+      return null;
     }
   },
 

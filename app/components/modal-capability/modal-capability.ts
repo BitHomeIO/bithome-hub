@@ -7,7 +7,8 @@ import {ComponentRef} from 'angular2/core';
 import {Capability} from '../capability/capability';
 import {ActionService} from '../../services/ActionService';
 import * as _ from 'lodash';
-import {ICustomModalComponent, ModalDialogInstance, ICustomModal} from 'angular2-modal/dist/angular2-modal';
+import {ICustomModalComponent, ICustomModal} from 'angular2-modal/dist/commonjs/models/ICustomModal';
+import {ModalDialogInstance} from 'angular2-modal/dist/commonjs/models/ModalDialogInstance';
 declare var System: any;
 
 export class ModalCapabilityData {

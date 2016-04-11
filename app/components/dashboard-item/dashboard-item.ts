@@ -69,10 +69,11 @@ export class DashboardItem implements OnInit, OnDestroy {
 
         var configObject: any = {'component': componentModuleName, 'path': componentPath};
 
-        System.import(configObject.path)
-            .then(componentModule => componentModule[configObject.component])
-            .then(config => this.dynamicComponentLoader.loadIntoLocation(config, this.elementRef, 'content'))
-            .then(cmp => this.attachListener(cmp));
+            System.import(configObject.path)
+                .then(componentModule => componentModule[configObject.component])
+                .then(config => this.dynamicComponentLoader.loadIntoLocation(config, this.elementRef, 'content'))
+                .then(cmp => this.attachListener(cmp))
+                .catch(e => this.error(e));
     }
 
     public getElementRef(): ElementRef {
@@ -91,6 +92,12 @@ export class DashboardItem implements OnInit, OnDestroy {
         if (this.valuesSubscription) {
             this.valuesSubscription.unsubscribe();
         }
+    }
+
+    private error(exception: any): void {
+        console.log('Could not load ui component for ' + this.capability);
+
+        this.itemInitialized.emit(this);
     }
 
     private attachListener(componentRef: ComponentRef): void {

@@ -6,7 +6,10 @@ import {Renderer} from 'angular2/core';
 import {ElementRef} from 'angular2/core';
 import {RouterLink} from 'angular2/router';
 import {ModalCapability, ModalCapabilityData} from '../modal-capability/modal-capability';
-import {Modal, ModalDialogInstance, ICustomModal, ModalConfig} from 'angular2-modal/dist/angular2-modal';
+import {Modal} from 'angular2-modal/dist/commonjs/providers/Modal';
+import {ModalDialogInstance} from 'angular2-modal/dist/commonjs/models/ModalDialogInstance';
+import {ICustomModal} from 'angular2-modal/dist/commonjs/models/ICustomModal';
+import {ModalConfig} from 'angular2-modal/dist/commonjs/models/ModalConfig';
 
 @Component({
     inputs: ['node'],

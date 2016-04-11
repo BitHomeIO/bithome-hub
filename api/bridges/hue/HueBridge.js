@@ -3,12 +3,11 @@ var HueApi = hue.HueApi;
 var LightState = hue.lightState;
 
 var machina = require('machina');
-var logName = 'HueAdapter: ';
+var logName = 'HueBridge: ';
 
 module.exports = {
 
-  name: 'Hue Adapter',
-  logName: 'HueAdapter: ',
+  name: 'Hue Bridge',
   source: 'hue',
   linkButtonIntervalMs: 5000,
   searchNewNodesIntervalMs: 60000,
@@ -103,7 +102,7 @@ module.exports = {
   }),
 
   connectWithKey: function connectWithKey(key) {
-    sails.log.debug(this.logName + "Connecting with credentials");
+    sails.log.debug(logName + "Connecting with credentials");
 
     this.hueApi = new HueApi(this.hueBridge.ipaddress, key);
 
@@ -111,37 +110,37 @@ module.exports = {
 
     that.hueApi.description(function (err, result) {
       if (err) {
-        sails.log.error(that.logName + "Error getting bridge description: " + err);
+        sails.log.error(logName + "Error getting bridge description: " + err);
       } else {
-        sails.log.debug(that.logName + "Connected to " + result.model.name);
+        sails.log.debug(logName + "Connected to " + result.model.name);
         that.signals.handle('fetchingLights');
       }
     });
   },
 
   registerWithBridge: function registerWithBridge() {
-    sails.log.debug(this.logName + "Registering with hue bridge");
+    sails.log.debug(logName + "Registering with hue bridge");
 
     var hueApi = new HueApi();
     var that = this;
 
     hueApi.createUser(that.hueBridge.ipaddress, function (err, key) {
       if (err) {
-        sails.log.error(that.logName + "Error registering with bridge:" + err);
+        sails.log.error(logName + "Error registering with bridge:" + err);
         that.signals.handle('waitingForLinkButton');
       } else {
-        console.log(that.logName + "Key received from bridge");
+        console.log(logName + "Key received from bridge");
 
         BridgeSetting.create({
-          bridgeId: that.logName,
+          bridgeId: logName,
           key: 'userId',
           value: key
         }).exec(function (error, created) {
           if (!error) {
-            sails.log.info(that.logName + "Saved key")
+            sails.log.info(logName + "Saved key")
             that.connectWithKey(key);
           } else {
-            sails.log.error(that.logName + error);
+            sails.log.error(logName + error);
           }
         });
       }
@@ -150,10 +149,10 @@ module.exports = {
 
   initializeBridge: function initializeBridge() {
     var that = this;
-    sails.log.debug(that.logName + "Initializing bridge");
+    sails.log.debug(logName + "Initializing bridge");
 
     var that = this;
-    BridgeSetting.findOne({bridgeId: that.logName, key: 'userId'}).exec(
+    BridgeSetting.findOne({bridgeId: logName, key: 'userId'}).exec(
       function (err, record) {
         if (record) {
           that.connectWithKey(record.value);
@@ -165,19 +164,19 @@ module.exports = {
   },
 
   searchBridges: function searchBridges() {
-    sails.log.debug(this.logName + "Searching for hue bridges");
+    sails.log.debug(logName + "Searching for hue bridges");
     var that = this;
     hue.nupnpSearch(function (err, result) {
       if (err) {
-        sails.log.error(that.logName + "Error searching for bridges:" + err);
+        sails.log.error(logName + "Error searching for bridges:" + err);
         that.signals.handle('bridgeNotFound');
       } else {
         if (result.length === 0) {
-          sails.log.debug(that.logName + "No Hue bridges Found.");
+          sails.log.debug(logName + "No Hue bridges Found.");
           that.signals.handle('bridgeNotFound');
         } else {
           var bridge = result[0];
-          sails.log.debug(that.logName + "Bridge found: " + JSON.stringify(bridge));
+          sails.log.debug(logName + "Bridge found: " + JSON.stringify(bridge));
           that.hueBridge = bridge;
           that.signals.handle('initializeBridge');
         }
@@ -186,19 +185,19 @@ module.exports = {
   },
 
   fetchingLights: function fetchingLights() {
-    sails.log.debug(this.logName + "Fetching lights");
+    sails.log.debug(logName + "Fetching lights");
     var that = this;
     that.hueApi.lights(function (err, result) {
       if (err) {
-        sails.log.error(that.logName + "Error fetching lights from bridge:" + err);
+        sails.log.error(logName + "Error fetching lights from bridge:" + err);
         that.signals.handle('bridgeNotFound');
       } else {
         if (result.lights.length === 0) {
-          sails.log.debug(that.logName + "No Hue lights Found.");
+          sails.log.debug(logName + "No Hue lights Found.");
           that.signals.handle('bridgeNotFound');
         } else {
           _.each(result.lights, function (light) {
-            sails.log.debug(that.logName + "Found light " + light.name + " (" + light.uniqueid + ")");
+            sails.log.debug(logName + "Found light " + light.name + " (" + light.uniqueid + ")");
             that.nodeIdHueIdMap[light.uniqueid] = light.id;
             NodeService.addNode(light.uniqueid, light.name, that.source);
             NodeService.addNodeCapabilities(light.uniqueid, that.capabilities);
@@ -233,7 +232,7 @@ module.exports = {
 
   handleMessage: function handleMessage(nodeId, message) {
     if (!message || message.length == 0) {
-      sails.log.warn(this.logName + 'null message');
+      sails.log.warn(logName + 'null message');
     }
 
     // sails.log.debug(this.logName + 'handling message nodeId:' + nodeId + ' message:' + message);
@@ -319,7 +318,7 @@ module.exports = {
           break;
 
         default:
-          sails.log.info(this.logName + 'capability ' + args[0] + ' not implemented');
+          sails.log.info(logName + 'capability ' + args[0] + ' not implemented');
           break;
       }
       //if (message == 'on') {
@@ -337,13 +336,13 @@ module.exports = {
       //this.hueApi.setLightState(hueId, state).done();
 
     } else {
-      sails.log.error(this.logName + 'no Hue ID for nodeId: ' + nodeId);
+      sails.log.error(logName + 'no Hue ID for nodeId: ' + nodeId);
     }
   },
 
   requireArgs: function(args, minLength) {
     if (args.length < minLength) {
-      sails.log.error(this.logName + 'invalid arguments');
+      sails.log.error(logName + 'invalid arguments');
       return false;
     }
     return true;
@@ -389,7 +388,7 @@ module.exports = {
   },
 
   init: function init() {
-    sails.log.info(this.logName + ": Starting");
+    sails.log.info(logName + ": Starting");
     var that = this;
     this.signals.on('searchBridges', function () {
       that.searchBridges();
