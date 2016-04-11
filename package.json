@@ -64,8 +64,8 @@
     "typescript": "^1.8.9",
     "underscore": "^1.8.3",
     "uppercamelcase": "^1.1.0",
-    "zone.js": "^0.6.8"
-    "websocket": "^1.0.22",
+    "zone.js": "^0.6.8",
+    "websocket": "^1.0.22"
   },
   "devDependencies": {
     "chai": "^3.5.0",
