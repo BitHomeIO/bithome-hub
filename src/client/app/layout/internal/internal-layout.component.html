@@ -1,0 +1,133 @@
+<div class="interrupt-overlay" [hidden]="!( (showDisconnectedInterrupt$ && showWebsocketDisconnectedInterrupt$)  | async)">
+    <i class="fa fa-exclamation-triangle fa-4x" aria-hidden="true"></i>
+    <h4>Unable to contact the server.</h4>
+</div>
+
+<span defaultOverlayTarget #defaultOverlayTarget></span>
+<header class="app-header navbar">
+  <button class="navbar-toggler mobile-sidebar-toggler hidden-lg-up" type="button">&#9776;</button>
+  <a class="navbar-brand" href="#"></a>
+  <ul class="nav navbar-nav hidden-md-down">
+    <li class="nav-item">
+      <a class="nav-link navbar-toggler sidebar-toggler" href="#">&#9776;</a>
+    </li>
+  </ul>
+</header>
+
+<div class="app-body">
+  <div class="sidebar">
+    <nav class="sidebar-nav">
+      <ul class="nav">
+        <li class="nav-item"> <a class="nav-link" [routerLink]="['/dashboards']"><i class="fa fa-tachometer fa-fw"></i> Dashboards</a> </li>
+        <li class="nav-item"> <a class="nav-link" [routerLink]="['/messages']"><i class="fa fa-list fa-fw"></i> Messages</a> </li>
+        <li class="nav-item"> <a class="nav-link" [routerLink]="['/nodes']"><i class="fa fa-lightbulb-o fa-fw"></i> Nodes</a> </li>
+        <li class="nav-item"> <a class="nav-link" [routerLink]="['/bridges']"><i class="fa fa-exchange fa-fw"></i> Bridges</a> </li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Main content -->
+  <main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+      <breadcrumbs></breadcrumbs>
+    </ol>
+
+    <div class="container-fluid">
+      <router-outlet></router-outlet>
+    </div>
+    <!-- /.conainer-fluid -->
+  </main>
+</div>
+
+<footer class="app-footer">
+  <a href="https://genesisui.com">Prime</a> &copy; 2017 creativeLabs.
+  <span class="float-right">Powered by <a href="https://genesisui.com">GenesisUI</a>
+    </span>
+</footer>
+
+<!--<header class="navbar">-->
+    <!--<div class="container-fluid">-->
+        <!--<button class="navbar-toggler hidden-sm-up" type="button" mobileNavToggle>&#9776;</button>-->
+        <!--<a class="navbar-brand" href="#"></a>-->
+
+        <!--<ul class="nav navbar-nav hidden-xs-down">-->
+            <!--&lt;!&ndash;<li class="nav-item">&ndash;&gt;-->
+                <!--&lt;!&ndash;<a class="nav-link navbar-toggler sidebar-toggle" href="#">&#9776;</a>&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+            <!--&lt;!&ndash;<li class="nav-item px-1">&ndash;&gt;-->
+                <!--&lt;!&ndash;<a class="nav-link" href="#">Dashboard</a>&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+            <!--&lt;!&ndash;<li class="nav-item px-1">&ndash;&gt;-->
+                <!--&lt;!&ndash;<a class="nav-link" href="#">Users</a>&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+            <!--&lt;!&ndash;<li class="nav-item px-1">&ndash;&gt;-->
+                <!--&lt;!&ndash;<a class="nav-link" href="#">Settings</a>&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--</ul>-->
+
+        <!--<ul class="nav navbar-nav account-menu float-xs-right hidden-xs-down">-->
+            <!--<li class="nav-item dropdown" dropdown>-->
+                <!--<a class="nav-link dropdown-toggle profile-menu " data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle>-->
+                    <!--<i class="fa fa-user-circle fa-2x" aria-hidden="true"></i>-->
+                    <!--<span class="hidden-sm-down">{{currentUser?.name}}</span>-->
+                <!--</a>-->
+                <!--<div class="dropdown-menu dropdown-menu-right" dropdownMenu aria-labelledby="simple-dropdown">-->
+
+                    <!--&lt;!&ndash;<div class="dropdown-header text-xs-center">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<strong>Account</strong>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+                    <!--&lt;!&ndash;<a class="dropdown-item" href="#"><i class="fa fa-bell-o"></i> Updates<span class="tag tag-info">42</span></a>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<a class="dropdown-item" href="#"><i class="fa fa-envelope-o"></i> Messages<span class="tag tag-success">42</span></a>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<a class="dropdown-item" href="#"><i class="fa fa-tasks"></i> Tasks<span class="tag tag-danger">42</span></a>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<a class="dropdown-item" href="#"><i class="fa fa-comments"></i> Comment<span class="tag tag-warning">42</span></a>&ndash;&gt;-->
+
+                    <!--&lt;!&ndash;<div class="dropdown-header text-xs-center">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<strong>Settings</strong>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+                    <!--&lt;!&ndash;<a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profile</a>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<a class="dropdown-item" href="#"><i class="fa fa-wrench"></i> Setting</a>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<a class="dropdown-item" href="#"><i class="fa fa-usd"></i> Payments<span class="tag tag-default">42</span></a>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<a class="dropdown-item" href="#"><i class="fa fa-file"></i> Projects<span class="tag tag-primary">42</span></a>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<div class="divider"></div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<a class="dropdown-item" href="#"><i class="fa fa-shield"></i> Lock account</a>&ndash;&gt;-->
+                    <!--<a class="dropdown-item" href="javascript:void(0);" (click)="logout()"><i class="fa fa-sign-out"></i> Logout</a>-->
+                <!--</div>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</div>-->
+<!--</header>-->
+
+
+<!--<div class="sidebar">-->
+    <!--<nav class="sidebar-nav">-->
+        <!--<ul class="nav">-->
+            <!--<li class="nav-item">-->
+                <!--<a class="nav-link" routerLinkActive="active" [routerLink]="['/hardware']">-->
+                    <!--<i class="fa fa-map-marker" aria-hidden="true"></i>Hardware</a>-->
+            <!--</li>-->
+            <!--<li class="nav-item">-->
+                <!--<a class="nav-link" routerLinkActive="active" [routerLink]="['/map']">-->
+                    <!--<i class="fa fa-map" aria-hidden="true"></i>Map</a>-->
+            <!--</li>-->
+            <!--<li class="nav-item">-->
+                <!--<a class="nav-link" routerLinkActive="active" [routerLink]="['/stream/offline']">-->
+                    <!--<i class="fa fa-cloud" aria-hidden="true"></i>Offline</a>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</nav>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Main content &ndash;&gt;-->
+<!--<div smartResize class="main">-->
+    <!--<router-outlet></router-outlet>-->
+<!--</div>-->
+
+<!--<footer class="footer">-->
+    <!--<span class="text-left">-->
+        <!--&copy; 2016 Point One Nav, Inc.-->
+    <!--</span>-->
+<!--</footer>-->

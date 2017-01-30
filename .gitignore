@@ -48,3 +48,4 @@ build
 www
 typings
 *.tmp.txt
+dist

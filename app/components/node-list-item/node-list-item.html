@@ -1,3 +1,0 @@
-<div class="bh-node-list-item">
-    <a [routerLink]="['/DashboardCapability', {nodeId: node.id}]">[{{node.id}}]] - {{node.name}}</a> (<span *ngFor="#capability of node.capabilities; #l = last"><a href="javascript:void(0);" (click)="openCapabilityDialog(capability)">{{capability}}</a>{{l?'':', '}}</span>)
-</div>

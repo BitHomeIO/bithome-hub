@@ -1,0 +1,23 @@
+.alert-notification-wrapper {
+  position: fixed;
+  width: 400px;
+  z-index: 1800;
+
+  left: 50%;
+  margin-left: -200px;
+}
+
+.alert-notification-wrapper.left { left: 20px; }
+.alert-notification-wrapper.top {
+  top: 0;
+}
+.alert-notification-wrapper.right { right: 20px; }
+.alert-notification-wrapper.bottom { bottom: 20px; }
+
+@media (max-width: 340px) {
+  .alert-notification-wrapper {
+    width: auto;
+    left: 20px;
+    right: 20px;
+  }
+}
