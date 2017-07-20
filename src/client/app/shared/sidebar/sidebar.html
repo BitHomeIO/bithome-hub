@@ -1,0 +1,30 @@
+<div class="collapse nav-toggleable-md" id="nav-toggleable-md">
+    <ul class="nav nav-pills nav-stacked flex-column">
+        <!--<li class="nav-header">Dashboards</li>-->
+        <!--<li class="nav-item">-->
+            <!--<a class="nav-link active" href="index.html"><i class="fa fa-fw fa-info-circle" aria-hidden="true"></i> Overview</a>-->
+        <!--</li>-->
+        <!--<li class="nav-item">-->
+            <!--<a class="nav-link " href="order-history/index.html">Order history</a>-->
+        <!--</li>-->
+        <!--<li class="nav-item">-->
+            <!--<a class="nav-link "href="fluid/index.html">Fluid layout</a>-->
+        <!--</li>-->
+        <!--<li class="nav-item">-->
+            <!--<a class="nav-link " href="icon-nav/index.html">Icon nav</a>-->
+        <!--</li>-->
+
+        <li class="nav-header">Admin</li>
+        <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/messages']">
+                <i class="fa fa-list" aria-hidden="true"></i> Messages
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/nodes']">
+                <i class="fa fa-sitemap" aria-hidden="true"></i> Nodes
+            </a>
+        </li>
+    </ul>
+    <hr class="visible-xs mt-3">
+</div>

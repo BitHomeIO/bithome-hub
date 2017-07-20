@@ -1,8 +1,6 @@
 import { Db, ObjectID } from 'mongodb';
 import { injectable } from 'inversify';
 import { MongoDBConnection } from '../config/mongodb.config';
-import * as mongoose from 'mongoose';
-import * as Promise from 'bluebird';
 import {User} from '../models/user';
 // import { User } from '../../models/user';
 
@@ -11,8 +9,6 @@ export class MongoDBClient {
   public db: Db;
 
   constructor() {
-    require('mongoose').Promise = Promise;
-
     MongoDBConnection.getConnection((connection: any) => {
       this.db = connection;
     });

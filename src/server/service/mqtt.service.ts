@@ -6,6 +6,8 @@ import TYPES from '../constants/identifiers';
 import {LoggerService} from './logger.service';
 import {MessageService} from './message.service';
 import {MqttClient} from '../models/mqtt-client';
+import {MqttPacket} from '../models/mqtt-packet';
+import {Deserialize} from 'cerialize';
 
 @injectable()
 export class MqttService {
@@ -57,7 +59,9 @@ export class MqttService {
   }
 
   private onPublished(packet: any, client: MqttClient): void {
-    this.LOGGER.debug('MQTT client "' + (client? client.toString() : 'undefined') + '" published packet ' + JSON.stringify(packet));
-    this.messageService.handleMessage(moment(), client, packet)
+    if (client && client.id) {
+      this.LOGGER.debug('MQTT client "' + (client ? client.id : 'undefined') + '" published packet ' + JSON.stringify(packet));
+      this.messageService.handleMessage(moment(), client, Deserialize(packet, MqttPacket));
+    }
   }
 }

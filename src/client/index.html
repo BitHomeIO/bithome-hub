@@ -10,19 +10,22 @@
 
 <head>
 
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Prime - Bootstrap 4 Admin Template">
-  <meta name="author" content="Łukasz Holeczek">
-  <meta name="keyword"
-        content="Bootstrap,Admin,Template,Open,Source,AngularJS,Angular,Angular2,jQuery,CSS,HTML,RWD,Dashboard">
-  <link rel="shortcut icon" href="assets/img/favicon.png">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Prime - Bootstrap 4 Admin Template">
+    <meta name="author" content="Łukasz Holeczek">
+    <meta name="keyword"
+          content="Bootstrap,Admin,Template,Open,Source,AngularJS,Angular,Angular2,jQuery,CSS,HTML,RWD,Dashboard">
+    <link rel="shortcut icon" href="assets/img/favicon.png">
 
-  <title>BitHome - Home Automation</title>
+    <title>BitHome - Home Automation</title>
 
-  <!-- inject:css -->
-  <!-- endinject -->
+    <link href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet">
+
+
+    <!-- inject:css -->
+    <!-- endinject -->
 </head>
 
 <!-- BODY options, add following classes to body to change options
@@ -46,38 +49,38 @@
 
 -->
 
-<body class="app header-fixed aside-menu-fixed aside-menu-hidden">
+<body>
 
-      <sd-app>Loading...</sd-app>
+<sd-app>Loading...</sd-app>
 
-      <script>
-        // Fixes undefined module function in SystemJS bundle
-        function module() {
-        }
-      </script>
+<script>
+    // Fixes undefined module function in SystemJS bundle
+    function module() {
+    }
+</script>
 
-      <!-- shims:js -->
-      <!-- endinject -->
+<!-- shims:js -->
+<!-- endinject -->
 
-      <% if (BUILD_TYPE === 'dev') { %>
-      <script src="<%= APP_BASE %>app/system-config.js"></script>
-      <% } %>
+<% if (BUILD_TYPE === 'dev') { %>
+<script src="<%= APP_BASE %>app/system-config.js"></script>
+<% } %>
 
-      <!-- libs:js -->
-      <!-- endinject -->
+<!-- libs:js -->
+<!-- endinject -->
 
-      <!-- inject:js -->
-      <!-- endinject -->
+<!-- inject:js -->
+<!-- endinject -->
 
-      <% if (BUILD_TYPE === 'dev') { %>
-      <script>
-        System.import('<%= BOOTSTRAP_MODULE %>')
-          .catch(function (e) {
+<% if (BUILD_TYPE === 'dev') { %>
+<script>
+    System.import('<%= BOOTSTRAP_MODULE %>')
+        .catch(function (e) {
             console.error(e.stack || e,
-              'Not expecting this error? Report it at https://github.com/mgechev/angular-seed/issues');
-          });
-      </script>
-      <% } %>
+                'Not expecting this error? Report it at https://github.com/mgechev/angular-seed/issues');
+        });
+</script>
+<% } %>
 
 </body>
 

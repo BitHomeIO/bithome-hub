@@ -1,0 +1,447 @@
+@import "../../variables";
+
+//colors
+$color_cell_primary: $brand-primary;
+$color_cell_border: $gray-dark;
+$color_row_alt: $gray-lightest;
+$color_log_cabin_approx: #222;
+$color_boulder_40_approx: rgba(120,120,120,0.4);
+$color_fuscous_gray_40_approx: rgba(80,80,80,0.4);
+$color_shark_40_approx: rgba(40,40,40,0.4);
+$black_40: rgba(0,0,0,0.4);
+$color_jewel_approx: #217346;
+$color_japanese_laurel_approx: #006400;
+$color_red_berry_approx: #8b0000;
+$color_surf_crest_approx: #cec;
+$white: #fff;
+$color_quill_gray_approx: #d3d3d3;
+$color_pumice_approx: #c7c7c7;
+$color_silver_approx: #bebebe;
+$color_black_haze_approx: #f6f6f6;
+$color_gallery_approx: #f0f0f0;
+$white_50: rgba(255,255,255,0.5);
+$black: #000;
+$gray: #808080;
+
+//fonts
+$font_0: Calibri;
+$font_1: Segoe UI;
+$font_2: Thonburi;
+$font_3: Arial;
+$font_4: Verdana;
+$font_5: sans-serif;
+
+.ag-blue {
+  line-height: 1.4;
+  font-family: $font_0, $font_1, $font_2, $font_3, $font_4, $font_5;
+  font-size: 10pt;
+  color: $color_log_cabin_approx;
+  img {
+    vertical-align: middle;
+    border: 0;
+  }
+  .ag-root {
+    border: 1px solid $color_cell_border;
+  }
+  .ag-cell-not-inline-editing {
+    padding: 2px;
+  }
+  .ag-column-moving {
+    .ag-cell {
+      //Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+      transition: left 0.2s;
+    }
+    .ag-header-cell {
+      //Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+      transition: left 0.2s;
+    }
+    .ag-header-group-cell {
+      //Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+      transition: left 0.2s;
+    }
+  }
+  .ag-cell-focus {
+    border: 2px solid $color_jewel_approx;
+  }
+  .ag-cell-no-focus {
+    border-right: 1px dotted $color_cell_border;
+    border-top: 2px solid transparent;
+    border-left: 2px solid transparent;
+    border-bottom: 1px dotted $color_cell_border;
+  }
+  .ag-cell-first-right-pinned {
+    border-left: 1px solid $color_cell_border;
+  }
+  .ag-cell-last-left-pinned {
+    border-right: 1px solid $color_cell_border;
+  }
+  .ag-cell-highlight {
+    border: 1px solid $color_japanese_laurel_approx;
+  }
+  .ag-cell-highlight-animation {
+    //Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+    transition: border 1s;
+  }
+  .ag-value-change-delta {
+    padding-right: 2px;
+  }
+  .ag-value-change-delta-up {
+    color: $color_japanese_laurel_approx;
+  }
+  .ag-value-change-delta-down {
+    color: $color_red_berry_approx;
+  }
+  .ag-value-change-value {
+    background-color: transparent;
+    //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+    border-radius: 1px;
+    padding-left: 1px;
+    padding-right: 1px;
+    //Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+    transition: background-color 1s;
+  }
+  .ag-value-change-value-highlight {
+    background-color: $color_surf_crest_approx;
+    //Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+    transition: background-color 0.1s;
+  }
+  .ag-rich-select {
+    font-size: 14px;
+    border: 1px solid $color_cell_border;
+    background-color: $white;
+  }
+  .ag-rich-select-value {
+    padding: 2px;
+  }
+  .ag-rich-select-list {
+    border-top: 1px solid $color_quill_gray_approx;
+  }
+  .ag-rich-select-row {
+    padding: 2px;
+  }
+  .ag-rich-select-row-selected {
+    background-color: $color_pumice_approx;
+  }
+  .ag-large-text {
+    border: 1px solid $color_cell_border;
+  }
+  .ag-header {
+    color: $white;
+    background: $color_cell_primary;
+    border-bottom: 1px solid $color_cell_border;
+    font-weight: 600;
+  }
+  .ag-header-icon {
+    color: $white;
+    stroke: none;
+    fill: $white;
+  }
+  .ag-header-cell {
+    border-right: 1px solid $color_cell_border;
+  }
+  .ag-header-cell-moving {
+    background-color: $color_silver_approx;
+    .ag-header-cell-label {
+      opacity: 0.5;
+      filter: alpha(opacity=50);
+    }
+  }
+  .ag-header-group-cell {
+    border-right: 1px solid $color_cell_border;
+  }
+  .ag-header-group-cell-with-group {
+    border-bottom: 1px solid $color_cell_border;
+  }
+  .ag-header-cell-label {
+    padding: 4px 2px;
+  }
+  .ag-header-cell-text {
+    padding-left: 2px;
+  }
+  .ag-header-group-cell-label {
+    padding: 4px;
+    padding-left: 10px;
+  }
+  .ag-header-group-text {
+    margin-right: 2px;
+  }
+  .ag-header-cell-menu-button {
+    padding: 2px;
+    margin-top: 4px;
+    border: 1px solid transparent;
+    //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+    border-radius: 3px;
+    //Instead of the line below you could use @include box-sizing($bs)
+    box-sizing: content-box;
+    line-height: 0;
+    &:hover {
+      border: 1px solid $color_cell_border;
+    }
+  }
+  .ag-pinned-right-header {
+    border-left: 1px solid $color_cell_border;
+  }
+  .ag-body {
+    background-color: $color_black_haze_approx;
+  }
+  .ag-row-odd {
+    background-color: $color_row_alt;
+  }
+  .ag-row-even {
+    background-color: $white;
+  }
+  .ag-row-selected {
+    background-color: $color_pumice_approx;
+  }
+  .ag-overlay-loading-wrapper {
+    background-color: $white_50;
+  }
+  .ag-overlay-loading-center {
+    background-color: $white;
+    border: 1px solid $color_cell_border;
+    //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+    border-radius: 10px;
+    padding: 10px;
+    color: $black;
+  }
+  .ag-overlay-no-rows-center {
+    background-color: $white;
+    border: 1px solid $color_cell_border;
+    //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+    border-radius: 10px;
+    padding: 10px;
+  }
+  .ag-group-cell-entire-row {
+    background-color: $color_black_haze_approx;
+    padding: 2px;
+  }
+  .ag-footer-cell-entire-row {
+    background-color: $color_black_haze_approx;
+    padding: 2px;
+  }
+  .ag-group-cell {
+    font-style: italic;
+  }
+  .ag-group-expanded {
+    padding-right: 4px;
+  }
+  .ag-group-contracted {
+    padding-right: 4px;
+  }
+  .ag-group-value {
+    padding-right: 2px;
+  }
+  .ag-group-checkbox {
+    padding-right: 2px;
+  }
+  .ag-footer-cell {
+    font-style: italic;
+  }
+  .ag-menu {
+    border: 1px solid $gray;
+    background-color: $color_black_haze_approx;
+    cursor: default;
+    font-family: $font_0, $font_1, $font_2, $font_3, $font_4, $font_5;
+    font-size: 10pt;
+    .ag-tab-header {
+      background-color: $color_cell_primary;
+    }
+    .ag-tab {
+      padding: 6px 8px;
+      margin: 2px 2px 0 2px;
+      display: inline-block;
+      border-right: 1px solid transparent;
+      border-left: 1px solid transparent;
+      border-top: 1px solid transparent;
+      //Instead of the line below you could use @include border-top-right-radius($radius)
+      border-top-right-radius: 2px;
+      //Instead of the line below you could use @include border-top-left-radius($radius)
+      border-top-left-radius: 2px;
+    }
+    .ag-tab-selected {
+      background-color: $color_cell_border;
+      border-right: 1px solid $color_quill_gray_approx;
+      border-left: 1px solid $color_quill_gray_approx;
+      border-top: 1px solid $color_quill_gray_approx;
+    }
+  }
+  .ag-menu-separator {
+    border-top: 1px solid $color_quill_gray_approx;
+  }
+  .ag-menu-option-active {
+    background-color: $color_pumice_approx;
+  }
+  .ag-menu-option-icon {
+    padding: 2px 4px;
+    vertical-align: middle;
+  }
+  .ag-menu-option-text {
+    padding: 2px 4px;
+    vertical-align: middle;
+  }
+  .ag-menu-option-shortcut {
+    padding: 2px 2px 2px 20px;
+    vertical-align: middle;
+  }
+  .ag-menu-option-popup-pointer {
+    padding: 2px 4px;
+    vertical-align: middle;
+  }
+  .ag-menu-option-disabled {
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+  }
+  .ag-menu-column-select-wrapper {
+    margin: 2px;
+  }
+  .ag-filter-checkbox {
+    position: relative;
+    top: 2px;
+    left: 2px;
+  }
+  .ag-filter-header-container {
+    border-bottom: 1px solid $color_quill_gray_approx;
+  }
+  .ag-filter-apply-panel {
+    border-top: 1px solid $color_quill_gray_approx;
+    padding: 2px;
+  }
+  .ag-filter-value {
+    margin-left: 4px;
+  }
+  .ag-selection-checkbox {
+    padding-right: 4px;
+  }
+  .ag-paging-panel {
+    padding: 4px;
+  }
+  .ag-paging-button {
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+  .ag-paging-row-summary-panel {
+    display: inline-block;
+    width: 300px;
+  }
+  .ag-tool-panel {
+    background-color: $color_black_haze_approx;
+    border-right: 1px solid $color_cell_border;
+    border-bottom: 1px solid $color_cell_border;
+    border-top: 1px solid $color_cell_border;
+    color: $color_log_cabin_approx;
+    .ag-column-select-panel {
+      border-bottom: 1px solid $color_cell_border;
+    }
+  }
+  .ag-status-bar {
+    color: $color_log_cabin_approx;
+    background-color: $color_black_haze_approx;
+    font-size: 10pt;
+    height: 22px;
+    border-bottom: 1px solid $color_cell_border;
+    border-left: 1px solid $color_cell_border;
+    border-right: 1px solid $color_cell_border;
+    padding: 2px;
+  }
+  .ag-status-bar-aggregations {
+    float: right;
+  }
+  .ag-status-bar-item {
+    padding-left: 10px;
+  }
+  .ag-column-drop-cell {
+    background: $color_row_alt;
+    color: $black;
+    border: 1px solid $gray;
+  }
+  .ag-column-drop-cell-ghost {
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+  }
+  .ag-column-drop-cell-text {
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+  .ag-column-drop-cell-button {
+    border: 1px solid transparent;
+    padding-left: 2px;
+    padding-right: 2px;
+    //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+    border-radius: 3px;
+    &:hover {
+      border: 1px solid $color_cell_border;
+    }
+  }
+  .ag-column-drop-empty-message {
+    padding-left: 2px;
+    padding-right: 2px;
+    color: $gray;
+  }
+  .ag-column-drop-icon {
+    padding-right: 4px;
+  }
+  .ag-column-drop {
+    background-color: $color_black_haze_approx;
+  }
+  .ag-column-drop-horizontal {
+    padding: 4px;
+    border-top: 1px solid $color_cell_border;
+    border-left: 1px solid $color_cell_border;
+    border-right: 1px solid $color_cell_border;
+    .ag-column-drop-cell {
+      padding: 2px;
+    }
+  }
+  .ag-column-drop-vertical {
+    padding: 4px 4px 10px 4px;
+    border-bottom: 1px solid $color_cell_border;
+    .ag-column-drop-cell {
+      margin-top: 2px;
+    }
+    .ag-column-drop-empty-message {
+      text-align: center;
+      padding: 5px;
+    }
+  }
+  .ag-pivot-mode {
+    border-bottom: 1px solid $color_cell_border;
+    padding: 4px;
+    background-color: $color_black_haze_approx;
+  }
+  .ag-select-agg-func-popup {
+    cursor: default;
+    position: absolute;
+    font-size: 14px;
+    background-color: $white;
+    border: 1px solid $color_cell_border;
+  }
+  .ag-select-agg-func-item {
+    padding-left: 2px;
+    padding-right: 2px;
+    &:hover {
+      background-color: $color_pumice_approx;
+    }
+  }
+  .ag-cell-range-selected-1:not(.ag-cell-focus) {
+    background-color: $color_boulder_40_approx;
+  }
+  .ag-cell-range-selected-2:not(.ag-cell-focus) {
+    background-color: $color_fuscous_gray_40_approx;
+  }
+  .ag-cell-range-selected-3:not(.ag-cell-focus) {
+    background-color: $color_shark_40_approx;
+  }
+  .ag-cell-range-selected-4:not(.ag-cell-focus) {
+    background-color: $black_40;
+  }
+  .ag-no-scrolls .ag-header-container {
+    background: $color_cell_primary;
+    border-bottom: 1px solid $color_cell_border;
+  }
+  .ag-floating-top .ag-row {
+    background-color: $color_gallery_approx;
+  }
+  .ag-floating-bottom .ag-row {
+    background-color: $color_gallery_approx;
+  }
+}

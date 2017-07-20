@@ -59,7 +59,7 @@ export class ProjectConfig extends SeedConfig {
       {src: `${this.CSS_SRC}/main.css`, inject: true, vendor: false},
       {src: `${this.NODE_MODULES}/tether/dist/css/tether.css`, inject: true, vendor: true},
       {src: `${this.NODE_MODULES}/tether/dist/css/tether-theme.basic.css`, inject: true, vendor: true},
-      {src: `.${this.NPM_BASE}/ag-grid/dist/styles/ag-grid.css`, inject: true, vendor: false}
+      {src: `${this.NODE_MODULES}/ag-grid/dist/styles/ag-grid.css`, inject: true, vendor: false}
       // {src: `${this.APP_SRC}/your-path-to-lib/libs/jquery-ui.js`, inject: true, vendor: false}
       // {src: `${this.CSS_SRC}/path-to-lib/test-lib.css`, inject: true, vendor: false},
     ];
@@ -210,7 +210,21 @@ export class ProjectConfig extends SeedConfig {
         packageMeta: {
           defaultExtension: 'js'
         }
-      }
+      },
+      {
+        name: `socket.io-client`,
+        path: `${this.NODE_MODULES}/socket.io-client/dist/socket.io.js`,
+        packageMeta: {
+          defaultExtension: 'js'
+        }
+      },
+      {
+        name: `socketio-wildcard`,
+        path: `./js/socketio-wildcard.js`,
+        packageMeta: {
+          defaultExtension: 'js'
+        }
+      },
     ];
 
 

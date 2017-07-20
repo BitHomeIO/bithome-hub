@@ -265,7 +265,7 @@ export class ApiService {
     }
 
     public WEBSOCKET(): string {
-        return this.wsPath + '/v1';
+        return 'http://localhost:3000';
     }
 
     public PROVIDER(): string {

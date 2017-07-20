@@ -23,6 +23,7 @@ import {Ng2BootstrapModule} from 'ng2-bootstrap/ng2-bootstrap';
 import {ModalModule} from 'angular2-modal';
 import {MessagesModule} from './pages/messages/messages.module';
 import {AgGridModule} from 'ag-grid-ng2';
+import {MessageService} from './service/message.service';
 
 @NgModule({
   imports: [
@@ -51,6 +52,7 @@ import {AgGridModule} from 'ag-grid-ng2';
     ApiService,
     ConfigService,
     WebSocketService,
+    MessageService,
     AuthService
   ],
   bootstrap: [AppComponent]

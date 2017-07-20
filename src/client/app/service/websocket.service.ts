@@ -1,13 +1,14 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from './api.service';
 import {AnonymousSubscription} from 'rxjs/Subscription';
-import {EventMessage, EventMessageType} from '../models/event.message.type';
 import {Deserialize} from 'cerialize';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
 import {UsingObservable} from 'rxjs/observable/UsingObservable';
+import * as io from 'socket.io-client';
+import * as socketiowildcard from 'socketio-wildcard';
 import async = require('async');
 import {IntervalObservable} from 'rxjs/observable/IntervalObservable';
 import {Store} from '@ngrx/store';
@@ -17,6 +18,7 @@ import * as _ from 'lodash';
 import moment = require('moment');
 import {State} from '../reducers/index.reducer';
 import {Subscription} from 'rxjs';
+import {EventMessage, EventMessageType} from '../shared/models/events/event.message';
 
 export class DisposableWebsocketSubscription implements AnonymousSubscription {
 
@@ -38,12 +40,12 @@ export class WebSocketService {
     private heartbeatLastSent: number;
     private heartbeatLastRecieved: number;
 
-    private ws: WebSocket;
     private wsSubject: Subject<EventMessage>;
     private isOpen: boolean = false;
     private heartbeatSubscription: Subscription = null;
     private reconnectWebsocket$: Observable<boolean>;
     private subscriptionStrings: string[] = [];
+    private socket: SocketIOClient.Socket;
 
     //Set up the default 'noop' event handlers
     public onclose: (ev: CloseEvent) => void = function (event: CloseEvent) {
@@ -74,10 +76,10 @@ export class WebSocketService {
 
         let observer = {
             next: (data: Object) => {
-                if (this.ws.readyState === WebSocket.OPEN) {
+                if (this.socket.connected) {
                     if (data !== null) {
                         try {
-                            this.ws.send(JSON.stringify(data));
+                            this.socket.send(JSON.stringify(data));
                         } catch (e) {
                             console.log('Could not convert json to send over ws');
                         }
@@ -94,13 +96,14 @@ export class WebSocketService {
             observable.map(
                 (message: MessageEvent) => {
                     try {
-                        return Deserialize(JSON.parse(message.data), EventMessage);
+                        let eventMessage = Deserialize(message.data[1], EventMessage);
+                        return eventMessage;
                     } catch (e) {
                         return null;
                     }
                 }
             ).filter((message: EventMessage) => {
-                return message !== null;
+                return message !== null && message.eventType !== null;
             }).share()
         );
     }
@@ -183,33 +186,37 @@ export class WebSocketService {
     }
 
     private connect(): void {
-        if (this.ws) {
-            this.ws.close();
+        if (this.socket) {
+            this.socket.close();
         }
 
-        this.ws = new WebSocket(this.apiService.WEBSOCKET());
+        this.socket = io.connect(this.apiService.WEBSOCKET(), {path: '/ws'});
 
-        this.ws.onerror = (event: ErrorEvent) => {
-            console.log('Websocket error: ' + event.message);
+        let wildcard = new socketiowildcard.SocketIOWildcard(io.Manager);
+        wildcard.patch(this.socket);
+
+        this.socket.on('error', (event: String) => {
+            console.log('Websocket error: ' + event);
             this.store.dispatch(new websocketActions.WebsocketDisconnectedAction());
-        };
+        });
 
-        this.ws.onclose = (event: CloseEvent) => {
+        this.socket.on('disconnect', () => {
             console.log('Websocket close');
             this.store.dispatch(new websocketActions.WebsocketDisconnectedAction());
-        };
+        });
 
-        this.ws.onopen = (event: Event) => {
+        this.socket.on('connect', () => {
             this.isOpen = true;
 
             this.store.dispatch(new websocketActions.WebsocketConnectedAction());
             this.initiateHeartbeatInterval();
             this.resubscribeChannels();
-        };
+        });
 
-        this.ws.onmessage = (event: MessageEvent) => {
+
+        this.socket.on('*', (event: any) => {
             this.onmessage(event);
-        };
+        });
     }
 
     private initiateHeartbeatInterval(): void {
@@ -238,24 +245,24 @@ export class WebSocketService {
 
     private sendHeartbeat(): void {
 
-        this.reconnectWebsocket$.take(1).subscribe(
-            (reconnectWebsocket: boolean) => {
-                if (reconnectWebsocket) {
-                    // Try reconnecting
-                    console.log('[Websocket] reconnecting');
-                    this.connect();
-                } else {
-                    var event: any = {request_type: 'PING'};
-                    this.wsSubject.next(event);
-                    this.heartbeatLastSent = moment().valueOf();
-
-                    if ((this.heartbeatLastSent - this.heartbeatLastRecieved > this.heartbeatTimeoutDuration) ||
-                        this.ws.readyState === WebSocket.CLOSED) {
-                        this.store.dispatch(new websocketActions.WebsocketDisconnectedAction());
-                    }
-                }
-            }
-        );
+        // this.reconnectWebsocket$.take(1).subscribe(
+        //     (reconnectWebsocket: boolean) => {
+        //         if (reconnectWebsocket) {
+        //             // Try reconnecting
+        //             console.log('[Websocket] reconnecting');
+        //             this.connect();
+        //         } else {
+        //             var event: any = {request_type: 'PING'};
+        //             this.wsSubject.next(event);
+        //             this.heartbeatLastSent = moment().valueOf();
+        //
+        //             if ((this.heartbeatLastSent - this.heartbeatLastRecieved > this.heartbeatTimeoutDuration) ||
+        //                 !this.socket.connected) {
+        //                 this.store.dispatch(new websocketActions.WebsocketDisconnectedAction());
+        //             }
+        //         }
+        //     }
+        // );
     }
 
     private addSubscriptionString(channel: string): void {

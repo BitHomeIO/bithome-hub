@@ -4,16 +4,21 @@ import {MessagesComponent} from './messages.component';
 import {AgGridModule} from 'ag-grid-ng2/main';
 import {MomentModule} from 'angular2-moment';
 import {MessagesRoutingModule} from './messages-routing.module';
+import {EventMessageTypeRendererComponent} from './event-message-type-renderer.component';
 
 @NgModule({
   imports: [
     CommonModule,
     MessagesRoutingModule,
-    AgGridModule,
+    AgGridModule.withComponents([]),
     MomentModule
   ],
-  declarations: [MessagesComponent],
-  exports: [MessagesComponent]
+  declarations: [
+      MessagesComponent,
+    EventMessageTypeRendererComponent
+  ],
+  exports: [MessagesComponent],
+  entryComponents: [EventMessageTypeRendererComponent]
 })
 
 export class MessagesModule {

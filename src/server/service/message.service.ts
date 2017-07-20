@@ -7,6 +7,9 @@ import {SocketService} from './socket.service';
 import {MqttClient} from '../models/mqtt-client';
 import {MqttPacket} from '../models/mqtt-packet';
 import {NodeService} from './node.service';
+import {EventMessage} from '../shared/events/event.message';
+import {EventMessageType} from '../shared/events/event.message.type';
+import { Serialize} from 'cerialize';
 
 @injectable()
 export class MessageService {
@@ -14,6 +17,7 @@ export class MessageService {
   private socketService: SocketService;
   private nodeService: NodeService;
 
+  private CHANNEL_ALL_MESSAGES: string = 'messages';
   private TOPIC_HUB: string = 'hub';
   private TOPIC_SYS: string = '$SYS/';
   private sourceMap: Map<string,{name:string,price:number}> = new Map<string,{name:string,price:number}>();
@@ -30,6 +34,8 @@ export class MessageService {
     if (!packet.topic.startsWith(this.TOPIC_SYS)) {
 
       this.socketService.broadcast(packet.topic, packet.messageId);
+      this.socketService.broadcast(this.CHANNEL_ALL_MESSAGES,
+          Serialize(new EventMessage(EventMessageType.RAW_PAYLOAD, packet.payload.toString())));
       // // sails.log.debug(JSON.stringify(NodeService.nodeSourceMap));
       // Check to see if this message has come across the hub topic
       this.nodeService.addNode(client.id, 'test', 'test');
@@ -40,7 +46,9 @@ export class MessageService {
         // Otherwise assume this message is for a device
         // this.handleMessageForNode(packet.topic, timestamp, client, packet);
       // } else {
-        this.LOGGER.debug("[" + timestamp.format() + "]  Packet:" + JSON.stringify(packet));
+          if (packet.payload) {
+            this.LOGGER.debug('[' + timestamp.format() + ']  Topic: ' + packet.topic + ' Message: ' + packet.payload.toString());
+          }
       }
     }
   }

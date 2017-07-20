@@ -20,7 +20,7 @@ export class SocketService {
 
     this.LOGGER.info('Starting socket.io Server.');
 
-    this.ioServer = socketIo(httpServer);
+    this.ioServer = socketIo(httpServer, { path: '/ws' });
 
 
     this.ioServer.on('connect', (socket: any) => {

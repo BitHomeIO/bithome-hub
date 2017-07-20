@@ -7,21 +7,24 @@ import {SmartResizeDirective} from '../../directives/smart-resize.directive';
 import {Ng2BootstrapModule, DropdownModule} from 'ng2-bootstrap/ng2-bootstrap';
 import {AlertNotificationModule} from '../../components/alert-notification/alert-notification.module';
 import {SIDEBAR_TOGGLE_DIRECTIVES} from '../../directives/sidebar.directive';
+import {SideBarModule} from '../../shared/sidebar/sidebar.module';
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    AlertNotificationModule,
-    Ng2BootstrapModule,
-    DropdownModule.forRoot(),
-    RouterModule
-  ],
-  declarations: [
-    InternalLayoutComponent,
-    SmartResizeDirective,
-    SIDEBAR_TOGGLE_DIRECTIVES,
-    BreadcrumbsComponent
-  ]
+    imports: [
+        BrowserModule,
+        AlertNotificationModule,
+        Ng2BootstrapModule,
+        DropdownModule.forRoot(),
+        RouterModule,
+        SideBarModule
+
+    ],
+    declarations: [
+        InternalLayoutComponent,
+        SmartResizeDirective,
+        SIDEBAR_TOGGLE_DIRECTIVES,
+        BreadcrumbsComponent
+    ]
 })
 
 export class InternalLayoutModule {

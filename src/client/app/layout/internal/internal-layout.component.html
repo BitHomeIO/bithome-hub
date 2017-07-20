@@ -4,48 +4,89 @@
 </div>
 
 <span defaultOverlayTarget #defaultOverlayTarget></span>
-<header class="app-header navbar">
-  <button class="navbar-toggler mobile-sidebar-toggler hidden-lg-up" type="button">&#9776;</button>
-  <a class="navbar-brand" href="#"></a>
-  <ul class="nav navbar-nav hidden-md-down">
-    <li class="nav-item">
-      <a class="nav-link navbar-toggler sidebar-toggler" href="#">&#9776;</a>
-    </li>
-  </ul>
-</header>
 
-<div class="app-body">
-  <div class="sidebar">
-    <nav class="sidebar-nav">
-      <ul class="nav">
-        <li class="nav-item"> <a class="nav-link" [routerLink]="['/dashboards']"><i class="fa fa-tachometer fa-fw"></i> Dashboards</a> </li>
-        <li class="nav-item"> <a class="nav-link" [routerLink]="['/messages']"><i class="fa fa-list fa-fw"></i> Messages</a> </li>
-        <li class="nav-item"> <a class="nav-link" [routerLink]="['/nodes']"><i class="fa fa-lightbulb-o fa-fw"></i> Nodes</a> </li>
-        <li class="nav-item"> <a class="nav-link" [routerLink]="['/bridges']"><i class="fa fa-exchange fa-fw"></i> Bridges</a> </li>
-      </ul>
-    </nav>
-  </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 sidebar">
+            <nav class="sidebar-nav">
+                <div class="sidebar-header">
+                    <button class="nav-toggler nav-toggler-md sidebar-toggler" type="button" data-toggle="collapse" data-target="#nav-toggleable-md">
+                        <span class="sr-only">Toggle nav</span>
+                    </button>
+                    <a class="sidebar-brand img-responsive" href="index.html">
+                        <div class="sidebar-brand-icon"></div>
+                    </a>
+                </div>
 
-  <!-- Main content -->
-  <main class="main">
-
-    <!-- Breadcrumb -->
-    <ol class="breadcrumb">
-      <breadcrumbs></breadcrumbs>
-    </ol>
-
-    <div class="container-fluid">
-      <router-outlet></router-outlet>
+                <sidebar></sidebar>
+            </nav>
+        </div>
+        <div class="col-md-9 content">
+            <router-outlet></router-outlet>
+        </div>
     </div>
-    <!-- /.conainer-fluid -->
-  </main>
 </div>
 
-<footer class="app-footer">
-  <a href="https://genesisui.com">Prime</a> &copy; 2017 creativeLabs.
-  <span class="float-right">Powered by <a href="https://genesisui.com">GenesisUI</a>
-    </span>
-</footer>
+<div id="docsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Example modal</h4>
+            </div>
+            <div class="modal-body">
+                <p>You're looking at an example modal in the dashboard theme.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cool, got it!</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<header class="app-header navbar">-->
+  <!--<button class="navbar-toggler mobile-sidebar-toggler hidden-lg-up" type="button">&#9776;</button>-->
+  <!--<a class="navbar-brand" href="#"></a>-->
+  <!--<ul class="nav navbar-nav hidden-md-down">-->
+    <!--<li class="nav-item">-->
+      <!--<a class="nav-link navbar-toggler sidebar-toggler" href="#">&#9776;</a>-->
+    <!--</li>-->
+  <!--</ul>-->
+<!--</header>-->
+
+<!--<div class="app-body">-->
+  <!--<div class="sidebar">-->
+    <!--<nav class="sidebar-nav">-->
+      <!--<ul class="nav">-->
+        <!--<li class="nav-item"> <a class="nav-link" [routerLink]="['/dashboards']"><i class="fa fa-tachometer fa-fw"></i> Dashboards</a> </li>-->
+        <!--<li class="nav-item"> <a class="nav-link" [routerLink]="['/messages']"><i class="fa fa-list fa-fw"></i> Messages</a> </li>-->
+        <!--<li class="nav-item"> <a class="nav-link" [routerLink]="['/nodes']"><i class="fa fa-lightbulb-o fa-fw"></i> Nodes</a> </li>-->
+        <!--<li class="nav-item"> <a class="nav-link" [routerLink]="['/bridges']"><i class="fa fa-exchange fa-fw"></i> Bridges</a> </li>-->
+      <!--</ul>-->
+    <!--</nav>-->
+  <!--</div>-->
+
+  <!--&lt;!&ndash; Main content &ndash;&gt;-->
+  <!--<main class="main">-->
+
+    <!--&lt;!&ndash; Breadcrumb &ndash;&gt;-->
+    <!--<ol class="breadcrumb">-->
+      <!--<breadcrumbs></breadcrumbs>-->
+    <!--</ol>-->
+
+    <!--<div class="container-fluid">-->
+      <!--<router-outlet></router-outlet>-->
+    <!--</div>-->
+    <!--&lt;!&ndash; /.conainer-fluid &ndash;&gt;-->
+  <!--</main>-->
+<!--</div>-->
+
+<!--<footer class="app-footer">-->
+  <!--<a href="https://genesisui.com">Prime</a> &copy; 2017 creativeLabs.-->
+  <!--<span class="float-right">Powered by <a href="https://genesisui.com">GenesisUI</a>-->
+    <!--</span>-->
+<!--</footer>-->
 
 <!--<header class="navbar">-->
     <!--<div class="container-fluid">-->

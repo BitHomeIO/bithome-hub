@@ -16,8 +16,10 @@ import {LoggerService} from './service/logger.service';
 import {MessageService} from './service/message.service';
 import {SocketService} from './service/socket.service';
 import {NodeService} from './service/node.service';
-import express = require("express")
-import path = require("path")
+import express = require("express");
+import path = require("path");
+import {DeserializeKeysFrom, UnderscoreCase, SerializeKeysTo} from 'cerialize';
+var fallback = require('express-history-api-fallback');
 
 export class BitHomeServer {
 
@@ -31,7 +33,7 @@ export class BitHomeServer {
 
     if (process.env.NODE_ENV === 'development') {
       let logger = makeLoggerMiddleware();
-      container.applyMiddleware(logger);
+      container.applyMiddleware((logger as any));
     }
 
     container.bind<interfaces.Controller>(TYPE.Controller).to(HomeController).whenTargetNamed(TAGS.HomeController);
@@ -49,6 +51,8 @@ export class BitHomeServer {
     var socketService: SocketService = container.get<SocketService>(TYPES.SocketService);
     var mqttService: MqttService = container.get<MqttService>(TYPES.MqttService);
 
+    DeserializeKeysFrom(UnderscoreCase);
+    SerializeKeysTo(UnderscoreCase);
 
     // start the server
     let server = new InversifyExpressServer(container);
@@ -60,9 +64,7 @@ export class BitHomeServer {
       app.use(helmet());
       app.use(express.static(__dirname + '/../client'));
       app.use('/node_modules', express.static(__dirname + '/../../../node_modules'));
-      app.use('/^(?!(api)).*$', function(req, res){
-        res.sendFile(path.resolve(__dirname + '/../client/index.html'));
-      });
+      app.use(/^\/(?!(api)).*/, fallback(path.resolve(__dirname + '/../client/index.html')));
     });
 
     let app = server.build();

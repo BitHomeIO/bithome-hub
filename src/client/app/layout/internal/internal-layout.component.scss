@@ -1,30 +1,5 @@
-@import "../../../scss/bootstrap-variables";
-
-.navbar-toggler {
-
-  cursor: pointer;
-
-  &:focus {
-    outline: 0;
-  }
-}
-
-.nav {
-  &.account-menu {
-    margin-right: 20px;
-
-    .profile-menu {
-      i {
-        margin-right: 4px;
-      }
-    }
-  }
-}
-
-.breadcrumb {
-  padding: 1rem 1rem;
-
-  h4 {
-    margin: 0;
-  }
+.sidebar-brand-icon {
+  width: 151px;
+  height: 37px;
+  background-image: url("../assets/img/logo_white_header.png");
 }

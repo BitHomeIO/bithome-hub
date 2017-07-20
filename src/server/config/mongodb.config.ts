@@ -1,12 +1,14 @@
 import * as mongoose from 'mongoose';
 import {Db} from 'mongodb';
+import {ConnectionOptions} from 'mongoose';
 
 const url: string = 'mongodb://localhost:27017/bithome';
 
 export class MongoDBConnection {
   private static isConnected: boolean = false;
   private static db: Db;
-  //
+
+
   public static getConnection(result: (connection: any) => void) {
     if (this.isConnected) {
       return result(this.db);
@@ -18,6 +20,9 @@ export class MongoDBConnection {
   }
 
   private static connect(result: (error: any) => void) {
+    (mongoose as any).Promise = global.Promise;
+
+
     mongoose.connect(url, (err: any) => {
       if (err) {
         console.log(err.message);
