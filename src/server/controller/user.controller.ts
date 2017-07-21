@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete } from 'inversify-express-utils';
+import { controller } from 'inversify-express-utils';
 import { injectable, inject } from 'inversify';
 import { Request } from 'express';
 import { User } from '../models/user';
@@ -6,7 +6,7 @@ import TYPES from '../constants/identifiers';
 import {UserService} from '../service/user.service';
 
 @injectable()
-@Controller('/api/user')
+@controller('/api/user')
 export class UserController {
 
   constructor( @inject(TYPES.UserService) private userService: UserService) { }

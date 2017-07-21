@@ -1,10 +1,10 @@
 import 'reflect-metadata';
-import {interfaces, Controller, InversifyExpressServer, TYPE} from 'inversify-express-utils';
+import {interfaces, InversifyExpressServer, TYPE} from 'inversify-express-utils';
 import {Container} from 'inversify';
 import {makeLoggerMiddleware} from 'inversify-logger-middleware';
 import * as bodyParser from 'body-parser';
 import * as helmet from 'helmet';
-import * as http from "http";
+import * as http from 'http';
 import {HomeController} from './controller/home.controller';
 import {UserController} from './controller/user.controller';
 import {MongoDBClient} from './client/mongodb.client';
@@ -19,6 +19,7 @@ import {NodeService} from './service/node.service';
 import express = require("express");
 import path = require("path");
 import {DeserializeKeysFrom, UnderscoreCase, SerializeKeysTo} from 'cerialize';
+import {Application} from 'express';
 var fallback = require('express-history-api-fallback');
 
 export class BitHomeServer {
@@ -56,7 +57,7 @@ export class BitHomeServer {
 
     // start the server
     let server = new InversifyExpressServer(container);
-    server.setConfig((app) => {
+    server.setConfig((app: Application) => {
       app.use(bodyParser.urlencoded({
         extended: true
       }));
@@ -68,6 +69,7 @@ export class BitHomeServer {
     });
 
     let app = server.build();
+
     let httpServer = http.createServer(app);
 
     httpServer.listen(3000);

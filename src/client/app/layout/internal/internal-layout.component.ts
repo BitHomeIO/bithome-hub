@@ -21,7 +21,7 @@ export class InternalLayoutComponent implements OnInit {
 
     public status: {isopen: boolean} = {isopen: false};
 
-    @ViewChild('defaultOverlayTarget', { read: ViewContainerRef }) defaultOverlayTarget: ViewContainerRef;
+    // @ViewChild('defaultOverlayTarget', { read: ViewContainerRef }) defaultOverlayTarget: ViewContainerRef;
 
     showDisconnectedInterrupt$: Observable<boolean>;
     showWebsocketDisconnectedInterrupt$: Observable<boolean>;
@@ -42,16 +42,14 @@ export class InternalLayoutComponent implements OnInit {
     };
 
     constructor(private authService: AuthService,
-                private overlay: Overlay,
-                private store: Store<reducers.State>,
-                private router: Router) {
+                private store: Store<reducers.State>) {
 
         this.showDisconnectedInterrupt$ = this.store.select(reducers.getShowDisconnectInterrupt);
         this.showWebsocketDisconnectedInterrupt$ = this.store.select(reducers.getShowWebsocketDisconnectInterrupt);
     }
 
     ngOnInit(): void {
-        this.overlay.defaultViewContainer = this.defaultOverlayTarget;
+        // this.overlay.defaultViewContainer = this.defaultOverlayTarget;
 
         this.authService.currentUser
             .subscribe(

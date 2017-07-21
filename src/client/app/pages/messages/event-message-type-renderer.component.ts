@@ -1,6 +1,6 @@
-import {AgRendererComponent} from 'ag-grid-ng2/main';
 import {Component} from '@angular/core';
 import {EventMessageType} from '../../shared/models/events/event.message';
+import {AgRendererComponent} from 'ag-grid-angular';
 
 @Component({
     template: `{{value}}`

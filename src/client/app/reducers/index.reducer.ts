@@ -47,7 +47,7 @@ import * as fromWebsocket from './websocket.reducer';
 export interface State {
     app: fromApp.State;
     websocket: fromWebsocket.State;
-    router: fromRouter.RouterState;
+    // router: fromRouter.RouterState;
 }
 
 

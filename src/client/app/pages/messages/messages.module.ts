@@ -1,10 +1,10 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {MessagesComponent} from './messages.component';
-import {AgGridModule} from 'ag-grid-ng2/main';
 import {MomentModule} from 'angular2-moment';
 import {MessagesRoutingModule} from './messages-routing.module';
 import {EventMessageTypeRendererComponent} from './event-message-type-renderer.component';
+import {AgGridModule} from 'ag-grid-angular/main';
 
 @NgModule({
   imports: [

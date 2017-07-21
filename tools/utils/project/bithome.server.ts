@@ -1,6 +1,5 @@
 import {existsSync, lstatSync, readFileSync, readdirSync} from 'fs';
 import * as express from 'express';
-import * as gulp from 'gulp';
 import * as fallback from 'express-history-api-fallback';
 import * as openResource from 'open';
 import * as tildify from 'tildify';
@@ -10,7 +9,6 @@ import {resolve, join} from 'path';
 import * as codeChangeTool from '../seed/code_change_tools';
 import * as util from 'gulp-util';
 import Config from '../../config';
-import {ServerOpts} from 'mosca';
 
 abstract class BitHomeServer {
   abstract run(done?: any): any | Promise<any> | void;
@@ -166,9 +164,9 @@ export function serveProd() {
   let root = resolve(process.cwd(), Config.PROD_DEST);
   let server = express();
 
-  for (let proxy of Config.getProxyMiddleware()) {
-    server.use(proxy);
-  }
+  // for (let proxy of Config.getProxyMiddleware()) {
+  //   server.use(proxy);
+  // }
 
   server.use(Config.APP_BASE, express.static(root));
 

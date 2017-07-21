@@ -1,10 +1,10 @@
-import { Controller, Get } from 'inversify-express-utils';
+import {controller, httpGet} from 'inversify-express-utils';
 import { injectable } from 'inversify';
 
 @injectable()
-@Controller('/api')
+@controller('/api')
 export class HomeController {
-  @Get('/')
+  @httpGet('/')
   public get(): string {
     return 'Home sweet home';
   }

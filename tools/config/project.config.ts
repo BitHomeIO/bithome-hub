@@ -1,8 +1,7 @@
 import {join} from 'path';
 
-import {SeedConfig, BUILD_TYPES} from './seed.config';
-import {ExtendPackages} from './seed.config.interfaces';
-// import { ExtendPackages } from './seed.config.interfaces';
+import { SeedConfig } from './seed.config';
+import { ExtendPackages } from './seed.config.interfaces';
 
 /**
  * This class extends the basic seed configuration, allowing for project specific overrides. A few examples can be found
@@ -92,7 +91,7 @@ export class ProjectConfig extends SeedConfig {
         name: '@ngrx/router-store',
         path: `${this.NODE_MODULES}/@ngrx/router-store`,
         packageMeta: {
-          main: 'bundles/router-store.umd.js',
+          main: 'bundles/router-store.umd.min.js',
           defaultExtension: 'js'
         }
       },
@@ -105,8 +104,8 @@ export class ProjectConfig extends SeedConfig {
         }
       },
       {
-        name: 'ng2-bootstrap/ng2-bootstrap',
-        path: `${this.NODE_MODULES}/ng2-bootstrap/bundles/ng2-bootstrap.umd.js`,
+        name: 'ng2-bootstrap',
+        path: `${this.NODE_MODULES}/ng2-bootstrap/bundles/ngx-bootstrap.umd.min.js`,
         packageMeta: {
           defaultExtension: 'js'
         }
@@ -176,8 +175,8 @@ export class ProjectConfig extends SeedConfig {
         }
       },
       {
-        name: 'ag-grid-ng2',
-        path: `${this.NODE_MODULES}/ag-grid-ng2/main.js`,
+        name: 'ag-grid-angular',
+        path: `${this.NODE_MODULES}/ag-grid-angular`,
         packageMeta: {
           defaultExtension: 'js'
         }
@@ -191,16 +190,15 @@ export class ProjectConfig extends SeedConfig {
       },
       {
         name: 'angular2-modal',
-        path: `${this.NODE_MODULES}/angular2-modal/bundles/angular2-modal.umd.js`,
+        path: `${this.NODE_MODULES}/angular2-modal/bundle/angular2-modal.rollup.umd.js`,
         packageMeta: {
           defaultExtension: 'js'
         }
       },
       {
         name: `angular2-modal/plugins/bootstrap`,
-        path: `${this.NODE_MODULES}/angular2-modal/bundles/angular2-modal.bootstrap.umd.js`,
+        path: `${this.NODE_MODULES}/angular2-modal/plugins/bootstrap/bundle/angular2-modal-bootstrap.rollup.umd.js`,
         packageMeta: {
-          main: 'index.js',
           defaultExtension: 'js'
         }
       },
@@ -225,12 +223,14 @@ export class ProjectConfig extends SeedConfig {
           defaultExtension: 'js'
         }
       },
+      {
+        name: `mosca`,
+        path: `${this.NODE_MODULES}/mosca/index.js`,
+        packageMeta: {
+          defaultExtension: 'js'
+        }
+      },
     ];
-
-
-    this.SYSTEM_BUILDER_CONFIG['packageConfigPaths'].push(
-      join('node_modules', '@ngrx', '*', 'package.json'),
-    );
 
     this.addPackagesBundles(additionalPackages);
 
@@ -239,7 +239,9 @@ export class ProjectConfig extends SeedConfig {
 
     this.ENABLE_SCSS = true;
 
-    this.PLUGIN_CONFIGS['browser-sync']['open'] = false;
+    this.PLUGIN_CONFIGS['browser-sync'] = {
+      open: false
+    };
   }
 
 }
