@@ -25,6 +25,18 @@ export class ProjectConfig extends SeedConfig {
     'node_modules/font-awesome/fonts/**'
   ];
 
+  /**
+   * Name of the output package
+   * @type {string}
+   */
+  PACKAGE_NAME = 'bithome-hub.zip';
+
+  /**
+   * The folder for the package directory
+   * @type {string}
+   */
+  PACKAGE_DEST = `${this.DIST_DIR}/package`;
+
   constructor() {
     super();
 

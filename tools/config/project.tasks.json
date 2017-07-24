@@ -17,6 +17,12 @@
     "build.js.dev",
     "build.server.js.dev",
     "build.index.dev"
+  ],
+  "package.prod": [
+    "clean.package",
+    "clean.prod",
+    "build.prod",
+    "package.dist.prod"
   ]
 }
 
