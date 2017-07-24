@@ -10,7 +10,6 @@ import {Store} from '@ngrx/store';
 import {Subject} from 'rxjs/Subject';
 import {ConfigService} from './config.service';
 import {Serialize} from 'cerialize';
-import saveAs = require('file-saver');
 
 class RequestData {
     public url: string;
@@ -114,38 +113,6 @@ export class ApiService {
         return observable;
     }
 
-    public getPostDownloadFileWithAuth(url: string, payload: any): Observable<void> {
-        let headers = this.getHeaders();
-        headers.append('Accept', 'application/octet-stream');
-
-        let options = new RequestOptions({headers: headers, responseType: ResponseContentType.Blob});
-
-        return this.http.post(url, Serialize(payload), options).map(
-            (response: Response) => {
-                var dispositionHeader = response.headers.get('content-disposition');
-                var result = dispositionHeader.split(';')[1].trim().split('=')[1];
-                var fileName = result.replace(/"/g, '');
-                saveAs(response.blob(), fileName);
-            }
-        );
-    }
-
-
-    public getDownloadFileWithAuth(url: string): Observable<void> {
-        let headers = this.getHeaders();
-        headers.append('Accept', 'application/octet-stream');
-
-        let options = new RequestOptions({headers: headers, responseType: ResponseContentType.Blob});
-
-        return this.http.get(url, options).map(
-            (response: Response) => {
-                var dispositionHeader = response.headers.get('content-disposition');
-                var result = dispositionHeader.split(';')[1].trim().split('=')[1];
-                var fileName = result.replace(/"/g, '');
-                saveAs(response.blob(), fileName);
-            }
-        );
-    }
 
     // endregion
 
