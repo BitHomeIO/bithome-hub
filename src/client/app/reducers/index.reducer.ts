@@ -19,16 +19,6 @@ import * as fromRouter from '@ngrx/router-store';
  */
 // import { storeFreeze } from 'ngrx-store-freeze';
 
-/**
- * combineReducers is another useful metareducer that takes a map of reducer
- * functions and creates a new reducer that stores the gathers the values
- * of each reducer and stores them using the reducer's key. Think of it
- * almost like a database, where every reducer is a table in the db.
- *
- * More: https://egghead.io/lessons/javascript-redux-implementing-combinereducers-from-scratch
- */
-import { combineReducers } from '@ngrx/store';
-
 
 /**
  * Every reducer module's default export is the reducer function itself. In
@@ -60,7 +50,7 @@ export interface State {
  * wrapping that in storeLogger. Remember that compose applies
  * the result from right to left.
  */
-export const reducers: ActionReducerMap<State> = {
+export const reducers: ActionReducerMap<any> = {
     app: fromApp.reducer,
     websocket: fromWebsocket.reducer,
     router: fromRouter.routerReducer

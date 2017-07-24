@@ -5,7 +5,7 @@ import {
 import {Subscription} from 'rxjs/Subscription';
 import {Notification} from '../notification/notification.type';
 import {NotificationOptions} from '../notification/notification.options.type';
-import {NotificationService} from '../../services/notification.service';
+import {NotificationService} from '../../service/notification.service';
 
 @Component({
   moduleId: module.id,

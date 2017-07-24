@@ -83,7 +83,7 @@ export class ProjectConfig extends SeedConfig {
         name: '@ngrx/core',
         path: `${this.NODE_MODULES}/@ngrx/core`,
         packageMeta: {
-          main: 'bundles/core.umd.js',
+          main: 'bundles/core.min.umd.js',
           defaultExtension: 'js'
         }
       },
@@ -99,7 +99,7 @@ export class ProjectConfig extends SeedConfig {
         name: '@ngrx/store',
         path: `${this.NODE_MODULES}/@ngrx/store`,
         packageMeta: {
-          main: 'bundles/store.umd.js',
+          main: 'bundles/store.umd.min.js',
           defaultExtension: 'js'
         }
       },

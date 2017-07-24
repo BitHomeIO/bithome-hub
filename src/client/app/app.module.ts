@@ -17,7 +17,7 @@ import {InternalLayoutModule} from './layout/internal/internal-layout.module';
 import {BsDropdownModule} from 'ng2-bootstrap';
 import {reducers} from './reducers/index.reducer';
 import {StoreModule} from '@ngrx/store';
-import {StoreRouterConnectingModule, routerReducer} from '@ngrx/router-store';
+import {StoreRouterConnectingModule} from '@ngrx/router-store';
 import {BootstrapModalModule} from 'angular2-modal/plugins/bootstrap';
 import {MessagesModule} from './pages/messages/messages.module';
 import {MessageService} from './service/message.service';
