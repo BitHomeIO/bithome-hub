@@ -1,17 +1,17 @@
 import {Actions, ActionTypes} from '../actions/websocket.action';
 
 
-export interface State {
+export interface WebsocketState {
     showWebsocketDisconnectInterrupt: boolean;
     reconnectWebsocket: boolean;
 }
 
-const initialState: State = {
+const initialState: WebsocketState = {
     showWebsocketDisconnectInterrupt: false,
     reconnectWebsocket: false
 };
 
-export function reducer(state = initialState, action: Actions): State {
+export function reducer(state = initialState, action: Actions): WebsocketState {
     switch (action.type) {
         case ActionTypes.CONNECTED_STATE:
             return {
@@ -36,6 +36,6 @@ export function reducer(state = initialState, action: Actions): State {
     }
 }
 
-export const getShowWebsocketDisconnectInterrupt = (state: State) => state.showWebsocketDisconnectInterrupt;
-export const getReconnectWebsocket = (state: State) => state.reconnectWebsocket;
+export const getShowWebsocketDisconnectInterrupt = (state: WebsocketState) => state.showWebsocketDisconnectInterrupt;
+export const getReconnectWebsocket = (state: WebsocketState) => state.reconnectWebsocket;
 

@@ -1,15 +1,15 @@
 import {Actions, ActionTypes} from '../actions/app.action';
 
 
-export interface State {
+export interface AppState {
     showDisconnectInterrupt: boolean;
 }
 
-const initialState: State = {
+const initialState: AppState = {
     showDisconnectInterrupt: false,
 };
 
-export function reducer(state = initialState, action: Actions): State {
+export function reducer(state = initialState, action: Actions): AppState {
     switch (action.type) {
         case ActionTypes.READY_STATE:
             return {
@@ -31,5 +31,5 @@ export function reducer(state = initialState, action: Actions): State {
     }
 }
 
-export const getShowDisconnectInterrupt = (state: State) => state.showDisconnectInterrupt;
+export const getShowDisconnectInterrupt = (state: AppState) => state.showDisconnectInterrupt;
 

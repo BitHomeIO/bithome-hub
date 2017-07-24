@@ -15,7 +15,7 @@ import {WebSocketService} from './service/websocket.service';
 import {AuthService} from './service/auth.service';
 import {InternalLayoutModule} from './layout/internal/internal-layout.module';
 import {BsDropdownModule} from 'ng2-bootstrap';
-import {reducer} from './reducers/index.reducer';
+import {reducers} from './reducers/index.reducer';
 import {StoreModule} from '@ngrx/store';
 import {StoreRouterConnectingModule, routerReducer} from '@ngrx/router-store';
 import {BootstrapModalModule} from 'angular2-modal/plugins/bootstrap';
@@ -28,7 +28,7 @@ import {AgGridModule} from 'ag-grid-angular/main';
     BrowserModule,
     HttpModule,
     AppRoutingModule,
-    StoreModule.forRoot({routerReducer: routerReducer}),
+    StoreModule.forRoot(reducers, {}),
     StoreRouterConnectingModule,
     BootstrapModalModule,
     BsDropdownModule.forRoot(),

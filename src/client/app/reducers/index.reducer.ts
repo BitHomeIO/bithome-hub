@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { ActionReducer } from '@ngrx/store';
+import {ActionReducer, ActionReducerMap} from '@ngrx/store';
 import * as fromRouter from '@ngrx/router-store';
 
 /**
@@ -38,6 +38,8 @@ import { combineReducers } from '@ngrx/store';
  */
 import * as fromApp from './app.reducer';
 import * as fromWebsocket from './websocket.reducer';
+import {WebsocketState} from './websocket.reducer';
+import {AppState} from './app.reducer';
 
 
 /**
@@ -45,8 +47,8 @@ import * as fromWebsocket from './websocket.reducer';
  * our top level state interface is just a map of keys to inner state types.
  */
 export interface State {
-    app: fromApp.State;
-    websocket: fromWebsocket.State;
+    app: AppState;
+    websocket: WebsocketState;
     // router: fromRouter.RouterState;
 }
 
@@ -58,24 +60,11 @@ export interface State {
  * wrapping that in storeLogger. Remember that compose applies
  * the result from right to left.
  */
-const reducers = {
+export const reducers: ActionReducerMap<State> = {
     app: fromApp.reducer,
     websocket: fromWebsocket.reducer,
-    router: fromRouter.routerReducer,
+    router: fromRouter.routerReducer
 };
-
-// const developmentReducer: ActionReducer<State> = compose(storeFreeze, combineReducers)(reducers);
-const productionReducer: ActionReducer<State> = combineReducers(reducers);
-
-export function reducer(state: any, action: any) {
-    // if (environment.production) {
-        return productionReducer(state, action);
-    // }
-    // else {
-    //     return developmentReducer(state, action);
-    // }
-}
-
 
 /**
  * A selector function is a map function factory. We pass it parameters and it
@@ -110,10 +99,6 @@ export const getWebsocketState = (state: State) => state.websocket;
  * observable. Each subscription to the resultant observable
  * is shared across all subscribers.
  */
-// export const getBookEntities = createSelector(getBooksState, fromBooks.getEntities);
-// export const getBookIds = createSelector(getBooksState, fromBooks.getIds);
-// export const getSelectedBookId = createSelector(getBooksState, fromBooks.getSelectedId);
-// export const getSelectedBook = createSelector(getBooksState, fromBooks.getSelected);
 
 export const getShowDisconnectInterrupt = createSelector(getAppState, fromApp.getShowDisconnectInterrupt);
 export const getShowWebsocketDisconnectInterrupt = createSelector(getWebsocketState, fromWebsocket.getShowWebsocketDisconnectInterrupt);
