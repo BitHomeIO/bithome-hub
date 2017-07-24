@@ -4,7 +4,7 @@ import { Directive, HostListener } from '@angular/core';
  * Smart body resize
  */
 @Directive({
-  selector: 'main',
+  selector: '[smartResize]',
 })
 export class SmartResizeDirective {
 
@@ -22,8 +22,13 @@ export class SmartResizeDirective {
       // if fixed-nav do ...
     } else {
       setTimeout(() => {
-        this.height = Math.max( this.body.scrollHeight, this.body.offsetHeight, this.html.clientHeight, this.html.scrollHeight, this.html.offsetHeight );
-        document.getElementsByTagName('body')[0].style.minHeight = this.height + "px";
+        this.height = Math.max(
+          this.body.scrollHeight,
+          this.body.offsetHeight,
+          this.html.clientHeight,
+          this.html.scrollHeight,
+          this.html.offsetHeight );
+        document.getElementsByTagName('body')[0].style.minHeight = this.height + 'px';
       }, 100);
     }
 
@@ -34,8 +39,14 @@ export class SmartResizeDirective {
     if (this.hasClass(document.querySelector('body'), 'fixed-nav')) {
       // if fixed-nav do ...
     } else {
-      this.height = Math.max( this.body.scrollHeight, this.body.offsetHeight, this.html.clientHeight, this.html.scrollHeight, this.html.offsetHeight );
-      document.getElementsByTagName('body')[0].style.minHeight = this.height + "px";
+      this.height = Math.max(
+        this.body.scrollHeight,
+        this.body.offsetHeight,
+        this.html.clientHeight,
+        this.html.scrollHeight,
+        this.html.offsetHeight );
+
+      document.getElementsByTagName('body')[0].style.minHeight = this.height + 'px';
     }
   }
 }

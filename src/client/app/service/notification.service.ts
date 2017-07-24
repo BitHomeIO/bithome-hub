@@ -15,7 +15,7 @@ export class NotificationService {
         notification.override.id : Math.random().toString(36).substring(3);
     this.emitter.next({command: 'set', notification: notification, add: to});
     return notification;
-  };
+  }
 
   getChangeEmitter() {
     return this.emitter;

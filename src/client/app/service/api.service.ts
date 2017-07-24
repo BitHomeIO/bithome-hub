@@ -270,7 +270,7 @@ export class ApiService {
 
     public PROVIDER(): string {
         return this.apiPath + '/v1/provider';
-    };
+    }
 
     public PROVIDER_ID(id: string): string {
         return this.apiPath + '/v1/provider/' + encodeURI(id);
@@ -278,7 +278,7 @@ export class ApiService {
 
     public COMPANY(): string {
         return this.apiPath + '/v1/company';
-    };
+    }
 
     public COMPANY_ID(id: string): string {
         return this.apiPath + '/v1/company/' + encodeURI(id);
@@ -286,7 +286,7 @@ export class ApiService {
 
     public USER(): string {
         return this.apiPath + '/v1/user';
-    };
+    }
 
     public USER_ID(id: string): string {
         return this.apiPath + '/v1/user/' + encodeURI(id);

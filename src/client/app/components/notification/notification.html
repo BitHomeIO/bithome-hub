@@ -15,16 +15,16 @@
      (mouseenter)="onEnter()"
      (mouseleave)="onLeave()">
 
-    <i class="fa fa-lg" [class]="item.icon" aria-hidden="true"></i>
-    <div *ngIf="!item.html">
-        <div class="sn-title">{{item.title}}</div>
-        <div class="sn-content">{{item.content | max:maxLength}}</div>
+  <i class="fa fa-lg" [class]="item.icon" aria-hidden="true"></i>
+  <div *ngIf="!item.html">
+    <div class="sn-title">{{item.title}}</div>
+    <div class="sn-content">{{item.content | max:maxLength}}</div>
 
-        <div *ngIf="item.type !== 'bare'" [innerHTML]="safeSvg"></div>
-    </div>
-    <div *ngIf="item.html" [innerHTML]="item.html"></div>
+    <div *ngIf="item.type !== 'bare'"></div>
+  </div>
+  <div *ngIf="item.html" [innerHTML]="item.html"></div>
 
-    <div class="sn-progress-loader" *ngIf="showProgressBar">
-        <span [ngStyle]="{'width': progressWidth + '%'}"></span>
-    </div>
+  <div class="sn-progress-loader" *ngIf="showProgressBar">
+    <span [ngStyle]="{'width': progressWidth + '%'}"></span>
+  </div>
 </div>
